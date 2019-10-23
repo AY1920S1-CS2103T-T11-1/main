@@ -29,9 +29,10 @@
 <li><a href="#implementation">4. Implementation</a>
 <ul class="sectlevel2">
 <li><a href="#undo-redo-feature">4.1. Undo/Redo feature</a></li>
-<li><a href="#proposed-data-encryption">4.2. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">4.3. Logging</a></li>
-<li><a href="#Implementation-Configuration">4.4. Configuration</a></li>
+<li><a href="#budget-feature">4.2. Budget feature</a></li>
+<li><a href="#proposed-data-encryption">4.3. [Proposed] Data Encryption</a></li>
+<li><a href="#logging">4.4. Logging</a></li>
+<li><a href="#Implementation-Configuration">4.5. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">5. Documentation</a></li>
@@ -526,20 +527,204 @@ by the <code>add</code> command.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">4.2. [Proposed] Data Encryption</a></h3>
+<h3 id="budget-feature"><a class="link" href="#budget-feature">4.2. Budget feature</a></h3>
+<div class="sect3">
+<h4 id="implementation-3"><a class="link" href="#implementation-3">4.2.1. Implementation</a></h4>
+<div class="paragraph">
+<p>The budget feature allows users to add a budget and track expenses under this budget.
+When a budget is added, it is automatically set to the primary budget, and all expenses added after that
+will be tracked under this budget. If the user wants to track an expense under a different budget, he
+switches to the target budget first, before adding the expense.</p>
+</div>
+<div class="paragraph">
+<p>Each budget has 8 fields:
+- description: <code>Description</code>, budget name
+- amount: <code>Price</code>, amount of budget limit
+- startDate: <code>Timestamp</code>, the start date of the budget (for the current period)
+- endDate: <code>Timestamp</code>, the end date of the budget (for the current period)
+- period: <code>Period</code>, the recurring period of the budget
+- expenses: <code>ObservableList&lt;Expense&gt;</code>, the list of all expenses under this budget
+- isPrimary: <code>boolean</code>, a flag indicating the primary status of this budget
+- proportionUsed: <code>Percentage</code>, the proportion of the total amount that has been used up</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/BudgetClassDiagram.png" alt="BudgetClassDiagram">
+</div>
+</div>
+<div class="paragraph">
+<p>Each budget, once added, will recur infinitely. This is achieved by the refresh() method, which checks whether
+the budget has expired, and refreshes it to a new period if necessary, upon launching MooLah.</p>
+</div>
+<div class="paragraph">
+<p>A budget is like a sliding window that moves in the positive direction of time axis. The window has a fixed size,
+which is the period of the budget. Only expenses within the current window will be shown in the app. Every time
+the budget refreshes, the window "slides" to the next period, starting with an empty screen that gradually gets
+populated with newly added expenses over time.</p>
+</div>
+<div class="paragraph">
+<p>A budget keeps a list of all expenses ever been tracked by this budget, including historical ones. Additionally,
+it has a method <code>getCurrentPeriodExpenses()</code> that generates a filtered list of expenses within the current budgeting
+period, which interacts with GUI to be shown in the current screen.</p>
+</div>
+<div class="paragraph">
+<p>The fundamental classes of the budget feature are:
+- <code>Budget</code> : main functional backend class
+- <code>JsonAdaptedBudget</code> : for storage of a <code>Budget</code> object in Json format
+- <code>UniqueBudgetList</code> : a list of non-duplicate budgets in MooLah
+- <code>AddBudgetCommand</code> and <code>SwitchBudgetCommand</code> : budget-related commands
+        <code>AddBudgetCommand</code> creates a new <code>Budget</code> and adds it to <code>UniqueBudgetList</code>
+        <code>SwitchBudgetCommand</code> switches the primary budget to the specified budget
+- <code>AddBudgetCommandParser</code> and <code>SwitchBudgetCommandParser</code> : for parsing CLI input into commands</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/AddBudgetCommandClassDiagram.png" alt="AddBudgetCommandClassDiagram">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/SwitchBudgetCommandClassDiagram.png" alt="SwitchBudgetCommandClassDiagram">
+</div>
+</div>
+<div class="paragraph">
+<p>Additionally, util classes like <code>Percentage</code> which wraps a percentage for easier calculation and validation of proportionUsed.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/PercentageClassDiagram.png" alt="PercentageClassDiagram">
+</div>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the add budget operation works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/AddBudgetSequenceDiagram.png" alt="AddBudgetSequenceDiagram">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The lifeline for <code>DeleteCommandParser</code> should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following activity diagram summarizes what happens when the app launches and when a new expense is added:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/BudgetActivityDiagram.png" alt="BudgetActivityDiagram">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">4.2.2. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-since-budget-already-keeps-a-list-of-expenses-should-expense-have-a-budget-field"><a class="link" href="#aspect-since-budget-already-keeps-a-list-of-expenses-should-expense-have-a-budget-field">Aspect: Since Budget already keeps a list of expenses, should Expense have a Budget field?</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1:</strong> Expense has a <code>Budget</code> field</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easier to manage expenses.</p>
+</li>
+<li>
+<p>Cons: Causes cyclical dependency, and reduces testability. Also, this will cause infinite loop when creating
+JsonAdaptedExpense and JsonAdaptedBudget.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Expense does not have reference to Budget</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Less coupling.</p>
+</li>
+<li>
+<p>Cons: When reconstructing MooLah from json file, system does not know which budget to add the past expenses to.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Solution (Current implementation):</strong>
+Each Expense keeps a budgetName field which indicates the name of the Budget it is tracked under. Since UniqueBudgetList
+checks for duplicate budget names, a name is sufficient to identify a Budget. Besides, since budgetName is of
+<code>Description</code> type instead of <code>Budget</code> type, it is easy to convert to String, and resolves infinite loop when creating
+json files. Also, the resulting JsonAdaptedExpense file will not be too long, since the "budgetName" property stores
+only the budget name instead of the full budget object.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-must-every-expense-be-tracked-under-a-budget-can-one-expense-be-tracked-under-multiple-budgets"><a class="link" href="#aspect-must-every-expense-be-tracked-under-a-budget-can-one-expense-be-tracked-under-multiple-budgets">Aspect: Must every expense be tracked under a Budget? Can one expense be tracked under multiple Budgets?</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1:</strong> Every expense must be tracked under one, and only one Budget.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Budgets would be a partition of all expenses, which makes generating statistics (pie charts, etc.) easier.</p>
+</li>
+<li>
+<p>Cons: User would not be able to track expenses that fall under multiple Budgets.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Allow expenses without a Budget.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: More flexible budgeting experience.</p>
+</li>
+<li>
+<p>Cons: Internal logic would be very confusing. GUI and statistics would be harder to implement.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Solution (Current implementation):</strong>
+Adopts Alternative 1. Every expense must be tracked under one and only one Budget. If the expense is added before
+adding any budgets, a default budget with a huge limit is created for tracking all expenses without a proper budget.
+This ensures that the main screen has a budget and shows a budget status bar at all times. Besides, it leads to neater
+statistics.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">4.3. [Proposed] Data Encryption</a></h3>
 <div class="paragraph">
 <p><em>{Explain here how the data encryption feature will be implemented}</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">4.3. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">4.4. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 4.4, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 4.5, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -570,7 +755,7 @@ by the <code>add</code> command.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">4.4. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">4.5. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g user prefs file location, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -1623,4 +1808,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-23 16:20:38 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-23 16:38:23 UTC</div></div></div></body></html>
