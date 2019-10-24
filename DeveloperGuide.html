@@ -32,8 +32,9 @@
 <li><a href="#budget-feature">4.2. Budget feature</a></li>
 <li><a href="#events-feature">4.3. Events feature</a></li>
 <li><a href="#statistics-feature">4.4. Statistics Feature</a></li>
-<li><a href="#logging">4.5. Logging</a></li>
-<li><a href="#Implementation-Configuration">4.6. Configuration</a></li>
+<li><a href="#proposed-data-encryption">4.5. [Proposed] Data Encryption</a></li>
+<li><a href="#logging">4.6. Logging</a></li>
+<li><a href="#Implementation-Configuration">4.7. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">5. Documentation</a></li>
@@ -65,14 +66,14 @@
 <div class="sect2">
 <h3 id="purpose-scope"><a class="link" href="#purpose-scope">1.1. Purpose &amp; Scope</a></h3>
 <div class="paragraph">
-<p>This document specifies architecture and software design decisions for the app NUSpend.
-The intended audience of this document is the developers, designers, and software testers of NUSpend.</p>
+<p>This document specifies architecture and software design decisions for the app MooLah.
+The intended audience of this document is the developers, designers, and software testers of MooLah.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="software-overview"><a class="link" href="#software-overview">1.2. Software Overview</a></h3>
 <div class="paragraph">
-<p>NUSpend is a desktop CLI application that help users track their expenses.
+<p>MooLah is a desktop CLI application that help users track their expenses.
 The App supports many other extensions such as budgeting, planning and reminders.
 In particular, it is tailored to students in National University of Singapore who dines frequently in school canteens.</p>
 </div>
@@ -838,16 +839,67 @@ the user&#8217;s decision) that can then be added as expenses when their due dat
 <div class="sect2">
 <h3 id="statistics-feature"><a class="link" href="#statistics-feature">4.4. Statistics Feature</a></h3>
 <div class="paragraph">
-<p>The statistics feature allows users to have an alternative view for the entries in MooLah.
-The feature will read the expenses, and budgets and generate various metrics to be displayed.</p>
+<p>The statistics feature is facilitated by the <code>Statistics</code> class, which is part of the <code>model</code> package.
+Its main purpose is to allow users to have an alternative view for the entries in <code>MooLah</code>. The
+main entries that <code>Statistics</code> interacts with are <code>Expense</code> and <code>Budget</code>, and the metrics chosen to be displayed
+are handled mainly by <code>Statistics#calculateStatistics()</code>. The method recognises command words such as
+<code>stats</code>, <code>statscompare</code> and <code>statstrend</code>, where each results in a different visual representation and represents
+a different use case.</p>
 </div>
 <div class="paragraph">
-<p>The Statistic feature supports command words such as <code>stats</code>, <code>statscompare</code> and <code>statstrend</code>.</p>
+<p>The final outcome of these interactions are reflected directly in <code>MainWindow</code>, as a popup whenever the command is received
+by the command line.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Ideally, it should result in an <code>Undo</code>-able page-transition instead of a popup to ensure better integration with the rest of the application.
+</td>
+</tr>
+</table>
 </div>
 <div class="sect3">
 <h4 id="code-stats-code"><a class="link" href="#code-stats-code">4.4.1. <code>stats</code></a></h4>
 <div class="sect4">
 <h5 id="implementation-5"><a class="link" href="#implementation-5">Implementation</a></h5>
+<div class="paragraph">
+<p>The purpose of the <code>stats</code> command word is to request <code>MooLah</code> to visualise the total expenditure across
+expenses of different categories as a percentage of the total expenditure of all expenses tracked under the budget
+where the command is called. The visual representation used here will be a PieChart.</p>
+</div>
+<div class="paragraph">
+<p>Given below is an example usage scenario and how the <code>stats</code> command word is handled by <code>MooLah</code>.</p>
+</div>
+<div class="paragraph">
+<p>Step 1. The user enters the command <code>stats sd/01-10-2019 ed/01-11-2019</code> to visualise the total percentage of each category
+as a percentage of total expenditure across all categories, in the primary budget.
+The command is received by <code>AddressBookParser</code>, which then creates a <code>StatsCommandParser</code> object,
+to subsequently help to parse the input by the user.</p>
+</div>
+<div class="paragraph">
+<p>Step 2. The newly created <code>StatsCommandParser</code> calls <code>parse("stats sd/01-10-2019 ed/01-11-2019")</code>,
+which in turns calls <code>ArgumentTokenizer.tokenize("sd/01-10-2019 ed/01-11-2019", PREFIX_START_DATE, PREFIX_END_DATE)</code> to
+split the arguments into its preamble(the start date and end date). This returns an <code>ArgumentMultimap</code> object, <code>argMultimap</code> containing the split input.</p>
+</div>
+<div class="paragraph">
+<p>Step 3. The <code>StatsCommandParser</code> object calls <code>ParserUtil.parseTimestamp(argMultimap.getValue(PREFIX_START_DATE).get())</code> which parses the arguments to get the start date.
+The date, that is present in this example, is parsed into the correct form and the end date is obtained similarly with
+<code>ParserUtil.parseTimestamp(argMultimap.getValue(PREFIX_END_DATE).get())</code>.
+A <code>StatsCommand</code> object containing the start date and end date is created and returned to the <code>LogicManager</code>.</p>
+</div>
+<div class="paragraph">
+<p>Step 4. The LogicManager calls <code>StatsCommand.execute()</code>, which calls <code>Model#getFilteredExpenseList()</code> to retrieve the list of expenses stored in MooLah.
+The correct <code>Statistics</code> object, <code>statistics</code>, will be created with <code>startStatistic</code> and the <code>calculateStats</code> method, will switch to the correct mode,
+to produce the correct feedback to the user, as well as update the attributes in <code>statistics</code>.</p>
+</div>
+<div class="paragraph">
+<p>Step 5. Percentages, categories and the title description of the <code>Statistics</code> will be used to create the <code>CommandResult</code> object,
+which is returned to the <code>LogicManager</code> and subsequently to the UI where a popup in the form of a pie chart will be generated.</p>
+</div>
 <div class="paragraph">
 <p>The following sequence diagram shows how the <code>stats</code> operation works:</p>
 </div>
@@ -856,47 +908,20 @@ The feature will read the expenses, and budgets and generate various metrics to 
 <img src="images/BasicStatisticsCommand.png" alt="BasicStatisticsCommand">
 </div>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-To be included later once I figure out
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>Figure 1. Sequence Diagram for executing a <code>StatsCommand</code></p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>The user enters the command <code>stats sd/01-10-2019 ed/01-11-2019</code> to visualise the total percentage of each category
-as a percentage of total expenditure across all categories, in the primary budget.
-The command is received by <code>AddressBookParser</code>, which then creates a <code>StatsCommandParser</code> object,
-to subsequently help to parse the input by the user.</p>
-</li>
-<li>
-<p>The newly created <code>StatsCommandParser</code> calls <code>parse("stats sd/01-10-2019 ed/01-11-2019")</code>,
-which in turns calls <code>ArgumentTokenizer.tokenize("sd/01-10-2019 ed/01-11-2019", PREFIX_START_DATE, PREFIX_END_DATE)</code> to
-split the arguments into its preamble(the start date and end date). This returns an <code>ArgumentMultimap</code> object, <code>argMultimap</code> containing the split input.</p>
-</li>
-<li>
-<p>The <code>StatsCommandParser</code> object calls <code>ParserUtil.parseTimestamp(argMultimap.getValue(PREFIX_START_DATE).get())</code> which parses the arguments to get the start date.
-The date, that is present in this example, is parsed into the correct form and the end date is obtained similarly with
-<code>ParserUtil.parseTimestamp(argMultimap.getValue(PREFIX_END_DATE).get())</code>.
-A <code>StatsCommand</code> object containing the start date and end date is created and returned to the <code>LogicManager</code>.</p>
-</li>
-<li>
-<p>The LogicManager calls <code>StatsCommand.execute()</code>, which calls <code>Model#getFilteredExpenseList()</code> to retrieve the list of expenses stored in MooLah.
-The correct <code>Statistics</code> object, <code>statistics</code>, will be created with <code>startStatistic</code> and the <code>calculateStats</code> method, will switch to the correct mode,
-to produce the correct feedback to the user, as well as update the attributes in <code>statistics</code>.</p>
-</li>
-<li>
-<p>Percentages, categories and the title description of the <code>Statistics</code> will be used to create the <code>CommandResult</code> object,
-which is returned to the <code>LogicManager</code> and subsequently to the UI where a popup in the form of a pie chart will be generated.</p>
-</li>
-</ol>
+<div class="paragraph">
+<p>The following reference diagram shows how <code>StatsCommandParser</code> decides on the user&#8217;s start date and end date for the different cases.
+This is used mainly to illustrate the interactions in Steps 2 to 3.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/StatsCommandParser.png" alt="StatsCommandParser">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 2. Reference Diagram for deciding start date and end date for a <code>StatsCommand</code></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -905,8 +930,8 @@ which is returned to the <code>LogicManager</code> and subsequently to the UI wh
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-As of Week 10, the design of <code>StatsCommand.execute()</code> is still a work in progress because of other concurrent priorities,
-and other dependencies the old command has to support. This applies for the rest of the command words.
+As of Week 10, the design of <code>StatsCommand.execute()</code> in Step 4 is still a work in progress because of concurrent refactoring, developing command words
+and other dependencies due to outdated methods that causes a depreciated return type to still be in use. This should be resolved ideally by v1.3.
 </td>
 </tr>
 </table>
@@ -915,8 +940,10 @@ and other dependencies the old command has to support. This applies for the rest
 </div>
 <div class="sect3">
 <h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">4.4.2. Design Considerations</a></h4>
-<div class="sect4">
-<h5 id="aspect-why-do-we-choose-piechart-instead-of-other-graphical-formats"><a class="link" href="#aspect-why-do-we-choose-piechart-instead-of-other-graphical-formats">Aspect: Why do we choose PieChart instead of other graphical formats?</a></h5>
+<div class="paragraph">
+<p>When designing the interaction of <code>Statistics#calculateStatistics()</code> with <code>stats</code>, decisions have to be made on the most
+suitable visual representation for <code>stats</code> particular use case.</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -924,7 +951,7 @@ and other dependencies the old command has to support. This applies for the rest
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Sequential view, focuses on number of entries</p>
+<p>Pros: Sequential view, can capture number of entries</p>
 </li>
 <li>
 <p>Cons: May be a duplicate of the <code>ListExpense</code> command, just sorted via categories</p>
@@ -937,7 +964,7 @@ and other dependencies the old command has to support. This applies for the rest
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Offers percentages of expenditure</p>
+<p>Pros: Offers a visual view of size to represent the expenditure under each category</p>
 </li>
 <li>
 <p>Cons: Loses the elements of number of entries in each category</p>
@@ -947,11 +974,11 @@ and other dependencies the old command has to support. This applies for the rest
 </li>
 <li>
 <p><strong>Solution (Current Implementation): </strong>
-Adopts Alternative 2. It is important that every aspect of the user experience gets covered, so Statistics can be made more
-meaningful by focusing on percentages instead of number of entries. This could very well be complemented with the list view
-in the primary budget. In the event the user wants to view the individual components of a category, <code>FindExpense</code> can be used,
-while the entire timeline of expense adding for the current budget can be accessed with <code>ListExpense</code> or simply the <code>Undo</code> command
-to revert the page switching back to the default sequential view.</p>
+Adopts Alternative 2. It is important that every aspect of the user experience gets covered, and what <code>MooLah</code> before the
+inclusion of <code>Statistics</code> is the appreciation of percentage expenditure in each category of expenses. Expenses can already be
+observed in its chronological order using <code>ListExpense</code> while individual view of expenses under a category can be accessed
+using <code>FindExpense</code>. Offering a visual view on expenditure under each category complements with the existing implementation
+of sequential view in the primary budget.</p>
 </li>
 </ul>
 </div>
@@ -967,33 +994,31 @@ Once again, this question will be better addressed holistically once all 3 featu
 </tr>
 </table>
 </div>
-</div>
 <div class="sect4">
 <h5 id="future-implementation-coming-in-v2-0-2"><a class="link" href="#future-implementation-coming-in-v2-0-2">Future Implementation (Coming in v2.0)</a></h5>
 <div class="paragraph">
-<p>Users will be given the option to choose a Visual Representation method, which will determine the output format of statistics.
-Currently, statistics under <code>stats</code> mode can only be displayed in a pie chart, and users may have different preferences for formats.
-Various options such as checking across different budgets other than within the same budget can also be considered.</p>
-</div>
-<div class="paragraph">
-<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; b0c4666f38acaeadcb6dd43f2515a6f6dfae140f
-=== [Proposed] Data Encryption</p>
-</div>
-<div class="paragraph">
-<p><em>{Explain here how the data encryption feature will be implemented}</em></p>
+<p>For each of the command words, users will be given the option to choose a Visual Representation method they prefer,
+instead of the default option we have prioritised. Currently, statistics under <code>stats</code> mode can only be displayed in a pie chart,
+and users may have different preferences for formats. Various options such as checking across different budgets other than within the same budget can also be considered.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">4.5. Logging</a></h3>
+<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">4.5. [Proposed] Data Encryption</a></h3>
+<div class="paragraph">
+<p><em>{Explain here how the data encryption feature will be implemented}</em></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="logging"><a class="link" href="#logging">4.6. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 4.6, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 4.7, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -1024,7 +1049,7 @@ Various options such as checking across different budgets other than within the 
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">4.6. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">4.7. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g user prefs file location, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -1377,7 +1402,7 @@ Various options such as checking across different budgets other than within the 
 <h2 id="use-cases"><a class="link" href="#use-cases">Appendix C: Use Cases</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>(For all use cases below, the <strong>System</strong> is <code>NUSpend</code> and the <strong>Actor</strong> is the <code>user</code>, unless specified otherwise)</p>
+<p>(For all use cases below, the <strong>System</strong> is <code>MooLah</code> and the <strong>Actor</strong> is the <code>user</code>, unless specified otherwise)</p>
 </div>
 <h3 id="use-case-add-a-budget-and-switch-to-it" class="discrete">Use case: Add a budget and switch to it</h3>
 <div class="paragraph">
@@ -1389,7 +1414,7 @@ Various options such as checking across different budgets other than within the 
 <p>User requests to add a budget and specifies budget name, amount, period and start date</p>
 </li>
 <li>
-<p>NUSpend shows success in creating new budget</p>
+<p>MooLah shows success in creating new budget</p>
 </li>
 <li>
 <p>User requests to switch to this budget by specifying the budget name</p>
@@ -1412,7 +1437,7 @@ Various options such as checking across different budgets other than within the 
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>1a1. NUSpend shows an error message and reminds the user to complete the parameters.</p>
+<p>1a1. MooLah shows an error message and reminds the user to complete the parameters.</p>
 </li>
 <li>
 <p>1a2. User re-enters the command with new data.</p>
@@ -1431,7 +1456,7 @@ Various options such as checking across different budgets other than within the 
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>3a1. NUSpend shows an error message and requests for the budget name.</p>
+<p>3a1. MooLah shows an error message and requests for the budget name.</p>
 </li>
 <li>
 <p>3a2. User re-enters the command, specifying the budget name.</p>
@@ -1447,7 +1472,7 @@ Various options such as checking across different budgets other than within the 
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>3b1. NUSpend shows an error message and requests for a correct budget name that exists.</p>
+<p>3b1. MooLah shows an error message and requests for a correct budget name that exists.</p>
 </li>
 <li>
 <p>3b2. User re-enters the command with a new budget name.</p>
@@ -1556,19 +1581,19 @@ Various options such as checking across different budgets other than within the 
 <p>User requests to view statistics</p>
 </li>
 <li>
-<p>NUSpend prompts user for start date</p>
+<p>MooLah prompts user for start date</p>
 </li>
 <li>
 <p>User enters start date</p>
 </li>
 <li>
-<p>NUSpend prompts user for end date</p>
+<p>MooLah prompts user for end date</p>
 </li>
 <li>
 <p>User enters end date</p>
 </li>
 <li>
-<p>NUSpend displays the statistics requested
+<p>MooLah displays the statistics requested
 Use case ends</p>
 </li>
 </ol>
@@ -1579,11 +1604,11 @@ Use case ends</p>
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>*a. NUSpend detects incorrect date format</p>
+<p>*a. MooLah detects incorrect date format</p>
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>*a1.NUSpend throws Exception</p>
+<p>*a1.MooLah throws Exception</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -1596,7 +1621,7 @@ Use case ends</p>
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>5a1. NUSpend displays the statistics 1 month after start date</p>
+<p>5a1. MooLah displays the statistics 1 month after start date</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -1609,7 +1634,7 @@ Use case ends</p>
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>5b1. NUSpend displays the statistics 1 month before end date</p>
+<p>5b1. MooLah displays the statistics 1 month before end date</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -1630,25 +1655,25 @@ Use case ends</p>
 <p>User requests to view statistics</p>
 </li>
 <li>
-<p>NUSpend prompts user for date 1</p>
+<p>MooLah prompts user for date 1</p>
 </li>
 <li>
 <p>User enters date 1</p>
 </li>
 <li>
-<p>NUSpend prompts user for date 2</p>
+<p>MooLah prompts user for date 2</p>
 </li>
 <li>
 <p>User enters date 2</p>
 </li>
 <li>
-<p>NUSpend prompts user for period</p>
+<p>MooLah prompts user for period</p>
 </li>
 <li>
 <p>User enters period</p>
 </li>
 <li>
-<p>NUSpend displays the statistics requested
+<p>MooLah displays the statistics requested
 Use case ends</p>
 </li>
 </ol>
@@ -1659,11 +1684,11 @@ Use case ends</p>
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>*a. NUSpend detects incorrect date format or missing parameters</p>
+<p>*a. MooLah detects incorrect date format or missing parameters</p>
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>*a1.NUSpend throws Exception</p>
+<p>*a1.MooLah throws Exception</p>
 <div class="paragraph">
 <p>Use case ends</p>
 </div>
@@ -1683,13 +1708,13 @@ Use case ends</p>
 <p>User assigns an Alias name for some input.</p>
 </li>
 <li>
-<p>NUSpend confirms that the input is alias name is valid.</p>
+<p>MooLah confirms that the input is alias name is valid.</p>
 </li>
 <li>
-<p>NUSpend saves the alias to the user&#8217;s preferences.</p>
+<p>MooLah saves the alias to the user&#8217;s preferences.</p>
 </li>
 <li>
-<p>NUSpend informs the user that the alias was successfully created.</p>
+<p>MooLah informs the user that the alias was successfully created.</p>
 <div class="paragraph">
 <p>Use case Ends.</p>
 </div>
@@ -1706,7 +1731,7 @@ Use case ends</p>
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>1a1. NUSpend informs the User that the alias name is invalid.</p>
+<p>1a1. MooLah informs the User that the alias name is invalid.</p>
 <div class="paragraph">
 <p>Use case Ends</p>
 </div>
@@ -1719,7 +1744,7 @@ Use case ends</p>
 <div class="ulist None">
 <ul class="None">
 <li>
-<p>2a1. NUSpend overwrites the existing Alias with the same name in the User&#8217;s preferences.</p>
+<p>2a1. MooLah overwrites the existing Alias with the same name in the User&#8217;s preferences.</p>
 <div class="paragraph">
 <p>Use case resumes from step 4.</p>
 </div>
@@ -1742,7 +1767,7 @@ Use case ends</p>
 <p>User enters the command</p>
 </li>
 <li>
-<p>NUSpend attempts to execute the input mapped to the alias.</p>
+<p>MooLah attempts to execute the input mapped to the alias.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -1762,7 +1787,7 @@ Use case ends</p>
 <p>1a1. User enters the command</p>
 </li>
 <li>
-<p>1a2. NUSpend attempts to execute the input mapped to the alias with the additional details appended.</p>
+<p>1a2. MooLah attempts to execute the input mapped to the alias with the additional details appended.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -1782,13 +1807,13 @@ Use case ends</p>
 <p>User adds an expense to a budget.</p>
 </li>
 <li>
-<p>NUSpend displays the updated expense list.</p>
+<p>MooLah displays the updated expense list.</p>
 </li>
 <li>
-<p>NUSpend finds that the total amount spent in the budget exceeds the allocated budget amount.</p>
+<p>MooLah finds that the total amount spent in the budget exceeds the allocated budget amount.</p>
 </li>
 <li>
-<p>NUSpend warns the User that they have overspent.</p>
+<p>MooLah warns the User that they have overspent.</p>
 <div class="paragraph">
 <p>Use case ends</p>
 </div>
@@ -2077,4 +2102,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-24 14:22:45 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-24 15:23:10 UTC</div></div></div></body></html>
