@@ -14,18 +14,17 @@
 <li><a href="#Features">3. Features</a>
 <ul class="sectlevel2">
 <li><a href="#viewing-help-code-help-code">3.1. Viewing help : <code>help</code></a></li>
-<li><a href="#basic-expense-related-commands">3.2. Basic Expense-Related Commands</a></li>
+<li><a href="#basic-expense-event-related-commands">3.2. Basic Expense/Event-Related Commands</a></li>
 <li><a href="#budgeting-related-commands">3.3. Budgeting-Related Commands</a></li>
-<li><a href="#prediction-code-predict-code">3.4. Prediction : <code>predict</code></a></li>
+<li><a href="#coming-in-v2-0-prediction-code-predict-code">3.4. (Coming in v2.0)Prediction : <code>predict</code></a></li>
 <li><a href="#creating-an-alias-for-your-favourite-commands-code-alias-code">3.5. Creating an alias for your favourite commands : <code>alias</code></a></li>
-<li><a href="#reminders">3.6. Reminders</a></li>
-<li><a href="#saving-the-data">3.7. Saving the data</a></li>
-<li><a href="#viewing-statistics">3.8. Viewing Statistics</a></li>
-<li><a href="#exiting-the-program-code-exit-code">3.9. Exiting the program : <code>exit</code></a></li>
-<li><a href="#saving-the-data-2">3.10. Saving the data</a></li>
-<li><a href="#encrypting-data-files-code-coming-in-v2-0-code">3.11. Encrypting data files <code>[coming in v2.0]</code></a></li>
-<li><a href="#email-notification-code-coming-in-v2-0-code">3.12. Email notification <code>[coming in v2.0]</code></a></li>
-<li><a href="#input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code">3.13. Input expenses by scanning a receipt <code>[coming in v2.0]</code></a></li>
+<li><a href="#saving-the-data">3.6. Saving the data</a></li>
+<li><a href="#viewing-statistics">3.7. Viewing Statistics</a></li>
+<li><a href="#exiting-the-program-code-exit-code">3.8. Exiting the program : <code>exit</code></a></li>
+<li><a href="#saving-the-data-2">3.9. Saving the data</a></li>
+<li><a href="#encrypting-data-files-code-coming-in-v2-0-code">3.10. Encrypting data files <code>[coming in v2.0]</code></a></li>
+<li><a href="#email-notification-code-coming-in-v2-0-code">3.11. Email notification <code>[coming in v2.0]</code></a></li>
+<li><a href="#input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code">3.12. Input expenses by scanning a receipt <code>[coming in v2.0]</code></a></li>
 </ul>
 </li>
 <li><a href="#faq">4. FAQ</a></li>
@@ -75,7 +74,7 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <p><strong><code>list</code></strong> : lists all expenses</p>
 </li>
 <li>
-<p><strong><code>add</code></strong><code>d/Chicken Rice p/2.50 t/15-09-2019 1230 c/Food</code> : adds an expense named <code>Chicken Rice</code> to the expense tracker.</p>
+<p><strong><code>add</code></strong><code>d/Chicken Rice p/2.50 c/Food t/25-10</code> : adds an expense named <code>Chicken Rice</code> to the expense tracker.</p>
 </li>
 <li>
 <p><strong><code>delete</code></strong><code>3</code> : deletes the 3rd expense shown in the current list</p>
@@ -129,20 +128,27 @@ e.g. <code>[c/CATEGORY]&#8230;&#8203;</code> can be used as <code>[blank]</code>
 </div>
 </div>
 <div class="sect2">
-<h3 id="basic-expense-related-commands"><a class="link" href="#basic-expense-related-commands">3.2. Basic Expense-Related Commands</a></h3>
+<h3 id="basic-expense-event-related-commands"><a class="link" href="#basic-expense-event-related-commands">3.2. Basic Expense/Event-Related Commands</a></h3>
 <div class="sect3">
-<h4 id="adding-an-expense-code-add-code"><a class="link" href="#adding-an-expense-code-add-code">3.2.1. Adding an expense: <code>add</code></a></h4>
+<h4 id="adding-an-expense-event-code-add-code"><a class="link" href="#adding-an-expense-event-code-add-code">3.2.1. Adding an expense/event: <code>add</code></a></h4>
 <div class="paragraph">
-<p>Add an expense to the expense tracker
-Format: <code>add d/DESCRIPTION p/PRICE [t/time] [c/CATEGORY]&#8230;&#8203;</code></p>
+<p>Add an expense/event to the expense tracker. If the timestamp denotes a future date, an event is added.
+If not, an expense is added instead.</p>
+</div>
+<div class="paragraph">
+<p>Upon launch, Moolah will remind the user of upcoming events (7 days or below), and also ask users whether they wish
+to automatically add expenses corresponding to transpired events.</p>
+</div>
+<div class="paragraph">
+<p>Format: <code>add d/DESCRIPTION p/PRICE c/CATEGORY t/TIMESTAMP &#8230;&#8203;</code></p>
 </div>
 <div class="ulist TIP">
 <ul class="TIP">
 <li>
-<p>An expense can have any number of categories (including 0).</p>
+<p>The timestamp field is optional.</p>
 </li>
 <li>
-<p>If a time is not specified, the time property of the expense will be that of the system’s current time.</p>
+<p>If a time is not specified, an expense will be added with its date being the current system date.</p>
 </li>
 </ul>
 </div>
@@ -152,17 +158,17 @@ Format: <code>add d/DESCRIPTION p/PRICE [t/time] [c/CATEGORY]&#8230;&#8203;</cod
 <div class="ulist">
 <ul>
 <li>
-<p><code>add d/Chicken Rice p/2.50 t/15-09-2019 1230 c/Food</code></p>
+<p><code>add d/Brian birthday p/40 c/Gifts t/31-12</code></p>
 </li>
 <li>
-<p><code>add d/Buffet p/250 c/Food c/Anniversary Expense</code></p>
+<p><code>add d/Buffet p/250 c/Food</code></p>
 </li>
 </ul>
 </div>
 <div class="sect4">
-<h5 id="using-relative-time-date-input-code-yesterday-code"><a class="link" href="#using-relative-time-date-input-code-yesterday-code">Using relative time/date input: <code>yesterday</code></a></h5>
+<h5 id="coming-in-v1-4-using-relative-time-date-input-code-yesterday-code"><a class="link" href="#coming-in-v1-4-using-relative-time-date-input-code-yesterday-code">(Coming in v1.4)Using relative time/date input: <code>yesterday</code></a></h5>
 <div class="paragraph">
-<p>The user can specify an expense’s time using relative dates and times.</p>
+<p>The user can specify an expense/event’s time using relative dates and times.</p>
 </div>
 <div class="paragraph">
 <p>Example:
@@ -180,10 +186,39 @@ Format: <code>list</code></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="updating-an-expense-code-edit-code"><a class="link" href="#updating-an-expense-code-edit-code">3.2.3. Updating an expense : <code>edit</code></a></h4>
+<h4 id="coming-in-v1-4-listing-all-events-code-events-code"><a class="link" href="#coming-in-v1-4-listing-all-events-code-events-code">3.2.3. (Coming in v1.4)Listing all events : <code>events</code></a></h4>
 <div class="paragraph">
-<p>Edits an existing expense in the expense tracker.
-Format: <code>edit INDEX [p/PRICE] [d/DESCRIPTION] [t/time] [c/CATEGORY]&#8230;&#8203;</code></p>
+<p>Lists all events that you have inputted.</p>
+</div>
+<div class="paragraph">
+<p>Format: <code>events</code></p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>events</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Result:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>You have these important dates coming up!
+Brian’s birthday: 04/06/2020
+Mum’s birthday: 06/06/2020</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="updating-an-expense-event-code-edit-code"><a class="link" href="#updating-an-expense-event-code-edit-code">3.2.4. Updating an expense/event : <code>edit</code></a></h4>
+<div class="paragraph">
+<p>Edits an existing expense/event in the expense tracker.</p>
+</div>
+<div class="paragraph">
+<p>Format: <code>edit INDEX [p/PRICE] [d/DESCRIPTION] [t/time] [c/CATEGORY]&#8230;&#8203;</code></p>
 </div>
 <div class="paragraph">
 <p>Example:
@@ -195,7 +230,7 @@ Updates the price of the 2nd expense in the current list to 3.50.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Edits the expense at the specified <code>INDEX</code>. The index refers to the index number shown in the currently displayed list.</p>
+<p>Edits the expense/event at the specified <code>INDEX</code>. The index refers to the index number shown in the currently displayed list.</p>
 </li>
 <li>
 <p>The index must be a positive integer 1, 2, 3, &#8230;&#8203;</p>
@@ -207,12 +242,6 @@ Updates the price of the 2nd expense in the current list to 3.50.</p>
 <p>Existing values will be updated to the input values.</p>
 </li>
 <li>
-<p>When editing categories, the existing categories of the expense will be removed, i.e adding of categories is not cumulative.</p>
-</li>
-<li>
-<p>You can remove an expense from all the categories by typing <code>c/</code> without specifying any categories after it. i.e. <code>edit 1 c/</code></p>
-</li>
-<li>
 <p>You can set the time of the expense to the system’s current time by typing <code>t/</code> without specifying a time.</p>
 </li>
 </ul>
@@ -221,10 +250,12 @@ Updates the price of the 2nd expense in the current list to 3.50.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="locating-expenses-by-name-code-find-code"><a class="link" href="#locating-expenses-by-name-code-find-code">3.2.4. Locating expenses by name: <code>find</code></a></h4>
+<h4 id="locating-expenses-events-by-name-code-find-code"><a class="link" href="#locating-expenses-events-by-name-code-find-code">3.2.5. Locating expenses/events by name: <code>find</code></a></h4>
 <div class="paragraph">
-<p>Finds expenses whose description contain any of the given keywords.
-Format: <code>find KEYWORD [MORE_KEYWORDS]</code></p>
+<p>Finds expenses/events whose description contain any of the given keywords.</p>
+</div>
+<div class="paragraph">
+<p>Format: <code>find KEYWORD [MORE_KEYWORDS]</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -266,17 +297,19 @@ Returns any expense having description containing <code>chicken</code>, <code>ta
 </div>
 </div>
 <div class="sect3">
-<h4 id="deleting-an-expense-code-delete-code"><a class="link" href="#deleting-an-expense-code-delete-code">3.2.5. Deleting an expense : <code>delete</code></a></h4>
+<h4 id="deleting-an-expense-event-code-delete-code"><a class="link" href="#deleting-an-expense-event-code-delete-code">3.2.6. Deleting an expense/event : <code>delete</code></a></h4>
 <div class="paragraph">
-<p>Deletes the specified expense from the current list shown in the expense tracker.
-Format: <code>delete INDEX</code></p>
+<p>Deletes the specified expense/event from the current list shown in the expense tracker.</p>
+</div>
+<div class="paragraph">
+<p>Format: <code>delete INDEX</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
 <ul>
 <li>
-<p>Deletes the expense at the specified INDEX.</p>
+<p>Deletes the expense/event at the specified INDEX.</p>
 </li>
 <li>
 <p>The index refers to the index number shown in the currently displayed list.</p>
@@ -302,6 +335,15 @@ delete 2</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
+<pre class="CodeRay highlight"><code>events
+delete 2</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Deletes the 2nd event in the list of events, shown by <code>events</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
 <pre class="CodeRay highlight"><code>list
 find chicken
 delete 1</code></pre>
@@ -312,14 +354,16 @@ delete 1</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">3.2.6. Clearing all entries : <code>clear</code></a></h4>
+<h4 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">3.2.7. Clearing all entries : <code>clear</code></a></h4>
 <div class="paragraph">
-<p>Clears all entries from the expense tracker.
-Format: <code>clear</code></p>
+<p>Clears all entries from the expense tracker.</p>
+</div>
+<div class="paragraph">
+<p>Format: <code>clear</code></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="undo-the-previous-command-code-undo-code"><a class="link" href="#undo-the-previous-command-code-undo-code">3.2.7. Undo the previous command : <code>undo</code></a></h4>
+<h4 id="undo-the-previous-command-code-undo-code"><a class="link" href="#undo-the-previous-command-code-undo-code">3.2.8. Undo the previous command : <code>undo</code></a></h4>
 <div class="paragraph">
 <p>User can undo the previous command. Only commands that modify the data, e.g. <code>add</code> <code>edit</code> <code>delete</code> <code>clear</code>, can be undone.</p>
 </div>
@@ -341,7 +385,7 @@ Expense no. 5 will be undone, re-added to the data.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="redo-the-command-that-was-undone-code-redo-code"><a class="link" href="#redo-the-command-that-was-undone-code-redo-code">3.2.8. Redo the command that was undone : <code>redo</code></a></h4>
+<h4 id="redo-the-command-that-was-undone-code-redo-code"><a class="link" href="#redo-the-command-that-was-undone-code-redo-code">3.2.9. Redo the command that was undone : <code>redo</code></a></h4>
 <div class="paragraph">
 <p>User can redo the command they have undone.</p>
 </div>
@@ -364,7 +408,7 @@ Expense no. 5 will now be deleted.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="converting-any-currency-to-preferred-currency-code-convert-code"><a class="link" href="#converting-any-currency-to-preferred-currency-code-convert-code">3.2.9. Converting any currency to preferred currency : <code>convert</code></a></h4>
+<h4 id="coming-in-v2-0-converting-any-currency-to-preferred-currency-code-convert-code"><a class="link" href="#coming-in-v2-0-converting-any-currency-to-preferred-currency-code-convert-code">3.2.10. (Coming in v2.0) Converting any currency to preferred currency : <code>convert</code></a></h4>
 
 </div>
 </div>
@@ -399,7 +443,7 @@ This will create a new budget “General expense” that is set to $100 per mont
 </div>
 </div>
 <div class="sect2">
-<h3 id="prediction-code-predict-code"><a class="link" href="#prediction-code-predict-code">3.4. Prediction : <code>predict</code></a></h3>
+<h3 id="coming-in-v2-0-prediction-code-predict-code"><a class="link" href="#coming-in-v2-0-prediction-code-predict-code">3.4. (Coming in v2.0)Prediction : <code>predict</code></a></h3>
 <div class="paragraph">
 <p>User can get a rough estimation of next month&#8217;s total expense based on extrapolation from this month&#8217;s expenditure. The prediction will take into account important dates that require extra spending in next month.</p>
 </div>
@@ -439,63 +483,16 @@ Result creates an alias “chicken rice” for the command which adds an expense
 </div>
 </div>
 <div class="sect2">
-<h3 id="reminders"><a class="link" href="#reminders">3.6. Reminders</a></h3>
-<div class="sect3">
-<h4 id="recording-important-dates-code-remind-code"><a class="link" href="#recording-important-dates-code-remind-code">3.6.1. Recording important dates : <code>remind</code></a></h4>
-<div class="paragraph">
-<p>Records an important date, which the expense tracker will remind you of as the date approaches.</p>
-</div>
-<div class="paragraph">
-<p>Format: <code>remind EVENT DATE [n DAYS]</code>
-Records the EVENT with the timestamp DATE.</p>
-</div>
-<div class="paragraph">
-<p>By default, the expense tracker will remind you of this event when its scheduled time approaches 7 days and below. If the optional parameter <code>[n DAYS]</code> is inputted, the tracker will begin reminding you <code>n</code> days before the scheduled time.</p>
-</div>
-<div class="paragraph">
-<p>Example: <code>remind Brian’s birthday 04/06/2020 14 DAYS</code>
-14 days before 04/06/2020, the expense tracker will begin reminding you of Brian’s birthday.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="listing-all-reminders-code-reminders-code"><a class="link" href="#listing-all-reminders-code-reminders-code">3.6.2. Listing all reminders : <code>reminders</code></a></h4>
-<div class="paragraph">
-<p>Lists all reminders for important dates that you have inputted.</p>
-</div>
-<div class="paragraph">
-<p>Format: <code>reminders</code></p>
-</div>
-<div class="paragraph">
-<p>Example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code>reminders</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Result:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code>You have these important dates coming up!
-Brian’s birthday: 04/06/2020
-Mum’s birthday: 06/06/2020</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.7. Saving the data</a></h3>
+<h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.6. Saving the data</a></h3>
 <div class="paragraph">
 <p>Expense tracker data are saved in the hard disk automatically after any command that changes the data.
 There is no need to save manually.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="viewing-statistics"><a class="link" href="#viewing-statistics">3.8. Viewing Statistics</a></h3>
+<h3 id="viewing-statistics"><a class="link" href="#viewing-statistics">3.7. Viewing Statistics</a></h3>
 <div class="sect3">
-<h4 id="summary-code-stats-code"><a class="link" href="#summary-code-stats-code">3.8.1. Summary : <code>stats</code></a></h4>
+<h4 id="summary-code-stats-code"><a class="link" href="#summary-code-stats-code">3.7.1. Summary : <code>stats</code></a></h4>
 <div class="paragraph">
 <p>Produces statistics regarding the user’s expenses.</p>
 </div>
@@ -526,7 +523,7 @@ There is no need to save manually.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="compare-code-statscompare-code"><a class="link" href="#compare-code-statscompare-code">3.8.2. Compare : <code>statscompare</code></a></h4>
+<h4 id="compare-code-statscompare-code"><a class="link" href="#compare-code-statscompare-code">3.7.2. Compare : <code>statscompare</code></a></h4>
 <div class="paragraph">
 <p>Produces and displays statistics regarding the user’s finance for 2 time periods. The statistics include all categories of items, the number of entries and the total amount spent and the percentage composition of the total, stated as a difference using second period – first period</p>
 </div>
@@ -549,7 +546,7 @@ There is no need to save manually.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="visualize-code-visual-code"><a class="link" href="#visualize-code-visual-code">3.8.3. Visualize: <code>visual</code></a></h4>
+<h4 id="visualize-code-visual-code"><a class="link" href="#visualize-code-visual-code">3.7.3. Visualize: <code>visual</code></a></h4>
 <div class="paragraph">
 <p>Generates pie chart for spending in different categories. The pie chart also shows the percentage composition of the total expenditure in text.</p>
 </div>
@@ -581,29 +578,29 @@ There is no need to save manually.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">3.9. Exiting the program : <code>exit</code></a></h3>
+<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">3.8. Exiting the program : <code>exit</code></a></h3>
 <div class="paragraph">
 <p>Exits the program.<br>
 Format: <code>exit</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-the-data-2"><a class="link" href="#saving-the-data-2">3.10. Saving the data</a></h3>
+<h3 id="saving-the-data-2"><a class="link" href="#saving-the-data-2">3.9. Saving the data</a></h3>
 <div class="paragraph">
 <p>NUSpend data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">3.11. Encrypting data files <code>[coming in v2.0]</code></a></h3>
+<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">3.10. Encrypting data files <code>[coming in v2.0]</code></a></h3>
 
 </div>
 <div class="sect2">
-<h3 id="email-notification-code-coming-in-v2-0-code"><a class="link" href="#email-notification-code-coming-in-v2-0-code">3.12. Email notification <code>[coming in v2.0]</code></a></h3>
+<h3 id="email-notification-code-coming-in-v2-0-code"><a class="link" href="#email-notification-code-coming-in-v2-0-code">3.11. Email notification <code>[coming in v2.0]</code></a></h3>
 
 </div>
 <div class="sect2">
-<h3 id="input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code"><a class="link" href="#input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code">3.13. Input expenses by scanning a receipt <code>[coming in v2.0]</code></a></h3>
+<h3 id="input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code"><a class="link" href="#input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code">3.12. Input expenses by scanning a receipt <code>[coming in v2.0]</code></a></h3>
 
 </div>
 </div>
@@ -696,4 +693,4 @@ e.g. <code>visual start/11-11-2018 end/12-12-2018</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-24 07:30:46 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-24 14:22:45 UTC</div></div></div></body></html>

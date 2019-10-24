@@ -30,9 +30,10 @@
 <ul class="sectlevel2">
 <li><a href="#undo-redo-feature">4.1. Undo/Redo feature</a></li>
 <li><a href="#budget-feature">4.2. Budget feature</a></li>
-<li><a href="#statistics-feature">4.3. Statistics Feature</a></li>
-<li><a href="#logging">4.4. Logging</a></li>
-<li><a href="#Implementation-Configuration">4.5. Configuration</a></li>
+<li><a href="#events-feature">4.3. Events feature</a></li>
+<li><a href="#statistics-feature">4.4. Statistics Feature</a></li>
+<li><a href="#logging">4.5. Logging</a></li>
+<li><a href="#Implementation-Configuration">4.6. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">5. Documentation</a></li>
@@ -715,7 +716,127 @@ statistics.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="statistics-feature"><a class="link" href="#statistics-feature">4.3. Statistics Feature</a></h3>
+<h3 id="events-feature"><a class="link" href="#events-feature">4.3. Events feature</a></h3>
+<div class="sect3">
+<h4 id="implementation-4"><a class="link" href="#implementation-4">4.3.1. Implementation</a></h4>
+<div class="paragraph">
+<p>The Events feature allows users to add events that are supposed to occur on a future date. On launch, MooLah will
+remind users of upcoming events. MooLah will also notify the user about any events that are supposed to have
+transpired, and allow them to automatically add these events as expenses.</p>
+</div>
+<div class="paragraph">
+<p>The Events feature supports the <code>add</code>, <code>delete</code> and <code>events</code> command words.</p>
+</div>
+<div class="paragraph">
+<p>Events are added the same way expenses are added on the command line. When the user inputs an add command,
+MooLah determines whether an event or an expense should be added based on the date the user inputted in his command.
+This is illustrated below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/AddExpenseOrEventActivityDiagram.png" alt="AddExpenseOrEventActivityDiagram">
+</div>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how MooLah handles transpired events on launch:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/TranspiredEventsSequenceDiagram.png" alt="TranspiredEventsSequenceDiagram">
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>When MooLah launches, the <code>start</code> method of <code>UiManager</code> is called. <code>UiManager</code> then calls the <code>handleTranspiredEvents</code>
+of <code>MainWindow</code>, which fetches all transpired events and notifies the user about them. It does so by first obtaining the
+transpired events from the <code>Timekeeper</code> class by calling a series of getter methods.</p>
+</li>
+<li>
+<p>Once the transpired events have been obtained, for each transpired event, a new <code>TranspiredEventWindow</code> will be
+constructed. The transpired event will then be passed via <code>show</code>, a method of the newly constructed <code>TranspiredEventWindow</code>.
+<code>show</code> will create a popup window that details the transpired event, and asks the user whether it should be added as an
+expense. This popup window will have a 'Yes' and 'No' button.</p>
+</li>
+<li>
+<p>If the user presses the 'Yes' button, the original command that the user inputted to add this particular event is fetched
+and passed to the <code>execute</code> method of <code>LogicManager</code>, which executes command line inputs. Since the timestamp within this
+original command now denotes a past or present date, an expense will be added.</p>
+</li>
+<li>
+<p>If the user presses the 'No' button, the expense is not added.</p>
+</li>
+<li>
+<p>After pressing either button, the popup window closes.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+As of Week 10, adding expenses to the same budget the event was added to is still a work in progress.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">4.3.2. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-what-command-words-should-the-events-feature-use"><a class="link" href="#aspect-what-command-words-should-the-events-feature-use">Aspect: What command words should the Events feature use?</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong> Alternative 1:</strong> <code>addevent</code>, <code>deleteevent</code>, etc.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Makes it clear to the user that events are separate from expenses</p>
+</li>
+<li>
+<p>Cons: Somewhat clunky and redundant, especially since expenses and events share the same fields</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong> Alternative 2:</strong> <code>add</code>, <code>delete</code>, etc. (i.e. same command words as adding expenses)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: More streamlined, makes use of the fact that expenses and events share the same fields</p>
+</li>
+<li>
+<p>Cons: The distinction between events and expenses is more blurry to the user</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Solution (Current Implementation): </strong>
+Adopt Alternative 2. Since an event is ultimately an optional future expense that triggers on its
+due date, it is significantly more intuitive and natural to allow users to add events the same way they add expenses.
+MooLah can then easily tell whether the user intends to add an expense or an event by looking at the timestamp
+the user inputs in the command.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="future-implementation-coming-in-v2-0"><a class="link" href="#future-implementation-coming-in-v2-0">Future Implementation (Coming in v2.0)</a></h5>
+<div class="paragraph">
+<p>Users can set their expenses to recur. Recurring expenses will generate events daily/weekly/monthly (based on
+the user&#8217;s decision) that can then be added as expenses when their due dates are reached.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="statistics-feature"><a class="link" href="#statistics-feature">4.4. Statistics Feature</a></h3>
 <div class="paragraph">
 <p>The statistics feature allows users to have an alternative view for the entries in MooLah.
 The feature will read the expenses, and budgets and generate various metrics to be displayed.</p>
@@ -724,9 +845,9 @@ The feature will read the expenses, and budgets and generate various metrics to 
 <p>The Statistic feature supports command words such as <code>stats</code>, <code>statscompare</code> and <code>statstrend</code>.</p>
 </div>
 <div class="sect3">
-<h4 id="code-stats-code"><a class="link" href="#code-stats-code">4.3.1. <code>stats</code></a></h4>
+<h4 id="code-stats-code"><a class="link" href="#code-stats-code">4.4.1. <code>stats</code></a></h4>
 <div class="sect4">
-<h5 id="implementation-4"><a class="link" href="#implementation-4">Implementation</a></h5>
+<h5 id="implementation-5"><a class="link" href="#implementation-5">Implementation</a></h5>
 <div class="paragraph">
 <p>The following sequence diagram shows how the <code>stats</code> operation works:</p>
 </div>
@@ -793,7 +914,7 @@ and other dependencies the old command has to support. This applies for the rest
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">4.3.2. Design Considerations</a></h4>
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">4.4.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-why-do-we-choose-piechart-instead-of-other-graphical-formats"><a class="link" href="#aspect-why-do-we-choose-piechart-instead-of-other-graphical-formats">Aspect: Why do we choose PieChart instead of other graphical formats?</a></h5>
 <div class="ulist">
@@ -848,7 +969,7 @@ Once again, this question will be better addressed holistically once all 3 featu
 </div>
 </div>
 <div class="sect4">
-<h5 id="future-implementation-coming-in-v2-0"><a class="link" href="#future-implementation-coming-in-v2-0">Future Implementation (Coming in v2.0)</a></h5>
+<h5 id="future-implementation-coming-in-v2-0-2"><a class="link" href="#future-implementation-coming-in-v2-0-2">Future Implementation (Coming in v2.0)</a></h5>
 <div class="paragraph">
 <p>Users will be given the option to choose a Visual Representation method, which will determine the output format of statistics.
 Currently, statistics under <code>stats</code> mode can only be displayed in a pie chart, and users may have different preferences for formats.
@@ -865,14 +986,14 @@ Various options such as checking across different budgets other than within the 
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">4.4. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">4.5. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 4.5, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 4.6, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -903,7 +1024,7 @@ Various options such as checking across different budgets other than within the 
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">4.5. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">4.6. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g user prefs file location, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -1956,4 +2077,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-24 07:30:46 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-24 14:22:45 UTC</div></div></div></body></html>
