@@ -36,7 +36,14 @@
 <h2 id="introduction"><a class="link" href="#introduction">1. Introduction</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>MooLah is for those who <strong>prefer to use a desktop app for tracking expenses</strong>. More importantly, MooLah is <strong>optimized for those who prefer to work with a Command Line Interface</strong> (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, MooLah can get your expense management tasks done faster than traditional GUI apps. Interested? Jump to the <a href="#quick-start">Section 2, &#8220;Quick Start&#8221;</a> to get started. Enjoy!</p>
+<p>MooLah is a hassle-free expense tracker for those who <strong>prefer to use a desktop app for tracking expenses</strong>.
+More importantly, MooLah is <strong>optimized for those who prefer to work with a Command Line Interface</strong> (CLI)
+while still having the benefits of a Graphical User Interface (GUI). MooLah supports user-friendly input format and
+aliases that greatly improves the efficiency of CLI operations. It also supports recurring expenses and includes menus
+from canteens of National University of Singapore for students to track their everyday food expenses in a second.
+If you can type fast, MooLah can get your expense management tasks done much faster than traditional GUI expense
+trackers.
+Interested? Jump to the <a href="#quick-start">Section 2, &#8220;Quick Start&#8221;</a> to get started. Enjoy!</p>
 </div>
 </div>
 </div>
@@ -163,7 +170,7 @@ to automatically add expenses corresponding to transpired events.</p>
 </ul>
 </div>
 <div class="sect4">
-<h5 id="coming-in-v1-4-using-relative-time-date-input-code-yesterday-code"><a class="link" href="#coming-in-v1-4-using-relative-time-date-input-code-yesterday-code">(Coming in v1.4)Using relative time/date input: <code>yesterday</code></a></h5>
+<h5 id="coming-in-v1-4-using-relative-time-date-input-code-yesterday-code"><a class="link" href="#coming-in-v1-4-using-relative-time-date-input-code-yesterday-code">(Coming in v1.4) Using relative time/date input: <code>yesterday</code></a></h5>
 <div class="paragraph">
 <p>The user can specify an expense/event’s time using relative dates and times.</p>
 </div>
@@ -183,7 +190,7 @@ Format: <code>list</code></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="coming-in-v1-4-listing-all-events-code-events-code"><a class="link" href="#coming-in-v1-4-listing-all-events-code-events-code">3.2.3. (Coming in v1.4)Listing all events : <code>events</code></a></h4>
+<h4 id="coming-in-v1-4-listing-all-events-code-events-code"><a class="link" href="#coming-in-v1-4-listing-all-events-code-events-code">3.2.3. (Coming in v1.4) Listing all events : <code>events</code></a></h4>
 <div class="paragraph">
 <p>Lists all events that you have inputted.</p>
 </div>
@@ -271,7 +278,8 @@ Updates the price of the 2nd expense in the current list to 3.50.</p>
 <p>Only full words will be matched e.g. <code>chick</code> will not match <code>chicken</code></p>
 </li>
 <li>
-<p>Expenses matching at least one keyword will be returned (i.e. OR search). e.g. an expense with description <code>Chicken rice</code>, and expense with description <code>Duck Rice</code> will both match <code>rice</code></p>
+<p>Expenses matching at least one keyword will be returned (i.e. OR search). e.g. an expense with description
+<code>Chicken rice</code>, and expense with description <code>Duck Rice</code> will both match <code>rice</code></p>
 </li>
 </ul>
 </div>
@@ -362,7 +370,8 @@ delete 1</code></pre>
 <div class="sect3">
 <h4 id="undo-the-previous-command-code-undo-code"><a class="link" href="#undo-the-previous-command-code-undo-code">3.2.8. Undo the previous command : <code>undo</code></a></h4>
 <div class="paragraph">
-<p>User can undo the previous command. Only commands that modify the data, e.g. <code>add</code> <code>edit</code> <code>delete</code> <code>clear</code>, can be undone.</p>
+<p>User can undo the previous command. Only commands that modify the data, e.g. <code>add</code> <code>edit</code> <code>delete</code> <code>clear</code>,
+can be undone.</p>
 </div>
 <div class="paragraph">
 <p>Format: <code>undo</code></p>
@@ -417,32 +426,33 @@ Expense no. 5 will now be deleted.</p>
 <p>Creates a new expense budget.</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>budget n/BUDGET_NAME a/BUDGET_AMOUNT t/BUDGET_PERIOD d/BUDGET_START_DATE [p/IS_PRIMARY]</code></p>
+<p>Format: <code>budget d/BUDGET_NAME p/BUDGET_AMOUNT sd/BUDGET_START_DATE pr/BUDGET_PERIOD</code></p>
 </div>
 <div class="paragraph">
 <p>E.g.
-<code>budget n/General expense a/100 t/1 month d/18-09-2019</code>
-This will create a new budget “General expense” that is set to $100 per month, starting from 18th September 2019.</p>
+<code>budget d/school p/300 sd/01-10-2019 pr/month</code>
+This will create a new budget “school” that is set to $300 per month, starting from 1st October 2019.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="switch-current-budget-code-switchbudget-code"><a class="link" href="#switch-current-budget-code-switchbudget-code">3.3.2. Switch current budget : <code>switchbudget</code></a></h4>
+<h4 id="switch-current-budget-code-switch-code"><a class="link" href="#switch-current-budget-code-switch-code">3.3.2. Switch current budget : <code>switch</code></a></h4>
 <div class="paragraph">
-<p>Switches currently active budget to another.</p>
+<p>Switches currently active budget (i.e. primary budget) to another budget.</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>switchbudget n/BUDGET_NAME</code></p>
+<p>Format: <code>switch d/BUDGET_NAME</code></p>
 </div>
 <div class="paragraph">
 <p>E.g.
-<code>switchbudget General Expense</code></p>
+<code>switch d/outside school</code></p>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="coming-in-v2-0-prediction-code-predict-code"><a class="link" href="#coming-in-v2-0-prediction-code-predict-code">3.4. (Coming in v2.0)Prediction : <code>predict</code></a></h3>
 <div class="paragraph">
-<p>User can get a rough estimation of next month&#8217;s total expense based on extrapolation from this month&#8217;s expenditure. The prediction will take into account important dates that require extra spending in next month.</p>
+<p>User can get a rough estimation of next month&#8217;s total expense based on extrapolation from this month&#8217;s expenditure.
+The prediction will take into account important dates that require extra spending in next month.</p>
 </div>
 <div class="paragraph">
 <p>Format: <code>predict</code></p>
@@ -463,7 +473,8 @@ This will create a new budget “General expense” that is set to $100 per mont
 <div class="paragraph">
 <p>E.g.
 <code>alias a/chicken rice c/ add d/ Chicken Rice p/2.50 c/Food</code>
-Result creates an alias “chicken rice” for the command which adds an expense of 2.50 under the Food category with a description of “Chicken Rice” at the current system time.</p>
+Result creates an alias “chicken rice” for the command which adds an expense of 2.50 under the Food category with a
+description of “Chicken Rice” at the current system time.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -503,7 +514,8 @@ under the category, taken as a percentage of the total expenditure in the budget
 <div class="ulist">
 <ul>
 <li>
-<p>Date formats accepted include <code>DD-MM-YYYY</code> or <code>DD-MM</code>, where the year will be taken as the current year if it is not specified.</p>
+<p>Date formats accepted include <code>DD-MM-YYYY</code> or <code>DD-MM</code>, where the year will be taken as the current year if it is
+not specified.</p>
 </li>
 <li>
 <p><code>START_DATE</code> will be checked to be earlier than <code>END_DATE</code></p>
@@ -530,7 +542,8 @@ under the category, taken as a percentage of the total expenditure in the budget
 <h4 id="compare-code-statscompare-code"><a class="link" href="#compare-code-statscompare-code">3.7.2. Compare : <code>statscompare</code></a></h4>
 <div class="paragraph">
 <p>Produces and displays statistics regarding the user’s finance for 2 time periods.
-The statistics include all categories of items, the number of entries and the total expenditure of all expenses under the category.
+The statistics include all categories of items, the number of entries and the total expenditure of all expenses under
+the category.
 The number under each cell represents the difference using <code>second period – first period</code>.</p>
 </div>
 <div class="paragraph">
@@ -539,7 +552,8 @@ The number under each cell represents the difference using <code>second period �
 <div class="ulist">
 <ul>
 <li>
-<p>Date formats accepted include <code>DD-MM-YYYY</code> or <code>DD-MM</code>, where the year will be taken as the current year if it is not specified.</p>
+<p>Date formats accepted include <code>DD-MM-YYYY</code> or <code>DD-MM</code>, where the year will be taken as the current year if it is not
+specified.</p>
 </li>
 <li>
 <p><code>PERIOD</code> takes in either of the following keywords: week, month, year</p>
@@ -553,7 +567,8 @@ The number under each cell represents the difference using <code>second period �
 <div class="ulist">
 <ul>
 <li>
-<p>If day is given as a keyword under <code>PERIOD</code>, statistics will be calculated from 12:00am of the day till 11:59pm of the same day</p>
+<p>If day is given as a keyword under <code>PERIOD</code>, statistics will be calculated from 12:00am of the day till 11:59pm of
+the same day</p>
 </li>
 </ul>
 </div>
@@ -596,7 +611,8 @@ There is no need to save manually.</p>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>Q</strong>: How do I transfer my data to another Computer?<br>
-<strong>A</strong>: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous MooLah folder.</p>
+<strong>A</strong>: Install the app in the other computer and overwrite the empty data file it creates with the file that contains
+the data of your previous MooLah folder.</p>
 </div>
 </div>
 </div>
@@ -621,8 +637,8 @@ e.g. <code>statscompare sd1/01-01-2019 sd2/01-02-2019 pr/week</code></p>
 e.g. <code>alias a/chicken rice c/ add d/ Chicken Rice p/2.50 c/Food</code></p>
 </li>
 <li>
-<p><strong>Create new budget</strong> : <code>budget n/BUDGET_NAME a/BUDGET_AMOUNT t/BUDGET_PERIOD d/BUDGET_START_DATE [p/IS_PRIMARY]</code><br>
-e.g. <code>budget n/General expense a/100 t/1 month d/18-09-2019</code></p>
+<p><strong>Create new budget</strong> : <code>budget d/BUDGET_NAME p/BUDGET_AMOUNT sd/BUDGET_START_DATE pr/BUDGET_PERIOD</code><br>
+e.g. <code>budget d/school p/300 sd/01-10-2019 pr/month</code></p>
 </li>
 <li>
 <p><strong>Currency conversion</strong> : <code>convert</code></p>
@@ -662,8 +678,8 @@ e.g. <code>remind Brian’s birthday 04/06/2020 14 DAYS</code></p>
 <p><strong>Redo</strong> : <code>redo</code></p>
 </li>
 <li>
-<p><strong>Switch budget</strong> : <code>switchbudget n/BUDGET_NAME</code><br>
-e.g. <code>switchbudget General Expense</code></p>
+<p><strong>Switch budget</strong> : <code>switch d/BUDGET_NAME</code><br>
+e.g. <code>switch d/outside school</code></p>
 </li>
 <li>
 <p><strong>Undo</strong> : <code>undo</code></p>
@@ -675,4 +691,4 @@ e.g. <code>stats sd/11-11-2018 ed/12-12-2018</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-25 03:07:36 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-25 03:44:05 UTC</div></div></div></body></html>

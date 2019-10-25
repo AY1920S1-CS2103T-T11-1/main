@@ -74,7 +74,7 @@ The intended audience of this document is the developers, designers, and softwar
 <div class="paragraph">
 <p>MooLah is a desktop CLI application that help users track their expenses.
 The App supports many other extensions such as budgeting, planning and reminders.
-In particular, it is tailored to students in National University of Singapore who dines frequently in school canteens.</p>
+In particular, it is tailored to students in National University of Singapore who dine frequently in school canteens.</p>
 </div>
 </div>
 </div>
@@ -538,15 +538,35 @@ will be tracked under this budget. If the user wants to track an expense under a
 switches to the target budget first, before adding the expense.</p>
 </div>
 <div class="paragraph">
-<p>Each <code>Budget</code> has 8 fields:
-* description: <code>Description</code> - budget name
-* amount: <code>Price</code> - amount of budget limit
-* startDate: <code>Timestamp</code> - the start date of the budget (for the current period)
-* endDate: <code>Timestamp</code>- the end date of the budget (for the current period)
-* period: <code>Period</code> - the recurring period of the budget
-* expenses: <code>ObservableList&lt;Expense&gt;</code> - the list of all expenses under this budget
-* isPrimary: <code>boolean</code> - a flag indicating the primary status of this budget
-* proportionUsed: <code>Percentage</code> - the proportion of the total amount that has been used up</p>
+<p>Each <code>Budget</code> has 8 fields:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>description: <code>Description</code> - budget name</p>
+</li>
+<li>
+<p>amount: <code>Price</code> - amount of budget limit</p>
+</li>
+<li>
+<p>startDate: <code>Timestamp</code> - the start date of the budget (for the current period)</p>
+</li>
+<li>
+<p>endDate: <code>Timestamp</code>- the end date of the budget (for the current period)</p>
+</li>
+<li>
+<p>period: <code>Period</code> - the recurring period of the budget</p>
+</li>
+<li>
+<p>expenses: <code>ObservableList&lt;Expense&gt;</code> - the list of all expenses under this budget</p>
+</li>
+<li>
+<p>isPrimary: <code>boolean</code> - a flag indicating the primary status of this budget</p>
+</li>
+<li>
+<p>proportionUsed: <code>Percentage</code> - the proportion of the total amount that has been used up</p>
+</li>
+</ul>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -571,14 +591,28 @@ populated with newly added expenses over time.</p>
 period, which interacts with GUI to be shown in the current screen.</p>
 </div>
 <div class="paragraph">
-<p>The fundamental classes of the budget feature are:
-* <code>Budget</code> : main functional backend class
-* <code>JsonAdaptedBudget</code> : for storage of a <code>Budget</code> object in Json format
-* <code>UniqueBudgetList</code> : a list of non-duplicate budgets in MooLah
-* <code>AddBudgetCommand</code> and <code>SwitchBudgetCommand</code> : budget-related commands
-        <code>AddBudgetCommand</code> creates a new <code>Budget</code> and adds it to <code>UniqueBudgetList</code>
-        <code>SwitchBudgetCommand</code> switches the primary budget to the specified budget
-* <code>AddBudgetCommandParser</code> and <code>SwitchBudgetCommandParser</code> : for parsing CLI input into commands</p>
+<p>The fundamental classes of the budget feature are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Budget</code> : main functional backend class</p>
+</li>
+<li>
+<p><code>JsonAdaptedBudget</code> : for storage of a <code>Budget</code> object in Json format</p>
+</li>
+<li>
+<p><code>UniqueBudgetList</code> : a list of non-duplicate budgets in MooLah</p>
+</li>
+<li>
+<p><code>AddBudgetCommand</code> and <code>SwitchBudgetCommand</code> : budget-related commands
+<code>AddBudgetCommand</code> creates a new <code>Budget</code> and adds it to <code>UniqueBudgetList</code>
+<code>SwitchBudgetCommand</code> switches the primary budget to the specified budget</p>
+</li>
+<li>
+<p><code>AddBudgetCommandParser</code> and <code>SwitchBudgetCommandParser</code> : for parsing CLI input into commands</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>Here are the class diagrams of the two key commands related to Budget:</p>
@@ -2102,4 +2136,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-25 03:07:36 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-25 03:44:05 UTC</div></div></div></body></html>
