@@ -1,6 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Asciidoctor 1.5.6.1"><title>MooLah - Developer Guide</title><link rel="stylesheet" href="stylesheets/gh-pages.css">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Asciidoctor 1.5.6.1"><title>Moolah Level 3 - Developer Guide</title><link rel="stylesheet" href="stylesheets/gh-pages.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="stylesheets/coderay-asciidoctor.css"></head><body class="article"><div id="seedu-header"><nav class="navbar navbar-lg navbar-light bg-lighter"><div class="container"><a class="navbar-brand" href="https://se-edu.github.io/"><img src="images/SeEduLogo.png" alt="SE-EDU"></a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level1">AB-1</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level2">AB-2</a></li><li class="nav-item"><a class="nav-link active" href="index.html">AB-3</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level4">AB-4</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/collate">Collate</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/se-book">Book</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/learningresources">Resources</a></li></ul></div></nav></div><div id="site-header"><nav class="navbar navbar-light bg-light"><div class="container"><a class="navbar-brand" href="index.html">Expense Tracker</a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="UserGuide.html">User Guide</a></li><li class="nav-item"><a class="nav-link active" href="DeveloperGuide.html">Developer Guide</a></li><li class="nav-item"><a class="nav-link" href="LearningOutcomes.html">LOs</a></li><li class="nav-item"><a class="nav-link" href="AboutUs.html">About Us</a></li><li class="nav-item"><a class="nav-link" href="ContactUs.html">Contact Us</a></li><li class="navitem"><a class="nav-link" href="https://github.com/AY1920S1-CS2103T-T11-1/main"><span class="fa fa-github fa-lg" aria-hidden="true"></span>&nbsp;View on GitHub</a></li></ul></div></nav></div><div id="header"><h1>MooLah - Developer Guide</h1></div><div id="content"><div id="preamble">
+<link rel="stylesheet" href="stylesheets/coderay-asciidoctor.css"></head><body class="article"><div id="seedu-header"><nav class="navbar navbar-lg navbar-light bg-lighter"><div class="container"><a class="navbar-brand" href="https://se-edu.github.io/"><img src="images/SeEduLogo.png" alt="SE-EDU"></a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level1">AB-1</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level2">AB-2</a></li><li class="nav-item"><a class="nav-link active" href="index.html">AB-3</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level4">AB-4</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/collate">Collate</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/se-book">Book</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/learningresources">Resources</a></li></ul></div></nav></div><div id="site-header"><nav class="navbar navbar-light bg-light"><div class="container"><a class="navbar-brand" href="index.html">Expense Tracker</a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="UserGuide.html">User Guide</a></li><li class="nav-item"><a class="nav-link active" href="DeveloperGuide.html">Developer Guide</a></li><li class="nav-item"><a class="nav-link" href="LearningOutcomes.html">LOs</a></li><li class="nav-item"><a class="nav-link" href="AboutUs.html">About Us</a></li><li class="nav-item"><a class="nav-link" href="ContactUs.html">Contact Us</a></li><li class="navitem"><a class="nav-link" href="https://github.com/AY1920S1-CS2103T-T11-1/main"><span class="fa fa-github fa-lg" aria-hidden="true"></span>&nbsp;View on GitHub</a></li></ul></div></nav></div><div id="header"><h1>Moolah Level 3 - Developer Guide</h1></div><div id="content"><div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>By: <code>Team SE-EDU</code>      Since: <code>Jun 2016</code>      Licence: <code>MIT</code></p>
@@ -32,8 +32,10 @@
 <li><a href="#budget-feature">4.2. Budget feature</a></li>
 <li><a href="#events-feature">4.3. Events feature</a></li>
 <li><a href="#statistics-feature">4.4. Statistics Feature</a></li>
-<li><a href="#logging">4.5. Logging</a></li>
-<li><a href="#Implementation-Configuration">4.6. Configuration</a></li>
+<li><a href="#alias-feature">4.5. Alias feature</a></li>
+<li><a href="#syntax-highlighting-and-autofill-feature">4.6. Syntax Highlighting and Autofill feature</a></li>
+<li><a href="#logging">4.7. Logging</a></li>
+<li><a href="#Implementation-Configuration">4.8. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">5. Documentation</a></li>
@@ -205,7 +207,7 @@ The following class plays an important role at the architecture level:</p>
 <p><strong>API</strong> : <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/src/main/java/seedu/address/ui/Ui.java"><code>Ui.java</code></a></p>
 </div>
 <div class="paragraph">
-<p>The UI consists of a <code>MainWindow</code> that is made up of parts e.g.<code>CommandBox</code>, <code>ResultDisplay</code>, <code>PersonListPanel</code>, <code>StatusBarFooter</code> etc. All these, including the <code>MainWindow</code>, inherit from the abstract <code>UiPart</code> class.</p>
+<p>The UI consists of a <code>MainWindow</code> that is made up of parts e.g.<code>CommandBox</code>, <code>ResultDisplay</code>, <code>SinglePanelView</code>, <code>StatusBarFooter</code> etc. All these, including the <code>MainWindow</code>, inherit from the abstract <code>UiPart</code> class.</p>
 </div>
 <div class="paragraph">
 <p>The <code>UI</code> component uses JavaFx UI framework. The layout of these UI parts are defined in matching <code>.fxml</code> files that are in the <code>src/main/resources/view</code> folder. For example, the layout of the <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/src/main/java/seedu/address/ui/MainWindow.java"><code>MainWindow</code></a> is specified in <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/src/main/resources/view/MainWindow.fxml"><code>MainWindow.fxml</code></a></p>
@@ -222,6 +224,27 @@ The following class plays an important role at the architecture level:</p>
 <p>Listens for changes to <code>Model</code> data so that the UI can be updated with the modified data.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>The content being shown in the <code>MainWindow</code> is managed by the <code>SinglePanelView</code> which supports the following operations:
+<code>SinglePanelView#viewPanel(panelName)</code>
+<code>SinglePanelView#hasPanel(panelName)</code>
+<code>SinglePanelView#getPanel(panelName)</code>
+<code>SinglePanelView#setPanel(panelName, panel)</code></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/SinglePanelViewClassDiagram.png" alt="SinglePanelViewClassDiagram">
+</div>
+</div>
+<div class="paragraph">
+<p>Users may change between the visible panels through the CLI by using the <code>view</code> command.
+The following sequence diagram shows the events which occur in order to change the the UI component displayed in the main window.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ViewPanelSequenceDiagram.png" alt="ViewPanelSequenceDiagram">
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -910,7 +933,7 @@ where the command is called. The visual representation used here will be a PieCh
 <div class="paragraph">
 <p>Step 1. The user enters the command <code>stats sd/01-10-2019 ed/01-11-2019</code> to visualise the total percentage of each category
 as a percentage of total expenditure across all categories, in the primary budget.
-The command is received by <code>MooLahParser</code>, which then creates a <code>StatsCommandParser</code> object,
+The command is received by <code>AddressBookParser</code>, which then creates a <code>StatsCommandParser</code> object,
 to subsequently help to parse the input by the user.</p>
 </div>
 <div class="paragraph">
@@ -1034,6 +1057,392 @@ Once again, this question will be better addressed holistically once all 3 featu
 instead of the default option we have prioritised. Currently, statistics under <code>stats</code> mode can only be displayed in a pie chart,
 and users may have different preferences for formats. Various options such as checking across different budgets other than within the same budget can also be considered.</p>
 </div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="alias-feature"><a class="link" href="#alias-feature">4.5. Alias feature</a></h3>
+<div class="sect3">
+<h4 id="implementation-6"><a class="link" href="#implementation-6">4.5.1. Implementation</a></h4>
+<div class="paragraph">
+<p>The Aliases feature allows users to assign inputs they may use very often to a shortcut, and execute the input by entering
+the shortcut, (a.k.a <code>Alias</code>), in place of the full or partial command.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/AliasMappingsClassDiagram.png" alt="AliasMappingsClassDiagram">
+</div>
+</div>
+<div class="paragraph">
+<p>These user defined <code>Alias</code>es are saved in an <code>AliasMappings</code> object within <code>UserPref</code> as seen in the above diagram.
+Internally, the <code>AliasMappings</code> object stores an <code>Alias</code> in a Map&lt;Strings, Alias&gt; object. With the addition of <code>AliasMappings</code> object to <code>UserPref</code>,
+<code>UserPref</code> supports these additional operations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>UserPref#addUserAlias(Alias)</code>&#8201;&#8212;&#8201;Saves a specified <code>Alias</code> to the user preferences for future use.</p>
+</li>
+<li>
+<p><code>UserPref#hasAlias(String)</code>&#8201;&#8212;&#8201;Query if the there is an <code>Alias</code> with this name already defined.</p>
+</li>
+<li>
+<p><code>UserPref#getAlias(String)</code>&#8201;&#8212;&#8201;To get an <code>Alias</code> with this name if it exists.</p>
+</li>
+<li>
+<p><code>UserPref#aliasNameIsReservedCommandWord(Alias)</code>&#8201;&#8212;&#8201;To query if this <code>Alias</code> is uses a name which clashes with existing built-in
+commands.</p>
+</li>
+<li>
+<p><code>UserPref#aliasCommandWordIsAlias(Alias)</code>&#8201;&#8212;&#8201;To query if this <code>Alias</code> <code>input</code> begins with another <code>Alias</code>, this is used
+to validate that an <code>Alias</code> will not cause an infinite loop by chaining multiple aliases in a loop.</p>
+</li>
+<li>
+<p><code>UserPref#getAliasMappings()</code>&#8201;&#8212;&#8201;To access the <code>Alias</code> saved by the user.</p>
+</li>
+<li>
+<p><code>UserPref#setAliasMappings(AliasMappings mappings)</code>&#8201;&#8212;&#8201;To overwrite all the <code>Alias</code> saved by the user.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/AliasCommandClassDiagram.png" alt="AliasCommandClassDiagram">
+</div>
+</div>
+<div class="paragraph">
+<p>In order for the user to save an <code>Alias</code>, they first define it using the <code>AliasCommand</code>. The <code>AliasCommand</code> command extends
+<code>UndoableCommand</code> to allow users to undo defining an <code>Alias</code>. The following sequence diagram describe in more detail how an <code>Alias</code>
+is added.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/HighLevelAddAliasSequenceDiagram.png" alt="HighLevelAddAliasSequenceDiagram">
+</div>
+</div>
+<div class="olist None">
+<ol class="None">
+<li>
+<p>1. The user enters a command with the following syntax <code> alias a/ &lt;name&gt; i/ &lt;input&gt;</code>.</p>
+</li>
+<li>
+<p>2. The <code>UI</code> passes this command string to the <code>LogicManager</code> which passes it onto the <code>AddressBookParser</code>.</p>
+</li>
+<li>
+<p>3. The parser extracts the argument string and passes it to an <code>AliasCommandParser</code>.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ParseAliasCommandSequenceDiagram.png" alt="ParseAliasCommandSequenceDiagram">
+</div>
+</div>
+<div class="olist None">
+<ol class="None">
+<li>
+<p>4. The <code>AliasCommandParser</code> uses the <code>ArgumentTokenizer</code> to tokenize the argument string and extract the
+<code>alias name</code> and <code>input</code> fields into an <code>ArgumentMultimap</code>.</p>
+</li>
+<li>
+<p>5. The arguments are obtained and to create a new <code>Alias</code> using the the <code>Alias</code> parser in <code>ParserUtil</code>.</p>
+</li>
+<li>
+<p>6. An <code>AliasCommand</code> is created containing this new <code>Alias</code> to add to the <code>UserPref</code>.</p>
+</li>
+<li>
+<p>7. This is passed back to the <code>LogicManager</code> to call <code>AliasCommand#run()</code>.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/verifyAlias.png" alt="verifyAlias">
+</div>
+</div>
+<div class="olist None">
+<ol class="None">
+<li>
+<p>8. The <code>AliasCommand</code> is validated using <code>AliasCommand#validate()</code>. The <code>Alias</code> is checked to ensure it does not</p>
+<div class="ulist None">
+<ul class="None">
+<li>
+<p>a. Have a clashing name used by an existing <code>Command</code> as a CommandWord.</p>
+</li>
+<li>
+<p>b. Have an input beginning with a supported <code>Alias</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>If is not valid, handled exception is thrown.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/addAlias.png" alt="addAlias">
+</div>
+</div>
+<div class="olist None">
+<ol class="None">
+<li>
+<p>9. If it was validated that the <code>Alias</code> can be added.</p>
+</li>
+<li>
+<p>10. The <code>Alias</code> is then added to the <code>AliasMappings</code> object within <code>UserPref</code>.</p>
+</li>
+<li>
+<p>11. The <code>Alias</code> is now usable  by the user.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>When a user enters an <code>input</code> to be executed, the <code>AddressBookParser</code> will first try to parse first token in
+the <code>input</code> as a <code>CommandWord</code>, failing which, it will try to parse it as an <code>Alias</code>. If it successfully does so,
+it replaces the first token in the original command string with the <code>input</code> stored in the <code>Alias</code>.
+Finally, the <code>AddressBookParser</code> re-parses the modified <code>input</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">4.5.2. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-why-can-an-code-alias-code-only-be-used-at-the-beginning-of-an-input-versus-anywhere-within-an-input"><a class="link" href="#aspect-why-can-an-code-alias-code-only-be-used-at-the-beginning-of-an-input-versus-anywhere-within-an-input">Aspect: Why can an <code>Alias</code> only be used at the beginning of an input versus anywhere within an input.</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong> Alternative 1(Chosen):</strong> Beginning only</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easier to determine which word is the shortcut.</p>
+</li>
+<li>
+<p>Pros: Easier to detect recursion due to alias chaining.</p>
+</li>
+<li>
+<p>Cons: Less flexible in term how the shortcut can be used i.e. it can only replace or prefix an input.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong> Alternative 2:</strong> Anywhere in input</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: A wider variety of shortcuts can be defined by the user<br>
+e.g. <code>add deckChicken 2.50</code>, where <code>deckChicken</code> maps to <code>d/ chicken rice c/ food p/</code>.</p>
+</li>
+<li>
+<p>Cons: Harder to detect recursion due to alias chaining.</p>
+</li>
+<li>
+<p>Cons: Parsing becomes more complicated and alias words become unusable in other contexts.
+e.g. defining an <code>Alias</code> mapping <code>bus</code> to <code>sbs bus</code> prevents an input such as <code>smrt bus</code> from being parsed properly
+as it would be replaced with <code>smrt sbs bus</code> by the parser.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Solution (Current Implementation): </strong>
+The biggest factor in choosing <code>Alternative 1</code> is to make it easier to prevent possible recusion due to alias chaining,
+which would potentially be a fatal bug in the application.
+Additionally, while it may be possible to determine which one the user means judging by the context in which it was used.
+However, that is far out of the scope of the module and would require much more processing of user input.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Another alternative would have been to have an alias name follow the following convention <code>'aliasName'</code> (i.e. some character before and after)
+clear what is an <code>Alias</code> within an input.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="future-implementation-coming-in-v2-0-3"><a class="link" href="#future-implementation-coming-in-v2-0-3">Future Implementation (Coming in v2.0)</a></h5>
+<div class="paragraph">
+<p>The purpose behind this feature was to make CLI input less troublesome, so users do not need to type in the full input string
+to carry out commands they may use frequently. In v2.0 we want to look into using data analysis track users' input habits in
+order to make suggestions on possible shortcuts or Aliases they may find convenient to have.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-data-structure-to-store-aliases"><a class="link" href="#aspect-data-structure-to-store-aliases">Aspect: Data structure to store Aliases.</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong> Alternative 1:</strong> List</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Less space needed to store same amount of data</p>
+</li>
+<li>
+<p>Cons: Takes time to loop through the list to get the right output.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong> Alternative 2(Chosen):</strong> Map</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Simple to access</p>
+</li>
+<li>
+<p>Cons: More space needed.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Solution (Current Implementation): </strong>
+As the user can define multiple aliases, it was important for the internal structure of <code>AliasMappings</code>
+to allow accessing the aliases by name.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If an ArrayList was used, the numbering each alias would change if new ones were added and old one removed or replaced.
+Map was used to prevent this problem as the name is used as the index. This avoids the need to loop through
+all the 'Alias' defined.</p>
+</div>
+<div class="paragraph">
+<p>It also makes it easier to prevent sharing of alias names between aliases and a Map&#8217;s key
+set cannot contain duplicates, and makes it easier to handle overwriting of existing aliases with same name.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="syntax-highlighting-and-autofill-feature"><a class="link" href="#syntax-highlighting-and-autofill-feature">4.6. Syntax Highlighting and Autofill feature</a></h3>
+<div class="sect3">
+<h4 id="implementation-7"><a class="link" href="#implementation-7">4.6.1. Implementation</a></h4>
+<div class="paragraph">
+<p>The Autofill feature was implemented to make it less important for users to remember the appropriate syntax for each command which
+can be a common issue in CLI based applications. This feature utilises regular expressions and JavaFX&#8217;s TextFormatter to extend the
+functionality of the existing TextField used in the original AB3 application.</p>
+</div>
+<div class="paragraph">
+<p>The Autofill feature also inserts <code>placeholders</code> into the text area to make it clearer which arguments each prefix delimit in the input.
+e.g. <code>add d/ &lt;description&gt; p/ &lt;price&gt; c/ &lt;category&gt;</code>. These <code>placeholder</code> are removed when the user types over them and
+are filtered from the input and not parsed by the <code>Parser</code> if the user forgets to type over them. The following diagram briefly describe
+the logic used to insert auto fill a command&#8217;s syntax.</p>
+</div>
+<div class="paragraph">
+<p>::<span class="image"><img src="images/AutoFillActivityDiagram.png" alt="AutoFillActivityDiagram"></span></p>
+</div>
+<div class="paragraph">
+<p>The Syntax highlighting feature was implemented to make it easier to differentiate the different arguments after typing
+as well as to implement some basic realtime input validation. This feature utilises RichTextFX&#8217;s StyleClassTextArea to
+apply different styles to different regions of the text, and regular expressions to determine which to highlight.</p>
+</div>
+<div class="paragraph">
+<p>::<span class="image"><img src="images/SyntaxHighlightingActivityDiagram.png" alt="SyntaxHighlightingActivityDiagram"></span></p>
+</div>
+<div class="paragraph">
+<p>Because RichTextFX&#8217;s TextAreas do not support JavaFX&#8217;s TextFormatter, the <code>SyntaxHighlightingTextArea</code> actually has two different
+TextAreas. One as the visible TestArea (RichTextFX) and one as the functional one (JavaFX).</p>
+</div>
+<div class="paragraph">
+<p>::<span class="image"><img src="images/SyntaxHighlightingTextAreaClassDiagram.png" alt="SyntaxHighlightingTextAreaClassDiagram"></span></p>
+</div>
+<div class="paragraph">
+<p>The two TextArea are layered on top of each other. The invisible functional TextArea overlays the visible one, and mirrors the TextProperty of the
+visible one mirrors the functional TextArea. The KeyEvents which occur in the functional text area are also mirrored by the visible text area.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-6"><a class="link" href="#design-considerations-6">4.6.2. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-which-configuration-of-input-fields-to-use-richtextfx-textarea-alone-javafx-alone-both-together"><a class="link" href="#aspect-which-configuration-of-input-fields-to-use-richtextfx-textarea-alone-javafx-alone-both-together">Aspect: Which configuration of Input fields to use? - RichTextFX TextArea alone, JavaFX alone, both together?</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong> Alternative 1:</strong>  JavaFX alone (JavaFX <code>TextField</code>) and manually place coloured elements to handle highlighting.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Already supports single line input.</p>
+</li>
+<li>
+<p>Pros: Easy to implement autofill.</p>
+</li>
+<li>
+<p>Cons: Does not inherently support styling of text with multiple styles.</p>
+</li>
+<li>
+<p>Cons: Manually inserting worked, but not all the time.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong> Alternative 2:</strong> <code>RichTextFX StyleClassTextArea</code> and <code>Listener</code>s to handle formatting of text.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Supports styling of text.</p>
+</li>
+<li>
+<p>Cons: Needs have certain <code>Events</code> blocked and functionality removed in order to act as a single line input field. e.g.
+preventing users from pasting text with newlines and the enter key event from making a new line.</p>
+</li>
+<li>
+<p>Cons: Does not support javafx <code>TextFormatter</code>, intermediate results (unwanted text) can possibly be evaluated.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong> Alternative 3(Chosen):</strong> Both</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Utilise best of both worlds, with <code>TextFormatter</code> and <code>RichTextFX StyleClassTextArea</code></p>
+</li>
+<li>
+<p>Cons: Need to properly align the two text areas so visible text and caret position is accurate.</p>
+</li>
+<li>
+<p>Cons: Needs have certain <code>Events</code> blocked and functionality removed in order to act as a single line input field. e.g.
+preventing users from pasting text with newlines and the enter key event from making a new line.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Solution (Current Implementation): </strong>
+With alternative 1, using a <code>TextFlow</code> was a problem when the text needed to remain in
+a single line. Manually layering coloured elements over the text was also an issue as the the position and size of elements
+eeded to be recalculated every time the text change, the UI moved, or was resized.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>While it was possible to use RichTextFX text areas alone, the text that the user inputs before it is formatted
+still enters the text area. Which interferes with realtime parsing as the text is not properly sanitized, which was
+why the uses <code>TextFormatter</code> was necessary.</p>
+</div>
+<div class="paragraph">
+<p>This meant only alternative 3 was viable, but because of layer of the two text areas, the events causing a change in text
+or what text was visible needed to be properly mirrored from the invisible to the visible text area. As a result, certain behaviours
+supported by a normal textfield needed to be blocked to ensure proper alignment e.g. copy and paste.</p>
+</div>
+<div class="paragraph">
+<p>At the moment, mass deletion and selection of text (e.g. Ctrl/Cmd+A &gt; Backspace) has been prevented in order to properly align the
+two textarea.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="future-implementation-coming-in-v2-0-4"><a class="link" href="#future-implementation-coming-in-v2-0-4">Future Implementation (Coming in v2.0)</a></h5>
+<div class="paragraph">
+<p>Moolah v2.0 should support better real time parsing of input and support validation of input without requiring the user
+to enter the command as well as a more functional input field.</p>
+</div>
 <div class="paragraph">
 <p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; b0c4666f38acaeadcb6dd43f2515a6f6dfae140f
 === [Proposed] Data Encryption</p>
@@ -1045,14 +1454,14 @@ and users may have different preferences for formats. Various options such as ch
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">4.5. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">4.7. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 4.6, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 4.8, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -1083,7 +1492,7 @@ and users may have different preferences for formats. Various options such as ch
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">4.6. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">4.8. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g user prefs file location, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -1532,7 +1941,7 @@ and users may have different preferences for formats. Various options such as ch
 <p>User requests to see reminders.</p>
 </li>
 <li>
-<p>MooLah shows a list of reminders.</p>
+<p>Moolah shows a list of reminders.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -2136,4 +2545,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-25 03:44:05 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-25 04:18:26 UTC</div></div></div></body></html>
