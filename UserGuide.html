@@ -15,16 +15,15 @@
 <ul class="sectlevel2">
 <li><a href="#viewing-help-code-help-code">3.1. Viewing help : <code>help</code></a></li>
 <li><a href="#basic-expense-event-related-commands">3.2. Basic Expense/Event-Related Commands</a></li>
-<li><a href="#budgeting-related-commands">3.3. Budgeting-Related Commands</a></li>
-<li><a href="#coming-in-v2-0-prediction-code-predict-code">3.4. (Coming in v2.0)Prediction : <code>predict</code></a></li>
-<li><a href="#creating-an-alias-for-your-favourite-commands-code-alias-code">3.5. Creating an alias for your favourite commands : <code>alias</code></a></li>
-<li><a href="#saving-the-data">3.6. Saving the data</a></li>
-<li><a href="#viewing-statistics">3.7. Viewing Statistics</a></li>
-<li><a href="#exiting-the-program-code-exit-code">3.8. Exiting the program : <code>exit</code></a></li>
-<li><a href="#saving-the-data-2">3.9. Saving the data</a></li>
-<li><a href="#encrypting-data-files-code-coming-in-v2-0-code">3.10. Encrypting data files <code>[coming in v2.0]</code></a></li>
-<li><a href="#email-notification-code-coming-in-v2-0-code">3.11. Email notification <code>[coming in v2.0]</code></a></li>
-<li><a href="#input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code">3.12. Input expenses by scanning a receipt <code>[coming in v2.0]</code></a></li>
+<li><a href="#let-s-do-budgeting">3.3. Let&#8217;s Do Budgeting</a></li>
+<li><a href="#creating-an-alias-for-your-favourite-commands-code-alias-code">3.4. Creating an alias for your favourite commands : <code>alias</code></a></li>
+<li><a href="#saving-the-data">3.5. Saving the data</a></li>
+<li><a href="#viewing-statistics">3.6. Viewing Statistics</a></li>
+<li><a href="#exiting-the-program-code-exit-code">3.7. Exiting the program : <code>exit</code></a></li>
+<li><a href="#saving-the-data-2">3.8. Saving the data</a></li>
+<li><a href="#encrypting-data-files-code-coming-in-v2-0-code">3.9. Encrypting data files <code>[coming in v2.0]</code></a></li>
+<li><a href="#email-notification-code-coming-in-v2-0-code">3.10. Email notification <code>[coming in v2.0]</code></a></li>
+<li><a href="#input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code">3.11. Input expenses by scanning a receipt <code>[coming in v2.0]</code></a></li>
 </ul>
 </li>
 <li><a href="#faq">4. FAQ</a></li>
@@ -419,51 +418,224 @@ Expense no. 5 will now be deleted.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="budgeting-related-commands"><a class="link" href="#budgeting-related-commands">3.3. Budgeting-Related Commands</a></h3>
+<h3 id="let-s-do-budgeting"><a class="link" href="#let-s-do-budgeting">3.3. Let&#8217;s Do Budgeting</a></h3>
 <div class="sect3">
-<h4 id="creating-new-budgets-code-budget-code"><a class="link" href="#creating-new-budgets-code-budget-code">3.3.1. Creating new budgets : <code>budget</code></a></h4>
+<h4 id="create-a-new-budget-code-addbudget-code"><a class="link" href="#create-a-new-budget-code-addbudget-code">3.3.1. Create a new budget : <code>addbudget</code></a></h4>
 <div class="paragraph">
-<p>Creates a new expense budget.</p>
+<p>Want your expenses tracked under a recurring budget? Simple enough with this command: <code>addbudget</code></p>
 </div>
 <div class="paragraph">
-<p>Format: <code>budget d/BUDGET_NAME p/BUDGET_AMOUNT sd/BUDGET_START_DATE pr/BUDGET_PERIOD</code></p>
+<p>The concrete format is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addbudget d/DESCRIPTION p/AMOUNT sd/START_DATE pr/PERIOD</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>E.g.
-<code>budget d/school p/300 sd/01-10-2019 pr/month</code>
-This will create a new budget “school” that is set to $300 per month, starting from 1st October 2019.</p>
+<p>For example, after typing</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addbudget d/school p/300 sd/01-10-2019 pr/month</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll see that a new budget "school" is created, and set to $300, recurring monthly, starting from 1st October 2019.</p>
+</div>
+<div class="paragraph">
+<p>Tips:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>4 types of budget periods are supported, namely <code>day</code>, <code>week</code>, <code>month</code>, and <code>year</code> (all in lower case).</p>
+</li>
+<li>
+<p>The year in start date is optional, i.e. you can simply input <code>01-10</code> and the year will be automatically set
+to the current year.</p>
+</li>
+<li>
+<p>The start date can be any time in the past or future, the budget period will automatically
+normalize to the current period.
+For example, if today is <code>23-10-2019</code>, when you type <code>sd/01-07 pr/month</code>, the resulting budget period
+will be <code>01-10-2019 to 31-10-2019</code>, since that&#8217;s the period anchored by today&#8217;s date.</p>
+</li>
+<li>
+<p>All budgets are recurring. Continuing from the example above, at 1 Nov 2019, you&#8217;ll see the budget&#8217;s period refreshed
+to <code>01-11-2019 to 30-11-2019</code>, and all past expenses archived, giving you an empty budget panel to start with.</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect3">
-<h4 id="switch-current-budget-code-switch-code"><a class="link" href="#switch-current-budget-code-switch-code">3.3.2. Switch current budget : <code>switch</code></a></h4>
+<h4 id="switch-between-budgets-code-switchbudget-code"><a class="link" href="#switch-between-budgets-code-switchbudget-code">3.3.2. Switch between budgets : <code>switchbudget</code></a></h4>
 <div class="paragraph">
-<p>Switches currently active budget (i.e. primary budget) to another budget.</p>
+<p>Now that you&#8217;ve successfully added a few different budgets, wonder how to toggle between them? Try this magical command:
+<code>switchbudget</code>, which switches the primary budget to any other budget in one shot!</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>switch d/BUDGET_NAME</code></p>
+<p>The concrete format is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>switchbudget d/BUDGET_NAME`</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>E.g.
-<code>switch d/outside school</code></p>
+<p>For example, suppose you&#8217;re at primary budget <code>school</code> now.</p>
+</div>
+<div class="paragraph">
+<p>After typing:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>switchbudget d/outside school</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You will see that the primary budget panel is switched from <code>school</code> to <code>outside school</code>. Every expense you add
+from now on will be tracked under the "outside school" budget instead.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="list-all-budgets-code-listbudgets-code"><a class="link" href="#list-all-budgets-code-listbudgets-code">3.3.3. List all budgets: <code>listbudgets</code></a></h4>
+<div class="paragraph">
+<p>To get an overview of all the budgets at hand, simply type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>listbudgets</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll see a list of all budgets in MooLah.</p>
+</div>
+<div class="paragraph">
+<p>Tips:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The primary budget is marked with a red border.</p>
+</li>
+<li>
+<p>To go back to primary budget panel, type <code>view Primary Budget</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="edit-a-budget-code-editbudget-code"><a class="link" href="#edit-a-budget-code-editbudget-code">3.3.4. Edit a budget: <code>editbudget</code></a></h4>
+<div class="paragraph">
+<p>A typo? On a second thought? No worries, you can easily modify your budget with <code>editbudget</code>.</p>
+</div>
+<div class="paragraph">
+<p>The concrete format is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>listbudgets (first go to list of budgets)
+editbudget INDEX d/DESCRIPTION p/AMOUNT sd/START DATE pr/PERIOD</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For example, if the second budget shown in the list is "school", recurring monthly, amount set at $300,
+refreshed on the first day of each month, after typing:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>listbudgets (first go to list of budgets)
+editbudget 2 d/school expenses p/400 sd/05-10</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It will change to "school expenses", capped at $400, refreshed on the 5th of every month.</p>
+</div>
+<div class="paragraph">
+<p>Tips:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You can choose to edit any of these 4 attributes of a budget: <code>DESCRIPTION</code>, <code>AMOUNT</code>, <code>START DATE</code>
+and <code>PERIOD</code>, more than one at a time.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="delete-a-budget-code-deletebudget-code"><a class="link" href="#delete-a-budget-code-deletebudget-code">3.3.5. Delete a budget: <code>deletebudget</code></a></h4>
+<div class="paragraph">
+<p>Don&#8217;t want it any more? Use <code>deletebudget</code> to say bye to your budget!</p>
+</div>
+<div class="paragraph">
+<p>The concrete format is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>listbudgets (first go to list of budgets)
+deletebudget INDEX</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll see the corresponding budget disappear from the list.</p>
+</div>
+<div class="paragraph">
+<p>Tips:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Regretted? Type <code>undo</code> to get it back ;D</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="view-expenses-in-the-past-code-pastperiod-code"><a class="link" href="#view-expenses-in-the-past-code-pastperiod-code">3.3.6. View expenses in the past: <code>pastperiod</code></a></h4>
+<div class="paragraph">
+<p>Wanna see your archived expenses in the past? The command <code>pastperiod</code> is the time machine you need.</p>
+</div>
+<div class="paragraph">
+<p>The concrete format is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>pastperiod t/DATE</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For example, suppose you have a monthly budget "school", refreshed at the first day of each month; and
+suppose it is November now.
+After typing:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>pastperiod t/01-05</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll see all expenses tracked under "school" from 1 May to 31 May this year.</p>
+</div>
+<div class="paragraph">
+<p>Tips:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The time machine can only travel <strong>back</strong> in time! That is, if the date is in the current or future period, you&#8217;ll need
+to input again.</p>
+</li>
+<li>
+<p>Only expenses tracked under <strong>this budget</strong> are shown.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="coming-in-v2-0-prediction-code-predict-code"><a class="link" href="#coming-in-v2-0-prediction-code-predict-code">3.4. (Coming in v2.0)Prediction : <code>predict</code></a></h3>
-<div class="paragraph">
-<p>User can get a rough estimation of next month&#8217;s total expense based on extrapolation from this month&#8217;s expenditure.
-The prediction will take into account important dates that require extra spending in next month.</p>
-</div>
-<div class="paragraph">
-<p>Format: <code>predict</code></p>
-</div>
-<div class="paragraph">
-<p>Result:
-<code>We predict your next month&#8217;s total expenditure to be &#8230;&#8203;</code></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="creating-an-alias-for-your-favourite-commands-code-alias-code"><a class="link" href="#creating-an-alias-for-your-favourite-commands-code-alias-code">3.5. Creating an alias for your favourite commands : <code>alias</code></a></h3>
+<h3 id="creating-an-alias-for-your-favourite-commands-code-alias-code"><a class="link" href="#creating-an-alias-for-your-favourite-commands-code-alias-code">3.4. Creating an alias for your favourite commands : <code>alias</code></a></h3>
 <div class="paragraph">
 <p>Assign a full paramaterized input to an alias.</p>
 </div>
@@ -491,16 +663,16 @@ description of “Chicken Rice” at the current system time.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.6. Saving the data</a></h3>
+<h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.5. Saving the data</a></h3>
 <div class="paragraph">
 <p>Expense tracker data are saved in the hard disk automatically after any command that changes the data.
 There is no need to save manually.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="viewing-statistics"><a class="link" href="#viewing-statistics">3.7. Viewing Statistics</a></h3>
+<h3 id="viewing-statistics"><a class="link" href="#viewing-statistics">3.6. Viewing Statistics</a></h3>
 <div class="sect3">
-<h4 id="summary-code-stats-code"><a class="link" href="#summary-code-stats-code">3.7.1. Summary : <code>stats</code></a></h4>
+<h4 id="summary-code-stats-code"><a class="link" href="#summary-code-stats-code">3.6.1. Summary : <code>stats</code></a></h4>
 <div class="paragraph">
 <p>Produces statistics regarding the user’s expenses.</p>
 </div>
@@ -539,7 +711,7 @@ not specified.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="compare-code-statscompare-code"><a class="link" href="#compare-code-statscompare-code">3.7.2. Compare : <code>statscompare</code></a></h4>
+<h4 id="compare-code-statscompare-code"><a class="link" href="#compare-code-statscompare-code">3.6.2. Compare : <code>statscompare</code></a></h4>
 <div class="paragraph">
 <p>Produces and displays statistics regarding the user’s finance for 2 time periods.
 The statistics include all categories of items, the number of entries and the total expenditure of all expenses under
@@ -579,29 +751,29 @@ the same day</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">3.8. Exiting the program : <code>exit</code></a></h3>
+<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">3.7. Exiting the program : <code>exit</code></a></h3>
 <div class="paragraph">
 <p>Exits the program.<br>
 Format: <code>exit</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-the-data-2"><a class="link" href="#saving-the-data-2">3.9. Saving the data</a></h3>
+<h3 id="saving-the-data-2"><a class="link" href="#saving-the-data-2">3.8. Saving the data</a></h3>
 <div class="paragraph">
 <p>MooLah data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">3.10. Encrypting data files <code>[coming in v2.0]</code></a></h3>
+<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">3.9. Encrypting data files <code>[coming in v2.0]</code></a></h3>
 
 </div>
 <div class="sect2">
-<h3 id="email-notification-code-coming-in-v2-0-code"><a class="link" href="#email-notification-code-coming-in-v2-0-code">3.11. Email notification <code>[coming in v2.0]</code></a></h3>
+<h3 id="email-notification-code-coming-in-v2-0-code"><a class="link" href="#email-notification-code-coming-in-v2-0-code">3.10. Email notification <code>[coming in v2.0]</code></a></h3>
 
 </div>
 <div class="sect2">
-<h3 id="input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code"><a class="link" href="#input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code">3.12. Input expenses by scanning a receipt <code>[coming in v2.0]</code></a></h3>
+<h3 id="input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code"><a class="link" href="#input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code">3.11. Input expenses by scanning a receipt <code>[coming in v2.0]</code></a></h3>
 
 </div>
 </div>
@@ -628,6 +800,42 @@ e.g. <code>add d/Chicken Rice p/2.50 t/15-09-2019 1230 c/Food</code></p>
 <li>
 <p><strong>Clear all expenses</strong> : <code>clear</code></p>
 </li>
+</ul>
+</div>
+<hr>
+<div class="paragraph">
+<p>All About Budgeting:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Create a new budget</strong> : <code>budget d/DESCRIPTION p/AMOUNT sd/START_DATE pr/PERIOD</code><br>
+e.g. <code>budget d/school p/300 sd/01-10-2019 pr/month</code></p>
+</li>
+<li>
+<p><strong>Switch between budgets</strong> : <code>switchbudget d/DESCRIPTION</code><br>
+e.g. <code>switchbudget d/outside school</code></p>
+</li>
+<li>
+<p><strong>List all budgets</strong> : <code>listbudgets</code></p>
+</li>
+<li>
+<p><strong>Edit a budget</strong> : <code>editbudget INDEX d/DESCRIPTION p/AMOUNT sd/START_DATE pr/PERIOD</code><br>
+e.g. <code>editbudget 2 d/school expenses p/400 sd/05-10</code></p>
+</li>
+<li>
+<p><strong>Delete a budget</strong> : <code>deletebudget INDEX</code><br>
+e.g. <code>deletebudget 2</code></p>
+</li>
+<li>
+<p><strong>View expenses in the past</strong> : <code>pastperiod</code><br>
+e.g. <code>pastperiod t/01-05</code></p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="ulist">
+<ul>
 <li>
 <p><strong>Compare statistics</strong> : <code>statscompare start1/START_DATE_1 end1/END_DATE start2/START_DATE_2 end2/END_DATE_2</code><br>
 e.g. <code>statscompare sd1/01-01-2019 sd2/01-02-2019 pr/week</code></p>
@@ -635,10 +843,6 @@ e.g. <code>statscompare sd1/01-01-2019 sd2/01-02-2019 pr/week</code></p>
 <li>
 <p><strong>Create alias</strong> : <code>alias a/ALIAS_NAME c/COMMAND_WITH_PARAMETERS</code><br>
 e.g. <code>alias a/chicken rice c/ add d/ Chicken Rice p/2.50 c/Food</code></p>
-</li>
-<li>
-<p><strong>Create new budget</strong> : <code>budget d/BUDGET_NAME p/BUDGET_AMOUNT sd/BUDGET_START_DATE pr/BUDGET_PERIOD</code><br>
-e.g. <code>budget d/school p/300 sd/01-10-2019 pr/month</code></p>
 </li>
 <li>
 <p><strong>Currency conversion</strong> : <code>convert</code></p>
@@ -691,4 +895,4 @@ e.g. <code>stats sd/11-11-2018 ed/12-12-2018</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-30 15:47:10 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-30 15:55:22 UTC</div></div></div></body></html>
