@@ -14,17 +14,19 @@
 <li><a href="#Features">3. Features</a>
 <ul class="sectlevel2">
 <li><a href="#viewing-help-code-help-code">3.1. Viewing help : <code>help</code></a></li>
-<li><a href="#basic-expense-related-commands">3.2. Basic Expense-related Commands</a></li>
-<li><a href="#basic-event-related-commands">3.3. Basic Event-related Commands</a></li>
-<li><a href="#let-s-do-budgeting">3.4. Let&#8217;s Do Budgeting</a></li>
-<li><a href="#creating-an-alias-for-your-favourite-commands-code-alias-code">3.5. Creating an alias for your favourite commands : <code>alias</code></a></li>
-<li><a href="#saving-the-data">3.6. Saving the data</a></li>
-<li><a href="#viewing-statistics">3.7. Viewing Statistics</a></li>
-<li><a href="#exiting-the-program-code-exit-code">3.8. Exiting the program : <code>exit</code></a></li>
-<li><a href="#saving-the-data-2">3.9. Saving the data</a></li>
-<li><a href="#encrypting-data-files-code-coming-in-v2-0-code">3.10. Encrypting data files <code>[coming in v2.0]</code></a></li>
-<li><a href="#email-notification-code-coming-in-v2-0-code">3.11. Email notification <code>[coming in v2.0]</code></a></li>
-<li><a href="#input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code">3.12. Input expenses by scanning a receipt <code>[coming in v2.0]</code></a></li>
+<li><a href="#undo-the-previous-command-code-undo-code">3.2. Undo the previous command : <code>undo</code></a></li>
+<li><a href="#redo-an-undone-command-code-redo-code">3.3. Redo an undone command : <code>redo</code></a></li>
+<li><a href="#basic-expense-related-commands">3.4. Basic Expense-related Commands</a></li>
+<li><a href="#basic-event-related-commands">3.5. Basic Event-related Commands</a></li>
+<li><a href="#let-s-do-budgeting">3.6. Let&#8217;s Do Budgeting</a></li>
+<li><a href="#creating-an-alias-for-your-favourite-commands-code-alias-code">3.7. Creating an alias for your favourite commands : <code>alias</code></a></li>
+<li><a href="#saving-the-data">3.8. Saving the data</a></li>
+<li><a href="#viewing-statistics">3.9. Viewing Statistics</a></li>
+<li><a href="#exiting-the-program-code-exit-code">3.10. Exiting the program : <code>exit</code></a></li>
+<li><a href="#saving-the-data-2">3.11. Saving the data</a></li>
+<li><a href="#encrypting-data-files-code-coming-in-v2-0-code">3.12. Encrypting data files <code>[coming in v2.0]</code></a></li>
+<li><a href="#email-notification-code-coming-in-v2-0-code">3.13. Email notification <code>[coming in v2.0]</code></a></li>
+<li><a href="#input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code">3.14. Input expenses by scanning a receipt <code>[coming in v2.0]</code></a></li>
 </ul>
 </li>
 <li><a href="#faq">4. FAQ</a></li>
@@ -143,11 +145,15 @@ e.g. in <code>add p/PRICE</code>, <code>PRICE</code> is a parameter which can be
 <div class="paragraph">
 <p>Format: <code>help</code></p>
 </div>
-<div class="sect3">
-<h4 id="undo-the-previous-command-code-undo-code"><a class="link" href="#undo-the-previous-command-code-undo-code">3.1.1. Undo the previous command : <code>undo</code></a></h4>
+</div>
+<div class="sect2">
+<h3 id="undo-the-previous-command-code-undo-code"><a class="link" href="#undo-the-previous-command-code-undo-code">3.2. Undo the previous command : <code>undo</code></a></h3>
 <div class="paragraph">
-<p>User can undo the previous command. Only commands that modify the data, e.g. <code>add</code> <code>edit</code> <code>delete</code> <code>clear</code> etc,
-can be undone. User will see the command that is being undone at the result display.</p>
+<p>Did something wrong? You can undo it. However, do keep in mind that you can only undo commands that modify the data in MooLah, such as <code>addexpense</code>, <code>deleteexpense</code>, and so on.</p>
+</div>
+<div class="paragraph">
+<p>Do not worry if you forget what did you do a few steps back (it happens!), MooLah will display a short description of what
+particular command it did undo to ensure that you undo the right thing.</p>
 </div>
 <div class="paragraph">
 <p>Format: <code>undo</code></p>
@@ -157,19 +163,23 @@ can be undone. User will see the command that is being undone at the result disp
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>delete 5
+<pre class="CodeRay highlight"><code>deleteexpense 5
 undo</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Result:
-Expense no. 5 will be undone, re-added to the data.</p>
+The deletion of expense #5 will be undone, or in other words, re-added to MooLah.
+MooLah will then display the message <code>Undid "Delete expense with index 5"</code>.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="redo-the-command-that-was-undone-code-redo-code"><a class="link" href="#redo-the-command-that-was-undone-code-redo-code">3.1.2. Redo the command that was undone : <code>redo</code></a></h4>
+<div class="sect2">
+<h3 id="redo-an-undone-command-code-redo-code"><a class="link" href="#redo-an-undone-command-code-redo-code">3.3. Redo an undone command : <code>redo</code></a></h3>
 <div class="paragraph">
-<p>User can redo the command they have undone.</p>
+<p>You might hit one undo too many and you wish to cancel that one undo. That&#8217;s okay, redo will help you on that.</p>
+</div>
+<div class="paragraph">
+<p>Similar to undo, MooLah will display a short description of the command it did redo to you.</p>
 </div>
 <div class="paragraph">
 <p>Format: <code>redo</code></p>
@@ -179,21 +189,20 @@ Expense no. 5 will be undone, re-added to the data.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>delete 5
+<pre class="CodeRay highlight"><code>deleteexpense 5
 undo
 redo</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Result:
-Expense no. 5 will now be deleted.</p>
-</div>
+At the end, expense #5 will keep being deleted (poor thing!). MooLah will also display a message <code>Redid "Delete expense with index 5"</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="basic-expense-related-commands"><a class="link" href="#basic-expense-related-commands">3.2. Basic Expense-related Commands</a></h3>
+<h3 id="basic-expense-related-commands"><a class="link" href="#basic-expense-related-commands">3.4. Basic Expense-related Commands</a></h3>
 <div class="sect3">
-<h4 id="adding-an-expense-code-addexpense-code"><a class="link" href="#adding-an-expense-code-addexpense-code">3.2.1. Adding an expense: <code>addexpense</code></a></h4>
+<h4 id="adding-an-expense-code-addexpense-code"><a class="link" href="#adding-an-expense-code-addexpense-code">3.4.1. Adding an expense: <code>addexpense</code></a></h4>
 <div class="paragraph">
 <p>This is MooLah&#8217;s fundamental feature: you can add your expenses.</p>
 </div>
@@ -233,7 +242,7 @@ These categories are case-insensitive.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="listing-all-expenses-code-listexpenses-code"><a class="link" href="#listing-all-expenses-code-listexpenses-code">3.2.2. Listing all expenses : <code>listexpenses</code></a></h4>
+<h4 id="listing-all-expenses-code-listexpenses-code"><a class="link" href="#listing-all-expenses-code-listexpenses-code">3.4.2. Listing all expenses : <code>listexpenses</code></a></h4>
 <div class="paragraph">
 <p>You can list every single expense you have added into MooLah.</p>
 </div>
@@ -242,7 +251,7 @@ These categories are case-insensitive.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="updating-an-expense-code-editexpense-code"><a class="link" href="#updating-an-expense-code-editexpense-code">3.2.3. Updating an expense: <code>editexpense</code></a></h4>
+<h4 id="updating-an-expense-code-editexpense-code"><a class="link" href="#updating-an-expense-code-editexpense-code">3.4.3. Updating an expense: <code>editexpense</code></a></h4>
 <div class="paragraph">
 <p>Made a mistake? You can edit expenses too.</p>
 </div>
@@ -281,7 +290,7 @@ Updates the price of the 2nd expense in the current list to 3.50.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="locating-expenses-by-name-code-find-code"><a class="link" href="#locating-expenses-by-name-code-find-code">3.2.4. Locating expenses by name: <code>find</code></a></h4>
+<h4 id="locating-expenses-by-name-code-find-code"><a class="link" href="#locating-expenses-by-name-code-find-code">3.4.4. Locating expenses by name: <code>find</code></a></h4>
 <div class="paragraph">
 <p>You can find expenses whose description contains any of the keywords you inputted.</p>
 </div>
@@ -327,7 +336,7 @@ Updates the price of the 2nd expense in the current list to 3.50.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="deleting-an-expense-code-deleteexpense-code"><a class="link" href="#deleting-an-expense-code-deleteexpense-code">3.2.5. Deleting an expense: <code>deleteexpense</code></a></h4>
+<h4 id="deleting-an-expense-code-deleteexpense-code"><a class="link" href="#deleting-an-expense-code-deleteexpense-code">3.4.5. Deleting an expense: <code>deleteexpense</code></a></h4>
 <div class="paragraph">
 <p>You can also delete an expense from the expenses list in MooLah.</p>
 </div>
@@ -376,7 +385,7 @@ delete 1</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="basic-event-related-commands"><a class="link" href="#basic-event-related-commands">3.3. Basic Event-related Commands</a></h3>
+<h3 id="basic-event-related-commands"><a class="link" href="#basic-event-related-commands">3.5. Basic Event-related Commands</a></h3>
 <div class="paragraph">
 <p>Events are pretty similar to expenses, except that they denote potential expenses that they may happen in the future.
 You should use this feature to keep track of future important events in your life that would require you to spend some money
@@ -392,7 +401,7 @@ asking you whether you wish to add these events as corresponding expenses.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="adding-an-event-code-addevent-code"><a class="link" href="#adding-an-event-code-addevent-code">3.3.1. Adding an event: <code>addevent</code></a></h4>
+<h4 id="adding-an-event-code-addevent-code"><a class="link" href="#adding-an-event-code-addevent-code">3.5.1. Adding an event: <code>addevent</code></a></h4>
 <div class="paragraph">
 <p>Events share the same fields as expenses, so you add them the same way.</p>
 </div>
@@ -432,7 +441,7 @@ These categories are case-insensitive.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="listing-all-events-code-listevents-code"><a class="link" href="#listing-all-events-code-listevents-code">3.3.2. Listing all events : <code>listevents</code></a></h4>
+<h4 id="listing-all-events-code-listevents-code"><a class="link" href="#listing-all-events-code-listevents-code">3.5.2. Listing all events : <code>listevents</code></a></h4>
 <div class="paragraph">
 <p>You can list every single event you have added into MooLah.</p>
 </div>
@@ -441,7 +450,7 @@ These categories are case-insensitive.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="updating-an-event-code-editevent-code"><a class="link" href="#updating-an-event-code-editevent-code">3.3.3. Updating an event: <code>editevent</code></a></h4>
+<h4 id="updating-an-event-code-editevent-code"><a class="link" href="#updating-an-event-code-editevent-code">3.5.3. Updating an event: <code>editevent</code></a></h4>
 <div class="paragraph">
 <p>You can edit events the same way you edit expenses.</p>
 </div>
@@ -477,7 +486,7 @@ Updates the price of the 2nd event in the current list to 300.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="deleting-an-event-code-deleteevent-code"><a class="link" href="#deleting-an-event-code-deleteevent-code">3.3.4. Deleting an event: <code>deleteevent</code></a></h4>
+<h4 id="deleting-an-event-code-deleteevent-code"><a class="link" href="#deleting-an-event-code-deleteevent-code">3.5.4. Deleting an event: <code>deleteevent</code></a></h4>
 <div class="paragraph">
 <p>You can also delete an event from the events list in MooLah.</p>
 </div>
@@ -515,14 +524,14 @@ delete 2</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="coming-in-v2-0-converting-any-currency-to-preferred-currency-code-convert-code"><a class="link" href="#coming-in-v2-0-converting-any-currency-to-preferred-currency-code-convert-code">3.3.5. (Coming in v2.0) Converting any currency to preferred currency : <code>convert</code></a></h4>
+<h4 id="coming-in-v2-0-converting-any-currency-to-preferred-currency-code-convert-code"><a class="link" href="#coming-in-v2-0-converting-any-currency-to-preferred-currency-code-convert-code">3.5.5. (Coming in v2.0) Converting any currency to preferred currency : <code>convert</code></a></h4>
 
 </div>
 </div>
 <div class="sect2">
-<h3 id="let-s-do-budgeting"><a class="link" href="#let-s-do-budgeting">3.4. Let&#8217;s Do Budgeting</a></h3>
+<h3 id="let-s-do-budgeting"><a class="link" href="#let-s-do-budgeting">3.6. Let&#8217;s Do Budgeting</a></h3>
 <div class="sect3">
-<h4 id="create-a-new-budget-code-addbudget-code"><a class="link" href="#create-a-new-budget-code-addbudget-code">3.4.1. Create a new budget : <code>addbudget</code></a></h4>
+<h4 id="create-a-new-budget-code-addbudget-code"><a class="link" href="#create-a-new-budget-code-addbudget-code">3.6.1. Create a new budget : <code>addbudget</code></a></h4>
 <div class="paragraph">
 <p>Want your expenses tracked under a recurring budget? Simple enough with this command: <code>addbudget</code></p>
 </div>
@@ -571,7 +580,7 @@ to <code>01-11-2019 to 30-11-2019</code>, and all past expenses archived, giving
 </div>
 </div>
 <div class="sect3">
-<h4 id="switch-between-budgets-code-switchbudget-code"><a class="link" href="#switch-between-budgets-code-switchbudget-code">3.4.2. Switch between budgets : <code>switchbudget</code></a></h4>
+<h4 id="switch-between-budgets-code-switchbudget-code"><a class="link" href="#switch-between-budgets-code-switchbudget-code">3.6.2. Switch between budgets : <code>switchbudget</code></a></h4>
 <div class="paragraph">
 <p>Now that you&#8217;ve successfully added a few different budgets, wonder how to toggle between them? Try this magical command:
 <code>switchbudget</code>, which switches the primary budget to any other budget in one shot!</p>
@@ -601,7 +610,7 @@ from now on will be tracked under the "outside school" budget instead.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="list-all-budgets-code-listbudgets-code"><a class="link" href="#list-all-budgets-code-listbudgets-code">3.4.3. List all budgets: <code>listbudgets</code></a></h4>
+<h4 id="list-all-budgets-code-listbudgets-code"><a class="link" href="#list-all-budgets-code-listbudgets-code">3.6.3. List all budgets: <code>listbudgets</code></a></h4>
 <div class="paragraph">
 <p>To get an overview of all the budgets at hand, simply type:</p>
 </div>
@@ -628,7 +637,7 @@ from now on will be tracked under the "outside school" budget instead.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="edit-a-budget-code-editbudget-code"><a class="link" href="#edit-a-budget-code-editbudget-code">3.4.4. Edit a budget: <code>editbudget</code></a></h4>
+<h4 id="edit-a-budget-code-editbudget-code"><a class="link" href="#edit-a-budget-code-editbudget-code">3.6.4. Edit a budget: <code>editbudget</code></a></h4>
 <div class="paragraph">
 <p>A typo? On a second thought? No worries, you can easily modify your budget with <code>editbudget</code>.</p>
 </div>
@@ -667,7 +676,7 @@ and <code>PERIOD</code>, more than one at a time.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="delete-a-budget-code-deletebudget-code"><a class="link" href="#delete-a-budget-code-deletebudget-code">3.4.5. Delete a budget: <code>deletebudget</code></a></h4>
+<h4 id="delete-a-budget-code-deletebudget-code"><a class="link" href="#delete-a-budget-code-deletebudget-code">3.6.5. Delete a budget: <code>deletebudget</code></a></h4>
 <div class="paragraph">
 <p>Don&#8217;t want it any more? Use <code>deletebudget</code> to say bye to your budget!</p>
 </div>
@@ -695,7 +704,7 @@ deletebudget INDEX</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="view-expenses-in-the-past-code-pastperiod-code"><a class="link" href="#view-expenses-in-the-past-code-pastperiod-code">3.4.6. View expenses in the past: <code>pastperiod</code></a></h4>
+<h4 id="view-expenses-in-the-past-code-pastperiod-code"><a class="link" href="#view-expenses-in-the-past-code-pastperiod-code">3.6.6. View expenses in the past: <code>pastperiod</code></a></h4>
 <div class="paragraph">
 <p>Wanna see your archived expenses in the past? The command <code>pastperiod</code> is the time machine you need.</p>
 </div>
@@ -737,7 +746,7 @@ to input again.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="creating-an-alias-for-your-favourite-commands-code-alias-code"><a class="link" href="#creating-an-alias-for-your-favourite-commands-code-alias-code">3.5. Creating an alias for your favourite commands : <code>alias</code></a></h3>
+<h3 id="creating-an-alias-for-your-favourite-commands-code-alias-code"><a class="link" href="#creating-an-alias-for-your-favourite-commands-code-alias-code">3.7. Creating an alias for your favourite commands : <code>alias</code></a></h3>
 <div class="paragraph">
 <p>Assign a full parameterized input to an alias.</p>
 </div>
@@ -765,16 +774,16 @@ description of “Chicken Rice” at the current system time.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.6. Saving the data</a></h3>
+<h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.8. Saving the data</a></h3>
 <div class="paragraph">
 <p>Expense tracker data is saved in the hard disk automatically after any command that changes the data.
 There is no need to save manually.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="viewing-statistics"><a class="link" href="#viewing-statistics">3.7. Viewing Statistics</a></h3>
+<h3 id="viewing-statistics"><a class="link" href="#viewing-statistics">3.9. Viewing Statistics</a></h3>
 <div class="sect3">
-<h4 id="summary-statistics-code-stats-code"><a class="link" href="#summary-statistics-code-stats-code">3.7.1. Summary Statistics: <code>stats</code></a></h4>
+<h4 id="summary-statistics-code-stats-code"><a class="link" href="#summary-statistics-code-stats-code">3.9.1. Summary Statistics: <code>stats</code></a></h4>
 <div class="paragraph">
 <p>This command allows you to have a basic summary of the money spent from their
 categorical expenses in a given period of their current budget.</p>
@@ -871,7 +880,7 @@ For example, MooLah is currently at the "school" budget with these expenses in w
 </div>
 </div>
 <div class="sect3">
-<h4 id="comparison-statistics-code-statscompare-code"><a class="link" href="#comparison-statistics-code-statscompare-code">3.7.2. Comparison Statistics: <code>statscompare</code></a></h4>
+<h4 id="comparison-statistics-code-statscompare-code"><a class="link" href="#comparison-statistics-code-statscompare-code">3.9.2. Comparison Statistics: <code>statscompare</code></a></h4>
 <div class="paragraph">
 <p>This command allows you to have a side-to-side comparison
 of the money spent from their categorical expenses in
@@ -1101,29 +1110,29 @@ For example, MooLah is currently at the "school" budget with these expenses in w
 </div>
 </div>
 <div class="sect2">
-<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">3.8. Exiting the program : <code>exit</code></a></h3>
+<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">3.10. Exiting the program : <code>exit</code></a></h3>
 <div class="paragraph">
 <p>Exits the program.<br>
 Format: <code>exit</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-the-data-2"><a class="link" href="#saving-the-data-2">3.9. Saving the data</a></h3>
+<h3 id="saving-the-data-2"><a class="link" href="#saving-the-data-2">3.11. Saving the data</a></h3>
 <div class="paragraph">
 <p>MooLah data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">3.10. Encrypting data files <code>[coming in v2.0]</code></a></h3>
+<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">3.12. Encrypting data files <code>[coming in v2.0]</code></a></h3>
 
 </div>
 <div class="sect2">
-<h3 id="email-notification-code-coming-in-v2-0-code"><a class="link" href="#email-notification-code-coming-in-v2-0-code">3.11. Email notification <code>[coming in v2.0]</code></a></h3>
+<h3 id="email-notification-code-coming-in-v2-0-code"><a class="link" href="#email-notification-code-coming-in-v2-0-code">3.13. Email notification <code>[coming in v2.0]</code></a></h3>
 
 </div>
 <div class="sect2">
-<h3 id="input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code"><a class="link" href="#input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code">3.12. Input expenses by scanning a receipt <code>[coming in v2.0]</code></a></h3>
+<h3 id="input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code"><a class="link" href="#input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code">3.14. Input expenses by scanning a receipt <code>[coming in v2.0]</code></a></h3>
 
 </div>
 </div>
@@ -1261,4 +1270,4 @@ e.g. <code>switch d/outside school</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-31 15:40:33 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-31 17:10:32 UTC</div></div></div></body></html>
