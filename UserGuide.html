@@ -774,81 +774,329 @@ There is no need to save manually.</p>
 <div class="sect2">
 <h3 id="viewing-statistics"><a class="link" href="#viewing-statistics">3.7. Viewing Statistics</a></h3>
 <div class="sect3">
-<h4 id="summary-code-stats-code"><a class="link" href="#summary-code-stats-code">3.7.1. Summary : <code>stats</code></a></h4>
+<h4 id="summary-statistics-code-stats-code"><a class="link" href="#summary-statistics-code-stats-code">3.7.1. Summary Statistics: <code>stats</code></a></h4>
 <div class="paragraph">
-<p>Produces statistics regarding the user’s expenses.</p>
+<p>This command allows you to have a basic summary of the money spent from their
+categorical expenses in a given period of their current budget.</p>
 </div>
 <div class="paragraph">
-<p>The statistics is in the form of a pie chart, where every piece represents the combined expenditure of all expenses
-under the category, taken as a percentage of the total expenditure in the budget the command was called.</p>
+<p>The visual output of the statistics shown is a pie chart, with each piece representing
+the combined expenditure of all expenses under the category,
+taken as a percentage of the total expenditure in the budget the command was called.</p>
 </div>
 <div class="paragraph">
 <p>Format: <code>stats [sd/START_DATE] [ed/END_DATE]</code></p>
 </div>
-<div class="ulist">
-<ul>
+<div class="ulist NOTE">
+<ul class="NOTE">
 <li>
-<p>Date formats accepted include <code>DD-MM-YYYY</code> or <code>DD-MM</code>, where the year will be taken as the current year if it is
-not specified.</p>
+<p>Date formats accepted are handled by our Natural Language Parser library which supports human jargons.
+Please refer to the above documentation for more information.</p>
+</li>
+<li>
+<p>For any input that consists of date and time, only, only the date information will be considered.</p>
+</li>
+<li>
+<p>Expenses to be included in the statistics generated include those on the start dates and end dates itself.</p>
 </li>
 <li>
 <p><code>START_DATE</code> will be checked to be earlier than <code>END_DATE</code></p>
 </li>
 <li>
-<p>If <code>START_DATE</code> is specified but <code>END_DATE</code> is empty, statistics is calculated from one month after <code>START_DATE</code></p>
+<p>Categories where no tracked expenses fall under will not be reflected in the Statistics Panel.</p>
+</li>
+</ul>
+</div>
+<div class="ulist TIP">
+<ul class="TIP">
+<li>
+<p>There is no need to specify all the parameters if the outcomes of the example usage scenarios
+below fit your needs</p>
 </li>
 <li>
-<p>If <code>START_DATE</code> is empty but <code>END_DATE</code> is specified, statistics is calculated from one month before <code>START_DATE</code></p>
+<p>If <code>START_DATE</code> is specified but <code>END_DATE</code> is empty, the period of the current budget will be considered as
+the unit of time and statistics is calculated till one unit of time after <code>START_DATE</code>.</p>
 </li>
 <li>
-<p>If both <code>START_DATE</code> and <code>END_DATE</code> are empty, statistics is calculated from one month before the current date.</p>
+<p>If <code>START_DATE</code> is empty but <code>END_DATE</code> is specified, the period of the current budget will be considered as
+the unit of time and statistics is calculated starting from one unit of time before <code>END_DATE</code>.</p>
+</li>
+<li>
+<p>If both <code>START_DATE</code> and <code>END_DATE</code> are empty, statistics will be calculated using the start date and end date
+of the current window of the budget.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Example:
+<p>Example of configurations:
 <code>stats</code>
-<code>stats sd/12-12-2018</code>
+<code>stats sd/ytd</code>
 <code>stats sd/11-11-2018 ed/12-12-2018</code></p>
+</div>
+<div class="paragraph">
+<p>Step-by-step guide:
+For example, MooLah is currently at the "school" budget with these expenses in window 1
+(sd1 to ed1) and window2(sd2 to ed2)</p>
+</div>
+<div class="paragraph">
+<p>To generate the pie chart:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Type <code>stats ed/XXX</code> into the command box and press <code>Enter</code> to execute it.</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/Ui.png" alt="Ui" width="790">
+</div>
+</div>
+</li>
+<li>
+<p>The result box will display the message Pie Chart generated.</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/Ui.png" alt="Ui" width="790">
+</div>
+</div>
+</li>
+<li>
+<p>The screen will be switched into the Statistics Panel where the Pie Chart will be generated.</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/Ui.png" alt="Ui" width="790">
+</div>
+</div>
+</li>
+</ol>
 </div>
 </div>
 <div class="sect3">
-<h4 id="compare-code-statscompare-code"><a class="link" href="#compare-code-statscompare-code">3.7.2. Compare : <code>statscompare</code></a></h4>
+<h4 id="comparison-statistics-code-statscompare-code"><a class="link" href="#comparison-statistics-code-statscompare-code">3.7.2. Comparison Statistics: <code>statscompare</code></a></h4>
 <div class="paragraph">
-<p>Produces and displays statistics regarding the user’s finance for 2 time periods.
-The statistics include all categories of items, the number of entries and the total expenditure of all expenses under
-the category.
-The number under each cell represents the difference using <code>second period – first period</code>.</p>
+<p>This command allows you to have a side-to-side comparison
+of the money spent from their categorical expenses in
+2 periods of their current budget. In this comparison, we provide
+you with data of both the similarities and differences in these 2
+periods.</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>statscompare sd1/START_DATE_1 sd2/END_DATE pr/PERIOD</code></p>
+<p>The visual output of the statistics shown is a table view,
+with 5 columns, consisting of a category column, and 2 pairs of
+frequency-total expenditure columns. The cells in the first pair
+of columns, denoted as "similarity columns" represents the frequency and
+total expenditure in any existing overlapping interval between the 2 periods,
+while the cells in the second pair of columns, denoted as the "difference columns"
+represents the difference in frequency and difference in total expenditure.</p>
 </div>
-<div class="ulist">
-<ul>
+<div class="paragraph">
+<p>Format: <code>statscompare sd1/START_DATE_1 sd2/START_DATE_2 [pr/PERIOD]</code></p>
+</div>
+<div class="ulist NOTE">
+<ul class="NOTE">
 <li>
-<p>Date formats accepted include <code>DD-MM-YYYY</code> or <code>DD-MM</code>, where the year will be taken as the current year if it is not
-specified.</p>
+<p>Date formats accepted are handled by our Natural Language Parser library which supports human jargons.
+Please refer to the above documentation for more information.</p>
+</li>
+<li>
+<p>For any input that consists of date and time, only, only the date information will be considered.</p>
+</li>
+<li>
+<p>Expenses to be included in the statistics generated include those on the start dates and end dates itself.</p>
 </li>
 <li>
 <p><code>PERIOD</code> takes in either of the following keywords: week, month, year</p>
 </li>
-</ul>
-</div>
-<div class="paragraph">
-<p>NOTE[Work in progress]:
-- day is ideally recognised as a keyword to <code>PERIOD</code></p>
-</div>
-<div class="ulist">
-<ul>
 <li>
-<p>If day is given as a keyword under <code>PERIOD</code>, statistics will be calculated from 12:00am of the day till 11:59pm of
-the same day</p>
+<p>The cells in the "similarity columns" denote only non-negative values. This is because it
+shows the frequency and total expenditure common to both periods.</p>
+</li>
+<li>
+<p>The cells in the "difference columns" may contain negative values. This is because
+the values for differences in frequency and differences in total expenditure for each category
+is calculated using the formula <code>second period – first period</code>.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Examples:
-<code>statscompare sd1/01-01-2019 sd2/01-02-2019 pr/month</code></p>
+<p><code>[Coming in v2.0]</code>
+- day is ideally recognised as a keyword to <code>PERIOD</code>
+- constructing periods with start dates doesn&#8217;t align with the principles of the application
+as compared to end dates.</p>
+</div>
+<div class="ulist TIP">
+<ul class="TIP">
+<li>
+<p>There is no need to specify all the parameters if the outcomes of the example usage scenarios
+below fit your needs</p>
+</li>
+<li>
+<p>If <code>PERIOD</code> is empty, the period of the current budget will be considered as
+the unit of time to construct the 2 periods to be compared.</p>
+</li>
+<li>
+<p>If zeroes are observed in the similarity columns, it may be possible that there is no
+overlap between the 2 periods or there are no expenses recorded in the common period.</p>
+</li>
+<li>
+<p>It is possible to reorder the columns generated after the Table is being generated for better
+comparison.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Example of configurations:
+<code>statscompare sd1/12-12 sd2/ 1 month ago'
+`stats sd2/ today sd1/ytd pr/ week</code>
+<code>stats sd2/ 23-09-2019 sd1/1 year ago  pr/ month</code></p>
+</div>
+<div class="paragraph">
+<p>Step-by-step guide:
+For example, MooLah is currently at the "school" budget with these expenses in window 1
+(sd1 to ed1) and window2(sd2 to ed2)</p>
+</div>
+<div class="paragraph">
+<p>To generate the table view:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Type <code>statscompare sd1/ startdate_of_first sd2/ some_date_in_between' into the command box and press `Enter</code> to execute it.</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/Ui.png" alt="Ui" width="790">
+</div>
+</div>
+</li>
+<li>
+<p>The result box will display the message Table generated.</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/Ui.png" alt="Ui" width="790">
+</div>
+</div>
+</li>
+<li>
+<p>The screen will be switched into the Statistics Panel where the Table View will be generated.</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/Ui.png" alt="Ui" width="790">
+</div>
+</div>
+<div class="paragraph">
+<p>==== Growth Statistics : <code>statstrend</code></p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This command allows you to see the growth
+of the money spent from their categorical expenses in specified
+units of time between the period specified in the current budget.</p>
+</div>
+<div class="paragraph">
+<p>The visual output of the statistics shown is in the form of plotted
+trend lines, one for each category and every plotted point on a line
+represents the total expenditure starting from its stated date,
+till before the start of the next date.</p>
+</div>
+<div class="paragraph">
+<p>Format: <code>statstrend [sd/START_DATE] [ed/END_DATE] mode/MODE</code></p>
+</div>
+<div class="ulist NOTE">
+<ul class="NOTE">
+<li>
+<p>Date formats accepted are handled by our Natural Language Parser library which supports human jargons.
+Please refer to the above documentation for more information.</p>
+</li>
+<li>
+<p>For any input that consists of date and time, only, only the date information will be considered.</p>
+</li>
+<li>
+<p>Expenses to be included in the statistics generated include those on the start dates and end dates itself.</p>
+</li>
+<li>
+<p><code>START_DATE</code> will be checked to be earlier than <code>END_DATE</code></p>
+</li>
+<li>
+<p>We only allow a maximum of 34 plotted points to be displayed, which means that in any specified
+time interval bounded by the start date and end date, we will produce at most 34 time intervals of
+the specified unit of time starting from the start date.</p>
+</li>
+<li>
+<p>The categories that do not have any expenses in any of the time intervals will not be reflected
+as trend lines in the Statistics Panel.</p>
+</li>
+</ul>
+</div>
+<div class="ulist TIP">
+<ul class="TIP">
+<li>
+<p>There is no need to specify all the parameters if the outcomes of the example usage scenarios
+below fit your needs</p>
+</li>
+<li>
+<p>If <code>START_DATE</code> is specified but <code>END_DATE</code> is empty, statistics is calculated till 34 unit of time after <code>START_DATE</code>.</p>
+</li>
+<li>
+<p>If <code>START_DATE</code> is empty but <code>END_DATE</code> is specified, the statistics is calculated starting from
+34 units of time before <code>END_DATE</code>.</p>
+</li>
+<li>
+<p>If both <code>START_DATE</code> and <code>END_DATE</code> are empty, statistics will be calculated 17 units of time before the current date
+till 17 units of time after the current date.</p>
+</li>
+<li>
+<p>The unit interval of time is set to always be the period of the current budget,
+hence to access other time modes of this command, please edit the budget&#8217;s period.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><code>[Coming in v2.0]</code>
+- <code>mode/budget</code> of this command is still work in progress. It will run with unintended output.
+Hence not written in the UG</p>
+</div>
+<div class="paragraph">
+<p>Example of configurations:
+<code>statstrend mode/category</code>
+<code>statstrend sd/ytd mode/category</code>
+<code>statstrend sd/11-11-2018 ed/12-12-2018 mode/category</code></p>
+</div>
+<div class="paragraph">
+<p>Step-by-step guide:
+For example, MooLah is currently at the "school" budget with these expenses in window 1
+(sd1 to ed1) and window2(sd2 to ed2)</p>
+</div>
+<div class="paragraph">
+<p>To generate the table view:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Type <code>statstrend mode/category</code> into the command box and press <code>Enter</code> to execute it.</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/Ui.png" alt="Ui" width="790">
+</div>
+</div>
+</li>
+<li>
+<p>The result box will display the message trend line generated.</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/Ui.png" alt="Ui" width="790">
+</div>
+</div>
+</li>
+<li>
+<p>The screen will be switched into the Statistics Panel where the trend lines will be generated.</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/Ui.png" alt="Ui" width="790">
+</div>
+</div>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -936,12 +1184,32 @@ e.g. <code>pastperiod t/01-05</code></p>
 </ul>
 </div>
 <hr>
+<div class="paragraph">
+<p>Viewing Statistics:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Compare statistics</strong> : <code>statscompare start1/START_DATE_1 end1/END_DATE start2/START_DATE_2 end2/END_DATE_2</code><br>
+<p><strong>Summary Statistics</strong> : <code>stats [start/START_DATE] [end/END_DATE]</code><br>
+e.g. <code>stats sd/11-11-2018 ed/12-12-2018</code></p>
+</li>
+<li>
+<p><strong>Comparison statistics</strong> : <code>statscompare sd1/START_DATE_1 sd2/START_DATE_2</code><br>
 e.g. <code>statscompare sd1/01-01-2019 sd2/01-02-2019 pr/week</code></p>
 </li>
+<li>
+<p><strong>Comparison statistics</strong> : <code>statscompare sd1/START_DATE_1 sd2/START_DATE_2</code><br>
+e.g. <code>statscompare sd1/01-01-2019 sd2/01-02-2019 pr/week</code></p>
+</li>
+<li>
+<p><strong>Growth statistics</strong> : <code>statstrend [sd/START_DATE] [ed/END_DATE] mode/MODE</code><br>
+e.g. <code>statstrend sd/11-11-2018 ed/12-12-2018 mode/category</code></p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="ulist">
+<ul>
 <li>
 <p><strong>Create alias</strong> : <code>alias a/ALIAS_NAME c/COMMAND_WITH_PARAMETERS</code><br>
 e.g. <code>alias a/chicken rice c/ add d/ Chicken Rice p/2.50 c/Food</code></p>
@@ -990,11 +1258,7 @@ e.g. <code>switch d/outside school</code></p>
 <li>
 <p><strong>Undo</strong> : <code>undo</code></p>
 </li>
-<li>
-<p><strong>View statistics</strong> : <code>stats [start/START_DATE] [end/END_DATE]</code><br>
-e.g. <code>stats sd/11-11-2018 ed/12-12-2018</code></p>
-</li>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-31 14:30:51 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-31 15:40:33 UTC</div></div></div></body></html>
