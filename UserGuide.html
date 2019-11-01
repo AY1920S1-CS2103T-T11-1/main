@@ -174,7 +174,11 @@ are valid inputs</p>
 <div class="sect3">
 <h4 id="undo-the-previous-command-code-undo-code"><a class="link" href="#undo-the-previous-command-code-undo-code">3.2.1. Undo the previous command : <code>undo</code></a></h4>
 <div class="paragraph">
-<p>Did something wrong? You can undo it. However, do keep in mind that you can only undo commands that modify the data in MooLah, such as <code>addexpense</code>, <code>deleteexpense</code>, and so on.</p>
+<p>Did something wrong? You can undo it.</p>
+</div>
+<div class="paragraph">
+<p>However, do keep in mind that you can only undo commands that modify the data in MooLah, such as <code>addexpense</code>, <code>deleteexpense</code>, and so on.
+Head over to <a href="#command-summary">Section 5, &#8220;Command Summary&#8221;</a> for list of commands that are undoable.</p>
 </div>
 <div class="paragraph">
 <p>Do not worry if you forgot what you did a few steps back (it happens!). MooLah will display a short description of what
@@ -1548,91 +1552,103 @@ the data of your previous MooLah folder.</p>
 <div class="sect1">
 <h2 id="command-summary"><a class="link" href="#command-summary">5. Command Summary</a></h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p><strong>General commands:</strong></p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Add an expense</strong><br>
-<code>addexpense d/&lt;DESCRIPTION&gt; p/&lt;PRICE&gt;  c/&lt;CATEGORY&gt; [t/&lt;time&gt;]</code><br>
-e.g. <code>addexpense d/Chicken Rice p/2.50 t/15-09-2019 1230 c/Food</code></p>
+<p><strong>Help</strong> : <code>help</code></p>
 </li>
 <li>
-<p><strong>list all expenses</strong><br>
-<code>listexpenses</code><br>
-e.g. <code>listexpenses</code></p>
+<p><strong>Exit the app</strong> : <code>exit</code></p>
 </li>
 <li>
-<p><strong>edit an expenses</strong><br>
-<code>editexpense &lt;INDEX&gt; [d/&lt;DESCRIPTION&gt;] [p/&lt;PRICE&gt;]  [c/&lt;CATEGORY&gt;] [t/&lt;time&gt;]</code><br>
-e.g. <code>editexpense 1 p/2.50 t/15-09-2019 1230 c/Food</code></p>
+<p><strong>Undo</strong> : <code>undo</code></p>
 </li>
 <li>
-<p><strong>delete an expense</strong><br>
-<code>deleteexpense &lt;INDEX&gt;</code></p>
-</li>
-<li>
-<p><strong>find an expense</strong><br>
-<code>findexpense &lt;KEYWORD&gt; [&lt;MORE_KEYWORD&gt;]</code></p>
-</li>
-<li>
-<p><strong>Clear all expenses and budgets</strong>:<br>
-<code>clearall</code></p>
+<p><strong>Redo</strong> : <code>redo</code></p>
 </li>
 </ul>
 </div>
 <hr>
 <div class="paragraph">
-<p>All About Budgeting:</p>
+<p><strong>All about expenses:</strong></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Create a new budget</strong> : <code>budget d/DESCRIPTION p/AMOUNT sd/START_DATE pr/PERIOD</code><br>
+<p><strong>Add an expense</strong> (<em>undoable</em>) : <code>addexpense d/&lt;DESCRIPTION&gt; p/&lt;PRICE&gt;  c/&lt;CATEGORY&gt; [t/&lt;TIME&gt;]</code><br>
+e.g. <code>addexpense d/Chicken Rice p/2.50 t/15-09-2019 1230 c/Food</code></p>
+</li>
+<li>
+<p><strong>List all expenses</strong> (<em>undoable</em>) : <code>listexpenses</code></p>
+</li>
+<li>
+<p><strong>Edit an expenses</strong> (<em>undoable</em>) : <code>editexpense &lt;INDEX&gt; [d/&lt;DESCRIPTION&gt;] [p/&lt;PRICE&gt;]  [c/&lt;CATEGORY&gt;] [t/&lt;TIME&gt;]</code><br>
+e.g. <code>editexpense 1 p/2.50 t/15-09-2019 1230 c/Food</code></p>
+</li>
+<li>
+<p><strong>Delete an expense</strong> (<em>undoable</em>) : <code>deleteexpense &lt;INDEX&gt;</code></p>
+</li>
+<li>
+<p><strong>Find an expense</strong> (<em>undoable</em>) : <code>findexpense &lt;KEYWORD&gt; [&lt;MORE_KEYWORD&gt;]</code></p>
+</li>
+<li>
+<p><strong>Clear all expenses and budgets</strong> (<em>undoable</em>) : <code>clearall</code></p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>All about budgeting:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Create a new budget</strong> (<em>undoable</em>) : <code>addbudget d/&lt;DESCRIPTION&gt; p/&lt;AMOUNT&gt; sd/&lt;START_DATE&gt; pr/&lt;PERIOD&gt;</code><br>
 e.g. <code>budget d/school p/300 sd/01-10-2019 pr/month</code></p>
 </li>
 <li>
-<p><strong>Switch between budgets</strong> : <code>switchbudget d/DESCRIPTION</code><br>
+<p><strong>Switch between budgets</strong> (<em>undoable</em>) : <code>switchbudget d/DESCRIPTION</code><br>
 e.g. <code>switchbudget d/outside school</code></p>
 </li>
 <li>
 <p><strong>List all budgets</strong> : <code>listbudgets</code></p>
 </li>
 <li>
-<p><strong>Edit a budget</strong> : <code>editbudget INDEX d/DESCRIPTION p/AMOUNT sd/START_DATE pr/PERIOD</code><br>
-e.g. <code>editbudget 2 d/school expenses p/400 sd/05-10</code></p>
+<p><strong>Edit a budget</strong> (<em>undoable</em>): <code>editbudget &lt;INDEX&gt; d/&lt;DESCRIPTION&gt; p/&lt;AMOUNT&gt; sd/&lt;START_DATE&gt; pr/&lt;PERIOD&gt;</code><br>
+e.g. <code>editbudget 2 d/school expenses p/400 sd/05-10 pr/week</code></p>
 </li>
 <li>
-<p><strong>Delete a budget (by name)</strong> : <code>deletebudget INDEX</code><br>
+<p><strong>Delete a budget by name</strong> (<em>undoable</em>): <code>deletebudget d/&lt;DESCRIPTION&gt;</code><br>
 e.g. <code>deletebudget d/school</code></p>
 </li>
 <li>
-<p><strong>Delete a budget (by index)</strong> : <code>deletebudgetid INDEX</code><br>
+<p><strong>Delete a budget by index</strong> (<em>undoable</em>): <code>deletebudgetid &lt;INDEX&gt;</code><br>
 e.g. <code>deletebudget 2</code></p>
 </li>
 <li>
-<p><strong>Delete all budgets</strong>: <code>clearbudgets</code></p>
+<p><strong>Clear all budgets</strong> : <code>clearbudgets</code></p>
 </li>
 <li>
-<p><strong>View expenses in a different period</strong> : <code>switchperiod</code><br>
+<p><strong>View expenses in a different period</strong> (<em>undoable</em>): <code>switchperiod t/&lt;DATE&gt;</code><br>
 e.g. <code>switchperiod t/01-05</code></p>
 </li>
 </ul>
 </div>
 <hr>
 <div class="paragraph">
-<p>Viewing Statistics:</p>
+<p><strong>Viewing statistics:</strong></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Summary Statistics</strong> : <code>stats [start/START_DATE] [end/END_DATE]</code><br>
+<p><strong>Summary statistics</strong> : <code>stats [start/START_DATE] [end/END_DATE]</code><br>
 e.g. <code>stats sd/11-11-2018 ed/12-12-2018</code></p>
 </li>
 <li>
-<p><strong>Comparison statistics</strong> : <code>statscompare sd1/START_DATE_1 sd2/START_DATE_2</code><br>
-e.g. <code>statscompare sd1/01-01-2019 sd2/01-02-2019 pr/week</code></p>
-</li>
-<li>
-<p><strong>Comparison statistics</strong> : <code>statscompare sd1/START_DATE_1 sd2/START_DATE_2</code><br>
+<p><strong>Comparison statistics</strong> : <code>statscompare sd1/START_DATE_1 sd2/START_DATE_2 pr/PERIOD</code><br>
 e.g. <code>statscompare sd1/01-01-2019 sd2/01-02-2019 pr/week</code></p>
 </li>
 <li>
@@ -1643,12 +1659,12 @@ e.g. <code>statstrend sd/11-11-2018 ed/12-12-2018 mode/category</code></p>
 </div>
 <hr>
 <div class="paragraph">
-<p><strong>Alias commands</strong></p>
+<p><strong>Everything alias:</strong></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Add alias</strong> : <code>addalias a/&lt;ALIAS_NAME&gt; c/&lt;INPUT&gt;</code><br>
+<p><strong>Add alias</strong> (<em>undoable</em>) : <code>addalias a/&lt;ALIAS_NAME&gt; c/&lt;INPUT&gt;</code><br>
 e.g. <code>alias a/chicken rice c/ add d/ Chicken Rice p/2.50 c/Food</code></p>
 </li>
 <li>
@@ -1659,32 +1675,5 @@ e.g. <code>alias a/chicken rice c/ add d/ Chicken Rice p/2.50 c/Food</code></p>
 </li>
 </ul>
 </div>
-<hr>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Exit the app</strong> : <code>exit</code></p>
-</li>
-<li>
-<p><strong>Find an expense</strong> : <code>find KEYWORD [MORE_KEYWORDS]</code><br>
-e.g. <code>find rice</code></p>
-</li>
-<li>
-<p><strong>List all expenses</strong> : <code>listexpenses</code></p>
-</li>
-<li>
-<p><strong>List all events</strong> : <code>listevents</code></p>
-</li>
-<li>
-<p><strong>Help</strong> : <code>help</code></p>
-</li>
-<li>
-<p><strong>Redo</strong> : <code>redo</code></p>
-</li>
-<li>
-<p><strong>Undo</strong> : <code>undo</code></p>
-</li>
-</ul>
 </div>
-</div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-01 07:21:58 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-01 07:35:19 UTC</div></div></div></body></html>
