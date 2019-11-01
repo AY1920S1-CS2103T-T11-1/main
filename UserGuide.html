@@ -19,7 +19,7 @@
 <li><a href="#basic-expense-related-commands">3.4. Basic Expense-related Commands</a></li>
 <li><a href="#basic-event-related-commands">3.5. Basic Event-related Commands</a></li>
 <li><a href="#let-s-do-budgeting">3.6. Let&#8217;s Do Budgeting</a></li>
-<li><a href="#creating-an-alias-for-your-favourite-commands-code-alias-code">3.7. Creating an alias for your favourite commands : <code>alias</code></a></li>
+<li><a href="#making-inputs-quick-and-easy">3.7. Making inputs quick and easy.</a></li>
 <li><a href="#saving-the-data">3.8. Saving the data</a></li>
 <li><a href="#viewing-statistics">3.9. Viewing Statistics</a></li>
 <li><a href="#exiting-the-program-code-exit-code">3.10. Exiting the program : <code>exit</code></a></li>
@@ -80,13 +80,13 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <div class="ulist">
 <ul>
 <li>
-<p><strong><code>list</code></strong> : lists all expenses</p>
+<p><strong><code>listexpense</code></strong> : lists all expenses</p>
 </li>
 <li>
-<p><strong><code>add</code></strong><code>d/Chicken Rice p/2.50 c/Food t/25-10</code> : adds an expense named <code>Chicken Rice</code> to the expense tracker.</p>
+<p><strong><code>addexpense</code></strong><code>d/Chicken Rice p/2.50 c/Food t/25-10</code> : adds an expense named <code>Chicken Rice</code> to the expense tracker.</p>
 </li>
 <li>
-<p><strong><code>delete</code></strong><code>3</code> : deletes the 3rd expense shown in the current list</p>
+<p><strong><code>deleteexpense</code></strong><code>3</code> : deletes the 3rd expense shown in the current list</p>
 </li>
 <li>
 <p><strong><code>exit</code></strong> : exits the app</p>
@@ -112,26 +112,43 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <div class="ulist">
 <ul>
 <li>
-<p>Words in UPPER_CASE are the parameters to be supplied by you!
-e.g. in <code>add p/PRICE</code>, <code>PRICE</code> is a parameter which can be used as <code>add p/2.50</code></p>
+<p>Words in between <code>&lt;</code> and <code>&gt;</code> are the parameters which are to supplied by you!<br>
+e.g. <code>add p/&lt;PRICE&gt;</code>, you will need to supply a value to be used as the <code>PRICE</code> such as <code>add p/2.50</code> .</p>
 </li>
 <li>
-<p>You don&#8217;t have to input the parameters in square brackets if you don&#8217;t want to; they are optional.</p>
+<p>You don&#8217;t have to input the parameters in square brackets if you don&#8217;t want to. These arguments are optional, and you
+may use them so specify more details.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>d/DESCRIPTION p/PRICE c/CATEGORY [t/DATE]</code> can be used as <code>add d/Chicken Rice p/2.50 c/Food</code> or
-<code>add d/Chicken Rice p/2.50 c/Food t/25-01</code></p>
+<p><code>addexpense d/&lt;DESCRIPTION&gt; p/&lt;PRICE&gt; c/&lt;CATEGORY&gt; [t/&lt;DATE&gt;]</code> means that both<br>
+<code>addexpense d/Chicken Rice p/2.50 c/Food</code><br>
+<code>addexpense d/Chicken Rice p/2.50 c/Food t/25-01</code><br>
+are valid inputs</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>You can input parameters in any order.</p>
+<p>You may also enter parameters which have a prefix in any order.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>add p/PRICE d/DESCRIPTION</code>, <code>add d/DESCRIPTION p/PRICE</code> are both acceptable.</p>
+<p><code>addexpense p/2.50 d/chicken rice c/food</code><br>
+<code>addexpense c/food d/chicken rice p/2.50</code> are both valid.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>However, for commands which require an argument without a prefix require that the argument be supplied immediately after the command word.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>editexpense 1 p/2.30</code> is valid.</p>
+</li>
+<li>
+<p><code>editexpense d/2.30 1</code> is not valid.</p>
 </li>
 </ul>
 </div>
@@ -207,7 +224,12 @@ At the end, expense #5 will keep being deleted (poor thing!). MooLah will also d
 <p>This is MooLah&#8217;s fundamental feature: you can add your expenses.</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>addexpense d/DESCRIPTION p/PRICE c/CATEGORY [t/TIMESTAMP]</code></p>
+<p>This is the format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addexpense d/&lt;DESCRIPTION&gt; p/&lt;PRICE&gt; c/&lt;CATEGORY&gt; [t/TIMESTAMP]</pre>
+</div>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -217,7 +239,8 @@ At the end, expense #5 will keep being deleted (poor thing!). MooLah will also d
 <p>If you don&#8217;t specify the time, your expense will be added with its time being the current system time.</p>
 </li>
 <li>
-<p>You should only input one of the following into the CATEGORY field: FOOD, TRAVEL, TRANSPORT, SHOPPING, UTILITIES, HEALTHCARE, ENTERTAINMENT, EDUCATION, OTHERS.
+<p>You should only input one of the following into the CATEGORY field: <code>FOOD</code>, <code>TRAVEL</code>, <code>TRANSPORT</code>,
+<code>SHOPPING</code>, <code>UTILITIES</code>, <code>HEALTHCARE</code>, <code>ENTERTAINMENT</code>, <code>EDUCATION</code>, <code>OTHERS</code>.
 These categories are case-insensitive.</p>
 </li>
 </ul>
@@ -256,14 +279,23 @@ These categories are case-insensitive.</p>
 <p>Made a mistake? You can edit expenses too.</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>edit INDEX [p/PRICE] [d/DESCRIPTION] [t/TIMESTAMP] [c/CATEGORY]&#8230;&#8203;</code></p>
+<p>Format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>editexpense &lt;INDEX&gt; [p/&lt;PRICE&gt;] [d/&lt;DESCRIPTION&gt;] [t/&lt;TIMESTAMP&gt;] [c/&lt;CATEGORY&gt;]</pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Example:</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre>editexpense 2 p/3.50</pre>
+</div>
+</div>
 <div class="paragraph">
-<p><code>edit 2 p/3.50</code>
-Updates the price of the 2nd expense in the current list to 3.50.</p>
+<p>This will update the price of the 2nd expense in the current list to 3.50.</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -295,7 +327,12 @@ Updates the price of the 2nd expense in the current list to 3.50.</p>
 <p>You can find expenses whose description contains any of the keywords you inputted.</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>find KEYWORD [MORE_KEYWORDS]</code></p>
+<p>Format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>findexpense &lt;KEYWORD&gt; [&lt;MORE_KEYWORDS&gt;]</pre>
+</div>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -327,10 +364,11 @@ Updates the price of the 2nd expense in the current list to 3.50.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>find rice</code> returns <code>chicken rice</code> and <code>duck rice</code>.</p>
+<p><code>findexpense rice</code> will show you all expenses with rice in their description</p>
 </li>
 <li>
-<p><code>find chicken taxi schoolfee</code> returns any expense having description containing <code>chicken</code>, <code>taxi</code>, or <code>schoolfee</code>.</p>
+<p><code>findexpense chicken taxi schoolfee</code> will show you all expenses with either <code>chicken</code>, <code>taxi</code>, <code>schoolfee</code>, or a
+combination of those in their description.</p>
 </li>
 </ul>
 </div>
@@ -341,7 +379,12 @@ Updates the price of the 2nd expense in the current list to 3.50.</p>
 <p>You can also delete an expense from the expenses list in MooLah.</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>deleteexpense INDEX</code></p>
+<p>Format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>deleteexpense &lt;INDEX&gt;</pre>
+</div>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -365,22 +408,22 @@ Updates the price of the 2nd expense in the current list to 3.50.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>listexpenses
-delete 2</code></pre>
+<pre>listexpense
+delete 2</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Deletes the 2nd expense in the list of expenses, shown by <code>list</code>.</p>
+<p>Deletes the 2nd expense in the list of expenses, shown after <code>listexpense</code> is executed.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>list
-find chicken
-delete 1</code></pre>
+<pre>listexpense
+findexpense chicken
+deleteexpense 1</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Deletes the 1st expense in the results of the <code>find</code> command.</p>
+<p>Deletes the 1st expense in the results of the <code>findexpense</code> command.</p>
 </div>
 </div>
 </div>
@@ -406,17 +449,23 @@ asking you whether you wish to add these events as corresponding expenses.</p>
 <p>Events share the same fields as expenses, so you add them the same way.</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>addevent d/DESCRIPTION p/PRICE c/CATEGORY t/TIMESTAMP</code></p>
+<p>Format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addevent d/&lt;DESCRIPTION&gt; p/&lt;PRICE&gt; c/&lt;CATEGORY&gt; t/&lt;TIMESTAMP&gt;</pre>
+</div>
 </div>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
 <ul>
 <li>
-<p>Events are potential future expenses, so the `TIMESTAMP' field is compulsory and should contain a future time.</p>
+<p>Events are potential future expenses, so the <code>TIMESTAMP</code> field is compulsory and should contain a future time.</p>
 </li>
 <li>
-<p>You should only input one of the following into the CATEGORY field: FOOD, TRAVEL, TRANSPORT, SHOPPING, UTILITIES, HEALTHCARE, ENTERTAINMENT, EDUCATION, OTHERS.
+<p>You should only input one of the following into the <code>CATEGORY</code> field:
+<code>FOOD</code>, <code>TRAVEL</code>, <code>TRANSPORT</code>, <code>SHOPPING</code>, <code>UTILITIES</code>, <code>HEALTHCARE</code>, <code>ENTERTAINMENT</code>, <code>EDUCATION</code>, <code>OTHERS</code>.
 These categories are case-insensitive.</p>
 </li>
 </ul>
@@ -446,7 +495,12 @@ These categories are case-insensitive.</p>
 <p>You can list every single event you have added into MooLah.</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>listevents</code></p>
+<p>Format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>listevents</pre>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -455,14 +509,23 @@ These categories are case-insensitive.</p>
 <p>You can edit events the same way you edit expenses.</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>edit INDEX [p/PRICE] [d/DESCRIPTION] [t/TIMESTAMP] [c/CATEGORY]&#8230;&#8203;</code></p>
+<p>Format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre> editevent &lt;INDEX&gt; [p/&lt;PRICE&gt;] [d/&lt;DESCRIPTION&gt;] [t/&lt;TIMESTAMP&gt;] [c/&lt;CATEGORY&gt;]</pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Example:</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre>editevent 2 p/300</pre>
+</div>
+</div>
 <div class="paragraph">
-<p><code>editevent 2 p/300</code>
-Updates the price of the 2nd event in the current list to 300.</p>
+<p>Updates the price of the 2nd event in the current list to be 300.</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -491,7 +554,12 @@ Updates the price of the 2nd event in the current list to 300.</p>
 <p>You can also delete an event from the events list in MooLah.</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>deleteevent INDEX</code></p>
+<p>Format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>deleteevent &lt;INDEX&gt;</pre>
+</div>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -515,8 +583,8 @@ Updates the price of the 2nd event in the current list to 300.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>listevents
-delete 2</code></pre>
+<pre>listevents
+delete 2</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -580,7 +648,7 @@ of how much you have overspent.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>addbudget d/DESCRIPTION p/AMOUNT sd/START_DATE pr/PERIOD</pre>
+<pre>addbudget d/&lt;DESCRIPTION&gt; p/&lt;AMOUNT&gt; sd/&lt;START_DATE&gt; pr/&lt;PERIOD&gt;</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -630,7 +698,7 @@ to <code>01-11-2019 to 30-11-2019</code>, and all past expenses archived, giving
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>switchbudget d/BUDGET_NAME`</pre>
+<pre>switchbudget d/&lt;BUDGET_NAME&gt;`</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -650,13 +718,13 @@ from now on will be tracked under the "outside school" budget instead.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="list-all-budgets-code-listbudgets-code"><a class="link" href="#list-all-budgets-code-listbudgets-code">3.6.3. List all budgets: <code>listbudgets</code></a></h4>
+<h4 id="list-all-budgets-code-listbudget-code"><a class="link" href="#list-all-budgets-code-listbudget-code">3.6.3. List all budgets: <code>listbudget</code></a></h4>
 <div class="paragraph">
 <p>To get an overview of all the budgets at hand, simply type:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>listbudgets</pre>
+<pre>listbudget</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -686,8 +754,8 @@ from now on will be tracked under the "outside school" budget instead.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>listbudgets (first go to list of budgets)
-editbudget INDEX d/DESCRIPTION p/AMOUNT sd/START DATE pr/PERIOD</pre>
+<pre>listbudget (first go to list of budgets)
+editbudget &lt;INDEX&gt; d/&lt;DESCRIPTION&gt; p/&lt;AMOUNT&gt; sd/&lt;START DATE&gt; pr/&lt;PERIOD&gt;</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -696,7 +764,7 @@ refreshed on the first day of each month, after typing:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>listbudgets (first go to list of budgets)
+<pre>listbudget (first go to list of budgets)
 editbudget 2 d/school expenses p/400 sd/05-10</pre>
 </div>
 </div>
@@ -725,7 +793,7 @@ and <code>PERIOD</code>, more than one at a time.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>deletebudget d/BUDGET_NAME</pre>
+<pre>deletebudget d/&lt;BUDGET_NAME&gt;</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -751,7 +819,7 @@ and <code>PERIOD</code>, more than one at a time.</p>
 <div class="listingblock">
 <div class="content">
 <pre>listbudgets (first go to list of budgets)
-deletebudget INDEX</pre>
+deletebudget &lt;INDEX&gt;</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -799,7 +867,7 @@ again for further testing.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>switchperiod t/DATE</pre>
+<pre>switchperiod t/&lt;DATE&gt;</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -832,31 +900,240 @@ to input again.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="creating-an-alias-for-your-favourite-commands-code-alias-code"><a class="link" href="#creating-an-alias-for-your-favourite-commands-code-alias-code">3.7. Creating an alias for your favourite commands : <code>alias</code></a></h3>
+<h3 id="making-inputs-quick-and-easy"><a class="link" href="#making-inputs-quick-and-easy">3.7. Making inputs quick and easy.</a></h3>
+<div class="sect3">
+<h4 id="creating-a-shortcut-code-alias-code"><a class="link" href="#creating-a-shortcut-code-alias-code">3.7.1. Creating a shortcut:  <code>alias</code></a></h4>
 <div class="paragraph">
-<p>Assign a full parameterized input to an alias.</p>
+<p>You can save your favourite inputs by assigning an them to an <code>alias</code>.</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>alias a/ALIAS_NAME c/COMMAND_WITH_PARAMETERS</code></p>
+<p>The format is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addalias a/&lt;ALIAS_NAME&gt; i/&lt;INPUT&gt;</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>E.g.
-<code>alias a/chicken rice c/ add d/ Chicken Rice p/2.50 c/Food</code>
-Result creates an alias “chicken rice” for the command which adds an expense of 2.50 under the Food category with a
-description of “Chicken Rice” at the current system time.</p>
+<p>For example, you can type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addalias a/chicken i/ addexpense d/ Chicken Rice p/2.50 c/Food</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This creates an alias <code>chicken</code> for <code>addexpense d/ Chicken Rice p/2.50 c/Food</code> which when executed creates:<br>
+an <code>Expense</code> with <code>price=2.50</code> and <code>description=“Chicken Rice”</code> in the <code>Food category</code>.</p>
+</div>
+<div class="paragraph">
+<p>You may also create an alias with an incomplete input which you may add arguments to when using it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addalias a/ addfood i/ addexpense c/Food
+addfood d/ chickenrice p/3.50</pre>
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><strong>Note</strong></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Note: all white spaces characters will be removed from alias names</p>
+<p>alias names cannot contain white spaces.</p>
 </li>
 <li>
-<p>Note: aliases with names of official commands cannot be made</p>
+<p>alias names cannot be the name of another alias.</p>
 </li>
 <li>
-<p>Note: using the same name for an alias will overwrite the existing alias if it exists</p>
+<p>you may not create an alias to create an alias</p>
+</li>
+<li>
+<p>using the same name for an alias will overwrite the existing alias if it exists.</p>
+</li>
+<li>
+<p>using the same name for an alias will overwrite the existing alias if it exists.</p>
 </li>
 </ul>
+</div>
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><strong>Warning</strong> <br>
+Because MooLah prioritizes later instances of a prefix, including <code>a/</code> and <code>i/</code> in your input may cause your Alias to
+not be parsed properly.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="listing-the-shortcuts-you-have-saved-code-listalias-code"><a class="link" href="#listing-the-shortcuts-you-have-saved-code-listalias-code">3.7.2. Listing the shortcuts you have saved: <code>listalias</code></a></h4>
+<div class="paragraph">
+<p>To view the aliases you have defined, you may use the <code>listalias</code>.</p>
+</div>
+<div class="paragraph">
+<p>Alternatively, you may use the <code>view</code> command by typing <code>view Aliases</code>.</p>
+</div>
+<div class="paragraph">
+<p>Either of these will bring you to the <code>User Defined Aliases</code> panel where
+you can see the list of aliases you have created.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="deleting-the-shortcuts-you-no-longer-want-to-use-code-deletealias-code"><a class="link" href="#deleting-the-shortcuts-you-no-longer-want-to-use-code-deletealias-code">3.7.3. Deleting the shortcuts you no longer want to use: <code>deletealias</code></a></h4>
+<div class="paragraph">
+<p>To delete an <code>Alias</code> you no longer wish to use, you may use the <code>deletealias</code> command.</p>
+</div>
+<div class="paragraph">
+<p>This is the format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>deletealias &lt;ALIAS_NAME&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will delete the <code>Alias</code> with the name you specified. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addalias a/hello i/helloworld
+deletealias hello</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will delete the <code>hello</code> from your saved shortcuts.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="autocomplete"><a class="link" href="#autocomplete">3.7.4. Autocomplete</a></h4>
+<div class="paragraph">
+<p>When entering a command, MooLah will show you a list of valid command words which match the text you have entered.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><span class="image"><img src="images/autocommand0.png" alt="autocommand0" width="350px"></span><br>
+You can press <kbd>TAB</kbd> to cycle through the available suggestions and press <kbd>ENTER</kbd> to autocomplete.
+All other keys will hide the menu.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>When you have entered a valid command, MooLah will show you a list of prefixes you have missed while typing your input.
+Prefixes with the red <code>Missing</code> tag are required prefixes you have not entered. While orange <code>Optional</code>
+prefixes are not necessary.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><span class="image"><img src="images/autoprefix0.png" alt="autoprefix0" width="350px"></span><br>
+You can press <kbd>TAB</kbd> to cycle through the available suggestions and press <kbd>ENTER</kbd> to autocomplete.
+All other keys will hide the menu.</p>
+</div>
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><span class="image"><img src="images/autoprefix1.png" alt="autoprefix1" width="350px"></span><br>
+After including the prefix, the prefix will not be included in the menu.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>If you choose <code>ALL MISSING</code>, all your missing required prefixes will be inserted.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="syntax-highlighting"><a class="link" href="#syntax-highlighting">3.7.5. Syntax Highlighting</a></h4>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><span class="image"><img src="images/syntaxhighlighting0.png" alt="syntaxhighlighting0" width="350px"></span><br>
+argument and prefix highlighting</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>MooLah highlights valid prefixes, and indicates what arguments fall under them.</p>
+</div>
+<div class="paragraph">
+<p><strong>note</strong>: while an argument may be highlighted, it does mean the value is valid.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><span class="image"><img src="images/descriptionplaceholder.png" alt="descriptionplaceholder" width="350px"></span><br>
+<code>&lt;placeholder&gt;</code> for description field</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>After typing in a prefix, MooLah will put a <code>&lt;placeholder&gt;</code> to remind you what the argument you should
+enter is.<br>
+Typing over this area will write write over the placeholder.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><span class="image"><img src="images/amountplaceholder.png" alt="amountplaceholder" width="350px"></span><br>
+<code>&lt;placeholder&gt;</code> for amount field</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>note</strong><br>
+If you forget to type over the placeholders, do not worry. It will not affect your input as these placeholders are
+ignored during execution of your input.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="input-history"><a class="link" href="#input-history">3.7.6. Input history</a></h4>
+<div class="paragraph">
+<p>You may cycle through successfully entered commands during the current session with the <kbd>UP</kbd> and <kbd>DOWN</kbd> keys.</p>
+</div>
+<div class="paragraph">
+<p>For example, if you entered these commands previously.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addexpense d/chickenrice p/12.3 c/food
+addexpense d/chickenrice p/12.3 c/food
+addexpense d/duck rice p/12.3111 c/food</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You may cycle thorough these commands using the arrow keys.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="generic-commands"><a class="link" href="#generic-commands">3.7.7. Generic commands</a></h4>
+<div class="paragraph">
+<p>MooLah has 5 generic commands which behave differently depending on which Panel in the UI is being shown at the moment.
+These commands are <code>add</code>, <code>list</code>, <code>clear</code>, <code>delete</code>, and <code>edit</code>. These generic commands differ from Panel to Panel.</p>
+</div>
+<div class="paragraph">
+<p>For example, you are in the Expense List Panel, then the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>add d/chicken duck p/3 c/food</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>will be interpreted as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addexpense d/chicken duck p/3 c/food</pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -880,7 +1157,7 @@ the combined expenditure of all expenses under the category,
 taken as a percentage of the total expenditure in the budget the command was called.</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>stats [sd/START_DATE] [ed/END_DATE]</code></p>
+<p>Format: <code>stats [sd/&lt;START_DATE&gt;] [ed/&lt;END_DATE&gt;]</code></p>
 </div>
 <div class="ulist NOTE">
 <ul class="NOTE">
@@ -984,7 +1261,7 @@ while the cells in the second pair of columns, denoted as the "difference column
 represents the difference in frequency and difference in total expenditure.</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>statscompare sd1/START_DATE_1 sd2/START_DATE_2 [pr/PERIOD]</code></p>
+<p>Format: <code>statscompare sd1/&lt;START_DATE_1&gt; sd2/&lt;START_DATE_2&gt; [pr/&lt;PERIOD&gt;]</code></p>
 </div>
 <div class="ulist NOTE">
 <ul class="NOTE">
@@ -1095,7 +1372,7 @@ represents the total expenditure starting from its stated date,
 till before the start of the next date.</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>statstrend [sd/START_DATE] [ed/END_DATE] mode/MODE</code></p>
+<p>Format: <code>statstrend [sd/&lt;START_DATE&gt;] [ed/&lt;END_DATE&gt;] mode/MODE</code></p>
 </div>
 <div class="ulist NOTE">
 <ul class="NOTE">
@@ -1239,11 +1516,31 @@ the data of your previous MooLah folder.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Add an expense</strong> <code>add d/DESCRIPTION p/PRICE [t/time] [c/CATEGORY]&#8230;&#8203;</code><br>
-e.g. <code>add d/Chicken Rice p/2.50 t/15-09-2019 1230 c/Food</code></p>
+<p><strong>Add an expense</strong><br>
+<code>addexpense d/&lt;DESCRIPTION&gt; p/&lt;PRICE&gt;  c/&lt;CATEGORY&gt; [t/&lt;time&gt;]</code><br>
+e.g. <code>addexpense d/Chicken Rice p/2.50 t/15-09-2019 1230 c/Food</code></p>
 </li>
 <li>
-<p><strong>Clear all expenses</strong> : <code>clear</code></p>
+<p><strong>list all expenses</strong><br>
+<code>listexpense</code><br>
+e.g. <code>listexpense</code></p>
+</li>
+<li>
+<p><strong>edit an expenses</strong><br>
+<code>editexpense &lt;INDEX&gt; [d/&lt;DESCRIPTION&gt;] [p/&lt;PRICE&gt;]  [c/&lt;CATEGORY&gt;] [t/&lt;time&gt;]</code><br>
+e.g. <code>editexpense 1 p/2.50 t/15-09-2019 1230 c/Food</code></p>
+</li>
+<li>
+<p><strong>delete an expense</strong><br>
+<code>deleteexpense &lt;INDEX&gt;</code></p>
+</li>
+<li>
+<p><strong>find an expense</strong><br>
+<code>findexpense &lt;KEYWORD&gt; [&lt;MORE_KEYWORD&gt;]</code></p>
+</li>
+<li>
+<p><strong>Clear all expenses and budgets</strong>:<br>
+<code>clearall</code></p>
 </li>
 </ul>
 </div>
@@ -1310,23 +1607,26 @@ e.g. <code>statstrend sd/11-11-2018 ed/12-12-2018 mode/category</code></p>
 </ul>
 </div>
 <hr>
+<div class="paragraph">
+<p><strong>Alias commands</strong></p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Create alias</strong> : <code>alias a/ALIAS_NAME c/COMMAND_WITH_PARAMETERS</code><br>
+<p><strong>Add alias</strong> : <code>addalias a/&lt;ALIAS_NAME&gt; c/&lt;INPUT&gt;</code><br>
 e.g. <code>alias a/chicken rice c/ add d/ Chicken Rice p/2.50 c/Food</code></p>
 </li>
 <li>
-<p><strong>Currency conversion</strong> : <code>convert</code></p>
+<p><strong>See all aliases</strong> : <code>listalias</code></p>
 </li>
 <li>
-<p><strong>Delete an expense</strong> : <code>delete INDEX</code><br>
-e.g. <code>delete 3</code></p>
+<p><strong>Delete an alias</strong> : <code>deletealias &lt;DESCRIPTION&gt;</code></p>
 </li>
-<li>
-<p><strong>Edit an expense</strong> : <code>edit INDEX [p/PRICE] [d/DESCRIPTION] [t/time] [c/CATEGORY]&#8230;&#8203;</code><br>
-e.g. <code>edit 2 p/3.50</code></p>
-</li>
+</ul>
+</div>
+<hr>
+<div class="ulist">
+<ul>
 <li>
 <p><strong>Exit the app</strong> : <code>exit</code></p>
 </li>
@@ -1335,27 +1635,16 @@ e.g. <code>edit 2 p/3.50</code></p>
 e.g. <code>find rice</code></p>
 </li>
 <li>
-<p><strong>List all expenses</strong> : <code>list</code></p>
+<p><strong>List all expenses</strong> : <code>listexpense</code></p>
 </li>
 <li>
-<p><strong>List all reminders</strong> : <code>reminders</code></p>
+<p><strong>List all events</strong> : <code>listevent</code></p>
 </li>
 <li>
 <p><strong>Help</strong> : <code>help</code></p>
 </li>
 <li>
-<p><strong>Prediction</strong> : <code>predict</code></p>
-</li>
-<li>
-<p><strong>Record important date</strong> : <code>remind EVENT DATE [n DAYS]</code><br>
-e.g. <code>remind Brian’s birthday 04/06/2020 14 DAYS</code></p>
-</li>
-<li>
 <p><strong>Redo</strong> : <code>redo</code></p>
-</li>
-<li>
-<p><strong>Switch budget</strong> : <code>switch d/BUDGET_NAME</code><br>
-e.g. <code>switch d/outside school</code></p>
 </li>
 <li>
 <p><strong>Undo</strong> : <code>undo</code></p>
@@ -1363,4 +1652,4 @@ e.g. <code>switch d/outside school</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-31 20:00:33 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-01 00:23:31 UTC</div></div></div></body></html>

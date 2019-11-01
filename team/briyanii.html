@@ -1,0 +1,465 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Asciidoctor 1.5.6.1"><title>Brian Fung - Project Portfolio</title><link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css"></head><body class="article"><div id="seedu-header"><nav class="navbar navbar-lg navbar-light bg-lighter"><div class="container"><a class="navbar-brand" href="https://se-edu.github.io/"><img src="../images/SeEduLogo.png" alt="SE-EDU"></a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level1">AB-1</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level2">AB-2</a></li><li class="nav-item"><a class="nav-link active" href="../index.html">AB-3</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level4">AB-4</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/collate">Collate</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/se-book">Book</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/learningresources">Resources</a></li></ul></div></nav></div><div id="site-header"><nav class="navbar navbar-light bg-light"><div class="container"><a class="navbar-brand" href="../index.html">Expense Tracker</a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="../UserGuide.html">User Guide</a></li><li class="nav-item"><a class="nav-link" href="../DeveloperGuide.html">Developer Guide</a></li><li class="nav-item"><a class="nav-link" href="../LearningOutcomes.html">LOs</a></li><li class="nav-item"><a class="nav-link active" href="../AboutUs.html">About Us</a></li><li class="nav-item"><a class="nav-link" href="../ContactUs.html">Contact Us</a></li><li class="navitem"><a class="nav-link" href="https://github.com/AY1920S1-CS2103T-T11-1/main"><span class="fa fa-github fa-lg" aria-hidden="true"></span>&nbsp;View on GitHub</a></li></ul></div></nav></div><div id="header"><h1>Brian Fung - Project Portfolio</h1></div><div id="content"><div class="sect1">
+<h2 id="project-moolah"><a class="link" href="#project-moolah">PROJECT: MooLah</a></h2>
+<div class="sectionbody">
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="overview"><a class="link" href="#overview">Overview</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This portfolio aims to document the contributions made to MooLah by Brian Fung.</p>
+</div>
+<div class="paragraph">
+<p>MooLah is a desktop expense tracking application, which was morphed from the code of Software Engineering Education&#8217;s AddressBook - Level 3 used for teaching Software Engineering principles.
+MooLah is a hassle-free expense tracker aimed at NUS students.</p>
+</div>
+<div class="paragraph">
+<p>The user interacts with it using a Command-Line Interface (CLI), and it has a GUI created with JavaFX. It is written in Java, and has about 17 kLoC.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="summary-of-contributions"><a class="link" href="#summary-of-contributions">Summary of contributions</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Major enhancement</strong>: added <strong>shortcut feature</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>What it does:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>allows the user to assign an alias to an input, allowing them to create shortcuts for command which they
+frequently require. this saves them a lot of time entering all the arguments for a command, as well as reduces the need to
+remember what exactly needs to be entered.</p>
+</li>
+<li>
+<p>saves successfully inputted commands to history to allow reentering of commands used within the same session</p>
+</li>
+<li>
+<p>generic commands</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Justification: as this is a CLI-Interface application, users would generally have to remember a lot of commands as
+well as command syntax. This feature allows users to reduce the keystrokes needed to complete a task, and
+reduce the need to remember commands.</p>
+</li>
+<li>
+<p>Highlights:</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Major enhancement</strong>: added *autocomplete and syntax highlighting</p>
+<div class="ulist">
+<ul>
+<li>
+<p>What it does:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>highlights syntax to show which arguments belong under which prefix in the CLI-interface.</p>
+</li>
+<li>
+<p>adds placeholders to indicate what argument a prefix is expecting after a user enters the prefix</p>
+</li>
+<li>
+<p>shows what are the valid commands the user can enter</p>
+</li>
+<li>
+<p>shows what are the required prefixes and optional prefixes which the command requires.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>What it does: allows the user to see what arguments they may have missed, and help them remember what each the arguments needed
+for each command</p>
+</li>
+<li>
+<p>Justification: This feature improves the product significantly because a user does not need to remember confusing commands and syntax.
+Especially due to the fact that our application supports a large number of commands. This allows users to see what valid commands there are as well
+as what arguments are required without having to press enter the command and see an error message.</p>
+</li>
+<li>
+<p>Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives.
+The implementation too was challenging as it required changes to existing commands as well heavy use of javafx elements.</p>
+</li>
+<li>
+<p>Credits: {richtextfx demo&#8230;&#8203; }</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Major enhancement</strong>: add <strong>GUI elements for Budget List, Budgets, Expense List</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>What it does &#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Minor enhancement</strong>: add <strong>GUI support adding of future panels</strong>
+&#8230;&#8203;</p>
+</li>
+<li>
+<p><strong>Minor enhancement</strong>: <strong>initial refactoring of AddressBook into MooLah</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>refactor Person class to expense
+&#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Code contributed</strong>: [<a href="https://github.com">Functional code</a>] [<a href="https://github.com">Test code</a>] <em>{give links to collated code files}</em></p>
+</li>
+<li>
+<p><strong>Other contributions</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Project management:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Managed releases <code>v1.3</code> - <code>v1.5rc</code> (3 releases) on GitHub</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Enhancements to existing features:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Updated the GUI color scheme (---)</p>
+</li>
+<li>
+<p>Refactored the GUI to support of adding extra Panels</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Documentation:</p>
+</li>
+<li>
+<p>Community:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Some parts of the syntax highlighting/autocomplete feature was &#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Tools:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Integrated a third party library (RichTextFX) to the project (#&#8230;&#8203;)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><em>{you can add/remove categories in the list above}</em></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-user-guide"><a class="link" href="#contributions-to-the-user-guide">Contributions to the User Guide</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="making-inputs-quick-and-easy"><a class="link" href="#making-inputs-quick-and-easy">Making inputs quick and easy.</a></h3>
+<div class="sect3">
+<h4 id="creating-a-shortcut-code-alias-code"><a class="link" href="#creating-a-shortcut-code-alias-code">Creating a shortcut:  <code>alias</code></a></h4>
+<div class="paragraph">
+<p>You can save your favourite inputs by assigning an them to an <code>alias</code>.</p>
+</div>
+<div class="paragraph">
+<p>The format is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addalias a/&lt;ALIAS_NAME&gt; i/&lt;INPUT&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For example, you can type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addalias a/chicken i/ addexpense d/ Chicken Rice p/2.50 c/Food</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This creates an alias <code>chicken</code> for <code>addexpense d/ Chicken Rice p/2.50 c/Food</code> which when executed creates:<br>
+an <code>Expense</code> with <code>price=2.50</code> and <code>description=“Chicken Rice”</code> in the <code>Food category</code>.</p>
+</div>
+<div class="paragraph">
+<p>You may also create an alias with an incomplete input which you may add arguments to when using it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addalias a/ addfood i/ addexpense c/Food
+addfood d/ chickenrice p/3.50</pre>
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><strong>Note</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>alias names cannot contain white spaces.</p>
+</li>
+<li>
+<p>alias names cannot be the name of another alias.</p>
+</li>
+<li>
+<p>you may not create an alias to create an alias</p>
+</li>
+<li>
+<p>using the same name for an alias will overwrite the existing alias if it exists.</p>
+</li>
+<li>
+<p>using the same name for an alias will overwrite the existing alias if it exists.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><strong>Warning</strong> <br>
+Because MooLah prioritizes later instances of a prefix, including <code>a/</code> and <code>i/</code> in your input may cause your Alias to
+not be parsed properly.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="listing-the-shortcuts-you-have-saved-code-listalias-code"><a class="link" href="#listing-the-shortcuts-you-have-saved-code-listalias-code">Listing the shortcuts you have saved: <code>listalias</code></a></h4>
+<div class="paragraph">
+<p>To view the aliases you have defined, you may use the <code>listalias</code>.</p>
+</div>
+<div class="paragraph">
+<p>Alternatively, you may use the <code>view</code> command by typing <code>view Aliases</code>.</p>
+</div>
+<div class="paragraph">
+<p>Either of these will bring you to the <code>User Defined Aliases</code> panel where
+you can see the list of aliases you have created.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="deleting-the-shortcuts-you-no-longer-want-to-use-code-deletealias-code"><a class="link" href="#deleting-the-shortcuts-you-no-longer-want-to-use-code-deletealias-code">Deleting the shortcuts you no longer want to use: <code>deletealias</code></a></h4>
+<div class="paragraph">
+<p>To delete an <code>Alias</code> you no longer wish to use, you may use the <code>deletealias</code> command.</p>
+</div>
+<div class="paragraph">
+<p>This is the format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>deletealias &lt;ALIAS_NAME&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will delete the <code>Alias</code> with the name you specified. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addalias a/hello i/helloworld
+deletealias hello</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will delete the <code>hello</code> from your saved shortcuts.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="autocomplete"><a class="link" href="#autocomplete">Autocomplete</a></h4>
+<div class="paragraph">
+<p>When entering a command, MooLah will show you a list of valid command words which match the text you have entered.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><span class="image"><img src="../images/autocommand0.png" alt="autocommand0" width="350px"></span><br>
+You can press <kbd>TAB</kbd> to cycle through the available suggestions and press <kbd>ENTER</kbd> to autocomplete.
+All other keys will hide the menu.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>When you have entered a valid command, MooLah will show you a list of prefixes you have missed while typing your input.
+Prefixes with the red <code>Missing</code> tag are required prefixes you have not entered. While orange <code>Optional</code>
+prefixes are not necessary.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><span class="image"><img src="../images/autoprefix0.png" alt="autoprefix0" width="350px"></span><br>
+You can press <kbd>TAB</kbd> to cycle through the available suggestions and press <kbd>ENTER</kbd> to autocomplete.
+All other keys will hide the menu.</p>
+</div>
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><span class="image"><img src="../images/autoprefix1.png" alt="autoprefix1" width="350px"></span><br>
+After including the prefix, the prefix will not be included in the menu.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>If you choose <code>ALL MISSING</code>, all your missing required prefixes will be inserted.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="syntax-highlighting"><a class="link" href="#syntax-highlighting">Syntax Highlighting</a></h4>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><span class="image"><img src="../images/syntaxhighlighting0.png" alt="syntaxhighlighting0" width="350px"></span><br>
+argument and prefix highlighting</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>MooLah highlights valid prefixes, and indicates what arguments fall under them.</p>
+</div>
+<div class="paragraph">
+<p><strong>note</strong>: while an argument may be highlighted, it does mean the value is valid.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><span class="image"><img src="../images/descriptionplaceholder.png" alt="descriptionplaceholder" width="350px"></span><br>
+<code>&lt;placeholder&gt;</code> for description field</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>After typing in a prefix, MooLah will put a <code>&lt;placeholder&gt;</code> to remind you what the argument you should
+enter is.<br>
+Typing over this area will write write over the placeholder.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><span class="image"><img src="../images/amountplaceholder.png" alt="amountplaceholder" width="350px"></span><br>
+<code>&lt;placeholder&gt;</code> for amount field</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>note</strong><br>
+If you forget to type over the placeholders, do not worry. It will not affect your input as these placeholders are
+ignored during execution of your input.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="input-history"><a class="link" href="#input-history">Input history</a></h4>
+<div class="paragraph">
+<p>You may cycle through successfully entered commands during the current session with the <kbd>UP</kbd> and <kbd>DOWN</kbd> keys.</p>
+</div>
+<div class="paragraph">
+<p>For example, if you entered these commands previously.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addexpense d/chickenrice p/12.3 c/food
+addexpense d/chickenrice p/12.3 c/food
+addexpense d/duck rice p/12.3111 c/food</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You may cycle thorough these commands using the arrow keys.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="generic-commands"><a class="link" href="#generic-commands">Generic commands</a></h4>
+<div class="paragraph">
+<p>MooLah has 5 generic commands which behave differently depending on which Panel in the UI is being shown at the moment.
+These commands are <code>add</code>, <code>list</code>, <code>clear</code>, <code>delete</code>, and <code>edit</code>. These generic commands differ from Panel to Panel.</p>
+</div>
+<div class="paragraph">
+<p>For example, you are in the Expense List Panel, then the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>add d/chicken duck p/3 c/food</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>will be interpreted as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addexpense d/chicken duck p/3 c/food</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-developer-guide"><a class="link" href="#contributions-to-the-developer-guide">Contributions to the Developer Guide</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><em>{Optionally, you may include other projects in your portfolio.}</em></p>
+</div>
+</div>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-01 00:23:31 UTC</div></div></div></body></html>
