@@ -1054,9 +1054,15 @@ Once again, this question will be better addressed holistically once all 3 featu
 <div class="sect4">
 <h5 id="future-implementation-coming-in-v2-0-2"><a class="link" href="#future-implementation-coming-in-v2-0-2">Future Implementation (Coming in v2.0)</a></h5>
 <div class="paragraph">
-<p>For each of the command words, users will be given the option to choose a Visual Representation method they prefer,
-instead of the default option we have prioritised. Currently, statistics under <code>stats</code> mode can only be displayed in a pie chart,
-and users may have different preferences for formats. Various options such as checking across different budgets other than within the same budget can also be considered.</p>
+<p>For each of the command words, users will be given the option to choose a Visual Representation method they prefer
+if the use case allows for it, instead of the default option we have prioritised.
+Currently, statistics under <code>stats</code> mode can only be displayed in a pie chart,
+and users may have different preferences for formats. The current implementation for MooLah
+is such that only expenses up to the current date will be included and any expenses after the current date
+is considered an event, which is not tracked by statistics. The inclusion of events in statistics
+can be a possible complementary feature to a prediction feature to pre-empt users about their incoming expenses.
+Last of all, more modes can be added to all existing commands, such as comparing with periods across different budgets
+other than being restricted within the same budget</p>
 </div>
 </div>
 </div>
@@ -2545,4 +2551,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-02 14:42:08 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-02 14:54:42 UTC</div></div></div></body></html>
