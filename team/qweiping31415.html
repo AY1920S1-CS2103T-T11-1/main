@@ -438,59 +438,91 @@ They showcase my ability to write technical documentation and the technical dept
 </tbody>
 </table>
 <div class="sect2">
-<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">Undo/Redo feature</a></h3>
+<h3 id="statistics-feature"><a class="link" href="#statistics-feature">Statistics Feature</a></h3>
+<div class="paragraph">
+<p>The statistics feature is facilitated by the <code>Statistics</code> class, which is part of the <code>model</code> package.
+Its main purpose is to allow users to have an alternative view for the entries in <code>MooLah</code>. The
+main entries that <code>Statistics</code> interacts with are <code>Expense</code> and <code>Budget</code>, and the metrics chosen to be displayed
+are handled mainly by <code>Statistics#calculateStatistics()</code>. The method recognises command words such as
+<code>stats</code>, <code>statscompare</code> and <code>statstrend</code>, where each results in a different visual representation and represents
+a different use case.</p>
+</div>
+<div class="paragraph">
+<p>The final outcome of these interactions are reflected directly in <code>MainWindow</code>, as a popup whenever the command is received
+by the command line.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Ideally, it should result in an <code>Undo</code>-able page-transition instead of a popup to ensure better integration with the rest of the application.
+</td>
+</tr>
+</table>
+</div>
 <div class="sect3">
-<h4 id="implementation"><a class="link" href="#implementation">Implementation</a></h4>
+<h4 id="code-stats-code"><a class="link" href="#code-stats-code"><code>stats</code></a></h4>
+<div class="sect4">
+<h5 id="implementation"><a class="link" href="#implementation">Implementation</a></h5>
 <div class="paragraph">
-<p>The undo/redo functionality is facilitated by <code>ModelHistory</code> which is an instance-level member for models.
-Internally, it stores model snapshots by using two stacks: <code>pastModels</code> and <code>futureModels</code>.
-With the addition of model history, now <code>Model</code> also supports these operations:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>Model#addToHistory()</code>&#8201;&#8212;&#8201;Moves the history forward by saving the current model snapshot in its past history and clearing the future history.</p>
-</li>
-<li>
-<p><code>Model#rollback()</code>&#8201;&#8212;&#8201;Restores the state to the immediate previous model in the history.</p>
-</li>
-<li>
-<p><code>Model#migrate()</code>&#8201;&#8212;&#8201;Forwards the state to the immediate next model in the history.</p>
-</li>
-</ul>
+<p>The purpose of the <code>stats</code> command word is to request <code>MooLah</code> to visualise the total expenditure across
+expenses of different categories as a percentage of the total expenditure of all expenses tracked under the budget
+where the command is called. The visual representation used here will be a PieChart.</p>
 </div>
 <div class="paragraph">
-<p><code>ModelHistory</code> only stores histories of models which were about to be (or are going to be) executed by model-changing commands.
-As some of the commands available are intuitively not undoable (e.g. <code>help</code>), we make commands extend to either <code>UndoableCommand</code> or a non-undoable <code>Command</code> classes.
-So, the <code>Model#addToHistory()</code> will only be called if the command to be executed is an instance of <code>UndoableCommand</code>.</p>
+<p>Given below is an example usage scenario and how the <code>stats</code> command word is handled by <code>MooLah</code>.</p>
 </div>
 <div class="paragraph">
-<p>Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.</p>
+<p>Step 1. The user enters the command <code>stats sd/01-10-2019 ed/01-11-2019</code> to visualise the total percentage of each category
+as a percentage of total expenditure across all categories, in the primary budget.
+The command is received by <code>AddressBookParser</code>, which then creates a <code>StatsCommandParser</code> object,
+to subsequently help to parse the input by the user.</p>
 </div>
 <div class="paragraph">
-<p>Step 1. The user launches the application for the first time. The current <code>ModelHistory</code> is now empty.</p>
+<p>Step 2. The newly created <code>StatsCommandParser</code> calls <code>parse("stats sd/01-10-2019 ed/01-11-2019")</code>,
+which in turns calls <code>ArgumentTokenizer.tokenize("sd/01-10-2019 ed/01-11-2019", PREFIX_START_DATE, PREFIX_END_DATE)</code> to
+split the arguments into its preamble(the start date and end date). This returns an <code>ArgumentMultimap</code> object, <code>argMultimap</code> containing the split input.</p>
+</div>
+<div class="paragraph">
+<p>Step 3. The <code>StatsCommandParser</code> object calls <code>ParserUtil.parseTimestamp(argMultimap.getValue(PREFIX_START_DATE).get())</code> which parses the arguments to get the start date.
+The date, that is present in this example, is parsed into the correct form and the end date is obtained similarly with
+<code>ParserUtil.parseTimestamp(argMultimap.getValue(PREFIX_END_DATE).get())</code>.
+A <code>StatsCommand</code> object containing the start date and end date is created and returned to the <code>LogicManager</code>.</p>
+</div>
+<div class="paragraph">
+<p>Step 4. The LogicManager calls <code>StatsCommand.execute()</code>, which calls <code>Model#getFilteredExpenseList()</code> to retrieve the list of expenses stored in MooLah.
+The correct <code>Statistics</code> object, <code>statistics</code>, will be created with <code>startStatistic</code> and the <code>calculateStats</code> method, will switch to the correct mode,
+to produce the correct feedback to the user, as well as update the attributes in <code>statistics</code>.</p>
+</div>
+<div class="paragraph">
+<p>Step 5. Percentages, categories and the title description of the <code>Statistics</code> will be used to create the <code>CommandResult</code> object,
+which is returned to the <code>LogicManager</code> and subsequently to the UI where a popup in the form of a pie chart will be generated.</p>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the <code>stats</code> operation works:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../images/UndoRedoState0.png" alt="UndoRedoState0">
+<img src="../images/BasicStatisticsCommand.png" alt="BasicStatisticsCommand">
 </div>
 </div>
 <div class="paragraph">
-<p>Step 2. The user executes <code>add d/Chicken Rice p/2.50 &#8230;&#8203;</code> command to add an expense.
-The <code>add</code> command, being an <code>UndoableCommand</code>, calls <code>Model#addToHistory()</code>, which saves the state of the model just before the command executes to <code>pastModels</code>, and <code>futureModels</code> is cleared.</p>
+<p>Figure 1. Sequence Diagram for executing a <code>StatsCommand</code></p>
+</div>
+<div class="paragraph">
+<p>The following reference diagram shows how <code>StatsCommandParser</code> decides on the user&#8217;s start date and end date for the different cases.
+This is used mainly to illustrate the interactions in Steps 2 to 3.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../images/UndoRedoState1.png" alt="UndoRedoState1">
+<img src="../images/StatsCommandParser.png" alt="StatsCommandParser">
 </div>
 </div>
 <div class="paragraph">
-<p>Step 3. The user executes <code>delete 1</code> to delete the first expense on the list. The <code>delete</code> command, also an <code>UndoableCommand</code>, calls <code>Model#addToHistory()</code>, inserting another entry to the <code>pastModels</code> and clearing <code>futureModels</code> again.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/UndoRedoState2.png" alt="UndoRedoState2">
-</div>
+<p>Figure 2. Reference Diagram for deciding start date and end date for a <code>StatsCommand</code></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -499,106 +531,82 @@ The <code>add</code> command, being an <code>UndoableCommand</code>, calls <code
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If a command fails its execution, it will not call <code>Model#addToHistory()</code>, so the model will not be saved into <code>ModelHistory</code>.
+As of Week 10, the design of <code>StatsCommand.execute()</code> in Step 4 is still a work in progress because of concurrent refactoring, developing command words
+and other dependencies due to outdated methods that causes a depreciated return type to still be in use. This should be resolved ideally by v1.3.
 </td>
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>Step 4. The user now decides that deleting the expense was a mistake, and decides to undo that action by executing the <code>undo</code> command. The <code>undo</code> command will call <code>Model#rollbackModel()</code>, which will retrieve the immediate previous model in history, adding the current model to the future history of the retrieved model, and restores the model according to that state.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/UndoRedoState3.png" alt="UndoRedoState3">
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-If <code>pastModels</code> is empty, then there are no previous models to roll back. The <code>undo</code> command uses <code>Model#canRollback()</code> to check if this is the case. If so, it will return an error to the user rather than attempting to perform the undo.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The following sequence diagram shows how the undo command works:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/UndoSequenceDiagram.png" alt="UndoSequenceDiagram">
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The lifeline for <code>UndoCommand</code> should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Inversely, the <code>redo</code> command calls <code>Model#migrate()</code>, which retrieves the immediate next model in history, adds the current model to the past history of the retrieved model, and resets the model according to that snapshot.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-If <code>futureModels</code> is empty, then there are no snapshots to be redone. The <code>redo</code> command uses <code>Model#canMigrate()</code> to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-</td>
-</tr>
-</table>
 </div>
 </div>
 <div class="sect3">
 <h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
-<div class="sect4">
-<h5 id="aspect-how-undo-redo-executes"><a class="link" href="#aspect-how-undo-redo-executes">Aspect: How undo &amp; redo executes</a></h5>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Alternative 1 (current choice):</strong> Saves the entire model.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Pros: Easier to implement.</p>
-</li>
-<li>
-<p>Cons: May have performance issues in terms of memory usage.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><strong>Alternative 2:</strong> Individual commands have their own counter-command that can negate the effects.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Pros: Quite intuitive (e.g. for <code>add</code>, just do <code>delete</code> to counter it).</p>
-</li>
-<li>
-<p>Cons: We must ensure that the implementation of each individual command are correct.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
 <div class="paragraph">
-<p>We choose Alternative 1 as this approach will be less likely to cause problems specific to restoring the state to the way it was before the execution of a command,
-as some commands will create a problem specific on their own which might not be supported by the proposed counter-command.
-As an example, to undo <code>delete 3</code>, we must re-add that expense to that specific position, which at the moment is not supported
-by the <code>add</code> command.</p>
+<p>When designing the interaction of <code>Statistics#calculateStatistics()</code> with <code>stats</code>, decisions have to be made on the most
+suitable visual representation for <code>stats</code> particular use case.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong> Alternative 1:</strong> Table view</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Sequential view, can capture number of entries</p>
+</li>
+<li>
+<p>Cons: May be a duplicate of the <code>ListExpense</code> command, just sorted via categories</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong> Alternative 2:</strong> Pie chart</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Offers a visual view of size to represent the expenditure under each category</p>
+</li>
+<li>
+<p>Cons: Loses the elements of number of entries in each category</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Solution (Current Implementation): </strong>
+Adopts Alternative 2. It is important that every aspect of the user experience gets covered, and what <code>MooLah</code> before the
+inclusion of <code>Statistics</code> is the appreciation of percentage expenditure in each category of expenses. Expenses can already be
+observed in its chronological order using <code>ListExpense</code> while individual view of expenses under a category can be accessed
+using <code>FindExpense</code>. Offering a visual view on expenditure under each category complements with the existing implementation
+of sequential view in the primary budget.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Once again, this question will be better addressed holistically once all 3 features has been rolled out.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="future-implementation-coming-in-v2-0"><a class="link" href="#future-implementation-coming-in-v2-0">Future Implementation (Coming in v2.0)</a></h5>
+<div class="paragraph">
+<p>For each of the command words, users will be given the option to choose a Visual Representation method they prefer
+if the use case allows for it, instead of the default option we have prioritised.
+Currently, statistics under <code>stats</code> mode can only be displayed in a pie chart,
+and users may have different preferences for formats. The current implementation for MooLah
+is such that only expenses up to the current date will be included and any expenses after the current date
+is considered an event, which is not tracked by statistics. The inclusion of events in statistics
+can be a possible complementary feature to a prediction feature to pre-empt users about their incoming expenses.
+Last of all, more modes can be added to all existing commands, such as comparing with periods across different budgets
+other than being restricted within the same budget</p>
 </div>
 </div>
 </div>
@@ -610,4 +618,4 @@ by the <code>add</code> command.</p>
 <div class="sectionbody">
 
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-03 12:02:14 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-03 14:47:22 UTC</div></div></div></body></html>
