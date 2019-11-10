@@ -899,16 +899,68 @@ the user&#8217;s decision) that can then be added as expenses when their due dat
 <div class="sect2">
 <h3 id="statistics-feature"><a class="link" href="#statistics-feature">4.4. Statistics Feature</a></h3>
 <div class="paragraph">
-<p>The statistics feature is facilitated by the <code>Statistics</code> class, which is part of the <code>model</code> package.
-Its main purpose is to allow users to have an alternative view for the entries in <code>MooLah</code>. The
-main entries that <code>Statistics</code> interacts with are <code>Expense</code> and <code>Budget</code>, and the metrics chosen to be displayed
-are handled mainly by <code>Statistics#calculateStatistics()</code>. The method recognises command words such as
-<code>stats</code>, <code>statscompare</code> and <code>statstrend</code>, where each results in a different visual representation and represents
-a different use case.</p>
+<p>The statistics feature allows users to have an alternative view for the entries in <code>MooLah</code>.
+It is facilitated by the <code>Statistics</code> interface, which is part of the <code>model</code> package, and is implemented by 3 classes
+<code>PieChartStatistics</code>, <code>TabularStatistics</code> and <code>TrendStatistics</code>. Each of the implementing classes will be invoked when
+their respective parsers detect its corresponding command word, which is <code>statsbasic</code>, <code>statscompare</code> and <code>statstrend</code>.
+The prefix configurations vary greatly between them as well as the visual representation they create.</p>
 </div>
 <div class="paragraph">
-<p>The final outcome of these interactions are reflected directly in <code>MainWindow</code>, as a popup whenever the command is received
-by the command line.</p>
+<p>Given below is a class diagram to summarise the relationship between <code>Statistics</code> and its implementing classes.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/StatisticsClassDiagram.png" alt="StatisticsClassDiagram">
+</div>
+</div>
+<div class="paragraph">
+<p>The main entries that <code>Statistics</code> interacts with are <code>Expense</code> class and the <code>Budget</code> class. The entire statistics features only
+supports the generating of statistics from only the current budget and responds to the different methods called by
+the current <code>Budget</code> object. Every successful interaction will force a switch to the <code>Statistics Panel</code>, where each of
+their different visual representations will be generated.</p>
+</div>
+<div class="paragraph">
+<p>The following activity diagram summarizes how statistics are shown from a current budget after possible user inputs
+to modify the attributes of the budget.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/StatisticsClassDiagram.png" alt="StatisticsClassDiagram">
+</div>
+</div>
+<div class="paragraph">
+<p>In the following sections, the implementation details of one of the more complicated command words will be discussed,
+as well as its design considerations.</p>
+</div>
+<div class="sect3">
+<h4 id="code-statsbasic-code"><a class="link" href="#code-statsbasic-code">4.4.1. <code>statsbasic</code></a></h4>
+<div class="sect4">
+<h5 id="implementation-5"><a class="link" href="#implementation-5">Implementation</a></h5>
+<div class="paragraph">
+<p>The purpose of the <code>statsbasic</code> command word is to request <code>MooLah</code> to visualise the total expenditure across
+expenses of different categories as a percentage of the total expenditure of all expenses tracked under the budget
+where the command is called. The visual representation used here will be a PieChart.</p>
+</div>
+<div class="paragraph">
+<p>Given below is an example usage scenario and how the <code>statsbasic</code> command word is handled by <code>MooLah</code>.</p>
+</div>
+<div class="paragraph">
+<p>Step 1. The user enters the command <code>statsbasic sd/01-10-2019 ed/01-11-2019</code> to visualise the total percentage of each category
+as a percentage of total expenditure across all categories, in the primary budget.
+The command is received by <code>MooLahParser</code>, which then creates a <code>StatsCommandParser</code> object,
+to subsequently help to parse the input by the user.</p>
+</div>
+<div class="paragraph">
+<p>Step 2. The newly created <code>StatsCommandParser</code> calls <code>parse("stats sd/01-10-2019 ed/01-11-2019")</code>,
+which in turns calls <code>ArgumentTokenizer#tokenize("sd/01-10-2019 ed/01-11-2019", PREFIX_START_DATE, PREFIX_END_DATE)</code> to
+split the arguments into its preamble(the start date and end date). This returns an <code>ArgumentMultimap</code> object, <code>argMultimap</code> containing the split input.</p>
+</div>
+<div class="paragraph">
+<p>Step 3. The <code>StatsCommandParser</code> object calls <code>ParserUtil#parseTimestamp(argMultimap.getValue(PREFIX_START_DATE).get())</code> which parses the arguments to get the start date.
+The date, that is present in this example, is parsed into the correct form and the end date is obtained similarly with
+<code>ParserUtil#parseTimestamp(argMultimap.getValue(PREFIX_END_DATE)#get())</code>.
+A <code>StatsDescriptor</code> object <code>desc</code>, eventually containing the start date and end date is created, and a <code>StatsCommand</code> object <code>cmd</code> will
+be created with <code>desc</code>, which will be returned to the <code>LogicManager</code>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -917,51 +969,37 @@ by the command line.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Ideally, it should result in an <code>Undo</code>-able page-transition instead of a popup to ensure better integration with the rest of the application.
+By right Steps 2 to 3 should be still described in this sequence, but the descriptor details should be abstracted from the main UML.
 </td>
 </tr>
 </table>
 </div>
-<div class="sect3">
-<h4 id="code-stats-code"><a class="link" href="#code-stats-code">4.4.1. <code>stats</code></a></h4>
-<div class="sect4">
-<h5 id="implementation-5"><a class="link" href="#implementation-5">Implementation</a></h5>
 <div class="paragraph">
-<p>The purpose of the <code>stats</code> command word is to request <code>MooLah</code> to visualise the total expenditure across
-expenses of different categories as a percentage of the total expenditure of all expenses tracked under the budget
-where the command is called. The visual representation used here will be a PieChart.</p>
+<p>Step 4. The <code>LogicManager</code> calls <code>StatsCommand#execute()</code>, which calls <code>ModelManager#getPrimaryBudget()</code> to retrieve the primary budget to calculate statistics from.
+The <code>PieChartStatistics</code> object <code>statistics</code>, will be created with <code>createPieChartStatistics', after which it will called its implemented method
+`populate()</code> to fill in the <code>attributes</code> required by the <code>Statistics Panel</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+As <code>populate()</code> is a method specified by the Statistics interface, need to show it in the main UML. It may be good to wrap
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>Given below is an example usage scenario and how the <code>stats</code> command word is handled by <code>MooLah</code>.</p>
+<p>Step 5. <code>ModelManager</code> calls <code>setStatistics(statistics)</code> which updates the <code>Statistics</code> attribute in ModelManager.</p>
 </div>
 <div class="paragraph">
-<p>Step 1. The user enters the command <code>stats sd/01-10-2019 ed/01-11-2019</code> to visualise the total percentage of each category
-as a percentage of total expenditure across all categories, in the primary budget.
-The command is received by <code>AddressBookParser</code>, which then creates a <code>StatsCommandParser</code> object,
-to subsequently help to parse the input by the user.</p>
+<p>Step 6. A <code>CommandResult</code> is then created and returned to <code>LogicManager</code>, which will then force a switch
+to the <code>Statistics Panel</code> where a Pie Chart will be generated.</p>
 </div>
 <div class="paragraph">
-<p>Step 2. The newly created <code>StatsCommandParser</code> calls <code>parse("stats sd/01-10-2019 ed/01-11-2019")</code>,
-which in turns calls <code>ArgumentTokenizer.tokenize("sd/01-10-2019 ed/01-11-2019", PREFIX_START_DATE, PREFIX_END_DATE)</code> to
-split the arguments into its preamble(the start date and end date). This returns an <code>ArgumentMultimap</code> object, <code>argMultimap</code> containing the split input.</p>
-</div>
-<div class="paragraph">
-<p>Step 3. The <code>StatsCommandParser</code> object calls <code>ParserUtil.parseTimestamp(argMultimap.getValue(PREFIX_START_DATE).get())</code> which parses the arguments to get the start date.
-The date, that is present in this example, is parsed into the correct form and the end date is obtained similarly with
-<code>ParserUtil.parseTimestamp(argMultimap.getValue(PREFIX_END_DATE).get())</code>.
-A <code>StatsCommand</code> object containing the start date and end date is created and returned to the <code>LogicManager</code>.</p>
-</div>
-<div class="paragraph">
-<p>Step 4. The LogicManager calls <code>StatsCommand.execute()</code>, which calls <code>Model#getFilteredExpenseList()</code> to retrieve the list of expenses stored in MooLah.
-The correct <code>Statistics</code> object, <code>statistics</code>, will be created with <code>startStatistic</code> and the <code>calculateStats</code> method, will switch to the correct mode,
-to produce the correct feedback to the user, as well as update the attributes in <code>statistics</code>.</p>
-</div>
-<div class="paragraph">
-<p>Step 5. Percentages, categories and the title description of the <code>Statistics</code> will be used to create the <code>CommandResult</code> object,
-which is returned to the <code>LogicManager</code> and subsequently to the UI where a popup in the form of a pie chart will be generated.</p>
-</div>
-<div class="paragraph">
-<p>The following sequence diagram shows how the <code>stats</code> operation works:</p>
+<p>The following sequence diagram shows how the <code>statsbasic</code> operation works:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -972,8 +1010,8 @@ which is returned to the <code>LogicManager</code> and subsequently to the UI wh
 <p>Figure 1. Sequence Diagram for executing a <code>StatsCommand</code></p>
 </div>
 <div class="paragraph">
-<p>The following reference diagram shows how <code>StatsCommandParser</code> decides on the user&#8217;s start date and end date for the different cases.
-This is used mainly to illustrate the interactions in Steps 2 to 3.</p>
+<p>The following reference diagram shows how <code>StatsCommandParser</code> handle optional start date and end date entries
+before creating a <code>StatsCommand</code>. This is used mainly to illustrate the interactions in Steps 2 to 3.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -990,7 +1028,7 @@ This is used mainly to illustrate the interactions in Steps 2 to 3.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-As of Week 10, the design of <code>StatsCommand.execute()</code> in Step 4 is still a work in progress because of concurrent refactoring, developing command words
+As of Week 10, the design of <code>StatsCommand#execute()</code> in Step 4 is still a work in progress because of concurrent refactoring, developing command words
 and other dependencies due to outdated methods that causes a depreciated return type to still be in use. This should be resolved ideally by v1.3.
 </td>
 </tr>
@@ -1001,8 +1039,8 @@ and other dependencies due to outdated methods that causes a depreciated return 
 <div class="sect3">
 <h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">4.4.2. Design Considerations</a></h4>
 <div class="paragraph">
-<p>When designing the interaction of <code>Statistics#calculateStatistics()</code> with <code>stats</code>, decisions have to be made on the most
-suitable visual representation for <code>stats</code> particular use case.</p>
+<p>When designing the interaction of <code>Statistics#calculateStatistics()</code> with <code>statsbasic</code>, decisions have to be made on the most
+suitable visual representation for <code>statsbasic</code> particular use case.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1059,7 +1097,7 @@ Once again, this question will be better addressed holistically once all 3 featu
 <div class="paragraph">
 <p>For each of the command words, users will be given the option to choose a Visual Representation method they prefer
 if the use case allows for it, instead of the default option we have prioritised.
-Currently, statistics under <code>stats</code> mode can only be displayed in a pie chart,
+Currently, statistics under <code>statsbasic</code> mode can only be displayed in a pie chart,
 and users may have different preferences for formats. The current implementation for MooLah
 is such that only expenses up to the current date will be included and any expenses after the current date
 is considered an event, which is not tracked by statistics. The inclusion of events in statistics
@@ -2554,4 +2592,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-10 04:47:57 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-10 05:14:49 UTC</div></div></div></body></html>

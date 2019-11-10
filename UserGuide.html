@@ -1372,6 +1372,11 @@ addexpense d/duck rice p/12.3111 c/food</pre>
 </div>
 <div class="sect2">
 <h3 id="viewing-statistics"><a class="link" href="#viewing-statistics">4.10. Viewing Statistics</a></h3>
+<div class="paragraph">
+<p>Like most of the expense commands, statistics of your expenses can be generated concerning
+to the primary budget you&#8217;re residing on. Read further for the rest of the commands covered
+under the Statistics section.</p>
+</div>
 <div class="sect3">
 <h4 id="summary-statistics-code-statsbasic-code"><a class="link" href="#summary-statistics-code-statsbasic-code">4.10.1. Summary Statistics: <code>statsbasic</code></a></h4>
 <div class="paragraph">
@@ -1386,8 +1391,13 @@ taken as a percentage of the total expenditure in the budget the command was cal
 <div class="paragraph">
 <p>Format: <code>statsbasic [sd/&lt;START_DATE&gt;] [ed/&lt;END_DATE&gt;]</code></p>
 </div>
-<div class="ulist NOTE">
-<ul class="NOTE">
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><strong>Note</strong></p>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>For any input that consists of date and time, only, only the date information will be considered.</p>
 </li>
@@ -1402,8 +1412,13 @@ taken as a percentage of the total expenditure in the budget the command was cal
 </li>
 </ul>
 </div>
-<div class="ulist TIP">
-<ul class="TIP">
+</div>
+</div>
+<div class="paragraph">
+<p>Tips:</p>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>There is no need to specify all the parameters if the outcomes of the example usage scenarios
 below fit your needs</p>
@@ -1420,21 +1435,35 @@ the unit of time and statistics is calculated starting from one unit of time bef
 <p>If both <code>START_DATE</code> and <code>END_DATE</code> are empty, statistics will be calculated using the start date and end date
 of the current window of the budget.</p>
 </li>
+<li>
+<p>As the 3 alternative configurations involve the knowledge of the budget&#8217;s period, be familiar with the
+procedure of editing a budget&#8217;s period.</p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Example of configurations:
-<code>statsbasic</code>
-<code>statsbasic sd/ytd</code>
-<code>statsbasic sd/11-11-2018 ed/12-12-2018</code></p>
+<p>Example of configurations:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>statsbasic
+statsbasic sd/ytd
+statsbasic sd/11-11-2018 ed/12-12-2018</pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Step-by-step guide:
-For example, MooLah is currently at the "school" budget with these expenses in window 1
-(sd1 to ed1) and window2(sd2 to ed2)</p>
+For example, MooLah is currently at the "Outside School" budget, and shown below is the view of
+the current window of the Budget from start of 18 Oct to the end of 24 Oct. There are exactly
+4 expenses as shown in the example.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/OutsideSchoolWindow.png" alt="OutsideSchoolWindow" width="790">
+</div>
 </div>
 <div class="paragraph">
-<p>To generate the pie chart:</p>
+<p>To generate the pie chart for the expenses for this window.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -1442,12 +1471,21 @@ For example, MooLah is currently at the "school" budget with these expenses in w
 <p>Type <code>statsbasic</code> into the command box and press <code>Enter</code> to execute it.</p>
 </li>
 <li>
-<p>The result box will display the message Pie Chart generated.</p>
+<p>The result box will display the message "Pie Chart calculated!".</p>
 </li>
 <li>
-<p>The screen will be switched into the Statistics Panel where the Pie Chart will be generated.</p>
+<p>The screen will be switched into the Statistics Panel where the Pie Chart will be generated
+as shown below.</p>
 </li>
 </ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/PieChart.png" alt="PieChart" width="790">
+</div>
+</div>
+<div class="paragraph">
+<p>+</p>
 </div>
 </div>
 <div class="sect3">
@@ -1471,8 +1509,13 @@ represents the difference in frequency and difference in total expenditure.</p>
 <div class="paragraph">
 <p>Format: <code>statscompare sd1/&lt;START_DATE_1&gt; sd2/&lt;START_DATE_2&gt;</code></p>
 </div>
-<div class="ulist NOTE">
-<ul class="NOTE">
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><strong>Note</strong></p>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>Date formats accepted are handled by our Natural Language Parser library which supports human jargons.
 Please refer to the above documentation for more information.</p>
@@ -1497,19 +1540,19 @@ the values for differences in frequency and differences in total expenditure for
 is calculated using the formula <code>second period – first period</code>.</p>
 </li>
 <li>
-<p>The default size of the applicaton window accounts just sufficiently for a nicely fitted view of the
+<p>The default size of the application window accounts just sufficiently for a nicely fitted view of the
 table columns. Adjustments to the program window should not be made, otherwise some columns may be covered
-or excess space will be revealed.</p>
+or excess space will be revealed. Currently the default startup dimension is Height = 800 and Width = 1254.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p><code>[Coming in v2.0]</code>
-- constructing periods with start dates doesn&#8217;t align with the principles of the application
-as compared to end dates.</p>
 </div>
-<div class="ulist TIP">
-<ul class="TIP">
+</div>
+<div class="paragraph">
+<p>Tips:</p>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>If zeroes are observed in the similarity columns, it may be possible that there is no
 overlap between the 2 periods or there are no expenses recorded in the common period.</p>
@@ -1521,15 +1564,17 @@ comparison.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>Example of configurations:
-<code>statscompare sd1/12-12 sd2/ 1 month ago'
-`stats sd2/ today sd1/ytd `
-`stats sd2/ 23-09-2019 sd1/1 year ago</code></p>
+<p>Example of configurations:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>statscompare sd1/12-12 sd2/ 1 month ago
+stats sd2/ today sd1/ytd
+stats sd2/ 23-09-2019 sd1/1 year ago</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Step-by-step guide:
-For example, MooLah is currently at the "school" budget with these expenses in window 1
-(sd1 to ed1) and window2(sd2 to ed2)</p>
+<p>Step-by-step guide:</p>
 </div>
 <div class="paragraph">
 <p>To generate the table view:</p>
@@ -1537,10 +1582,10 @@ For example, MooLah is currently at the "school" budget with these expenses in w
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Type <code>statscompare sd1/12-12 sd2/ 1 month ago' into the command box and press `Enter</code> to execute it.</p>
+<p>Type <code>statscompare sd1/27-10 sd2/ 28-10' into the command box and press `Enter</code> to execute it.</p>
 </li>
 <li>
-<p>The result box will display the message Table generated.</p>
+<p>The result box will display the message "Statistics Comparison Calculated!".</p>
 </li>
 <li>
 <p>The screen will be switched into the Statistics Panel where the Table View will be generated.</p>
@@ -1582,8 +1627,13 @@ till before the stated date of the next point.</p>
 <div class="paragraph">
 <p>Format: <code>statstrend [sd/&lt;START_DATE&gt;] [ed/&lt;END_DATE&gt;] mode/MODE</code></p>
 </div>
-<div class="ulist NOTE">
-<ul class="NOTE">
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><strong>Note</strong></p>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>Date formats accepted are handled by our Natural Language Parser library which supports human jargons.
 Please refer to the above documentation for more information.</p>
@@ -1598,18 +1648,21 @@ Please refer to the above documentation for more information.</p>
 <p><code>START_DATE</code> will be checked to be earlier than <code>END_DATE</code></p>
 </li>
 <li>
-<p>We only allow a maximum of 34 plotted points to be displayed, which means that in any specified
-time interval bounded by the start date and end date, we will produce at most 34 time intervals of
+<p>We only allow a maximum of 33 plotted points to be displayed, which means that in any specified
+time interval bounded by the start date and end date, we will produce at most 33 time intervals of
 the specified unit of time starting from the start date. This is also a design consideration to coordinate
 with the size of the application window.</p>
 </li>
 <li>
 <p>The first plotted point that would be observed should be the start date of the window of the current budget
-closest to the start date of analysis. Note that the two need not be the same.</p>
+closest to the start date of analysis. If the two happen to be the same, the start date of the window of the budget
+should be included as a point in the trend line</p>
 </li>
 <li>
 <p>Even though the current application doesn&#8217;t allow for expenses to be added into dates ahead of the current date,
-the budget windows after the most recent possible window will still be shown for ths command</p>
+the budget windows after the most recent possible window, relative to the current date, will still be shown for ths command.
+This also applies to budget windows which have intervals that are future to the current time. For example, a window spanning
+from 18 Oct to 24 Oct for a weekly budget is a legal point even when it is currently 19 Oct.</p>
 </li>
 <li>
 <p>The categories that do not have any expenses in any of the time intervals will not be reflected
@@ -1617,8 +1670,13 @@ as trend lines in the Statistics Panel.</p>
 </li>
 </ul>
 </div>
-<div class="ulist TIP">
-<ul class="TIP">
+</div>
+</div>
+<div class="paragraph">
+<p>Tips:</p>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>There is no need to specify all the parameters if the outcomes of the example usage scenarios
 below fit your needs</p>
@@ -1643,15 +1701,17 @@ hence to access other time modes of this command, please edit the budget&#8217;s
 </ul>
 </div>
 <div class="paragraph">
-<p>Example of configurations:
-<code>statstrend mode/category</code>
-<code>statstrend sd/ytd mode/category</code>
-<code>statstrend sd/11-11-2018 ed/12-12-2018 mode/category</code></p>
+<p>Example of configurations:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>statstrend mode/category
+statstrend sd/ytd mode/category
+statstrend sd/11-11-2018 ed/12-12-2018 mode/category</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Step-by-step guide:
-For example, MooLah is currently at the "school" budget with these expenses in window 1
-(sd1 to ed1) and window2(sd2 to ed2)</p>
+<p>Step-by-step guide:</p>
 </div>
 <div class="paragraph">
 <p>To generate the trend lines:</p>
@@ -1662,7 +1722,7 @@ For example, MooLah is currently at the "school" budget with these expenses in w
 <p>Type <code>statstrend mode/category</code> into the command box and press <code>Enter</code> to execute it.</p>
 </li>
 <li>
-<p>The result box will display the message trend line generated.</p>
+<p>The result box will display the message "Statistics Trend Calculated!".</p>
 </li>
 <li>
 <p>The screen will be switched into the Statistics Panel where the trend lines will be generated.</p>
@@ -1810,11 +1870,11 @@ e.g. <code>switchperiod t/01-05</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Summary statistics</strong> : <code>statsbasic [start/START_DATE] [end/END_DATE]</code><br>
+<p><strong>Summary statistics</strong> : <code>statsbasic [sd/&lt;START_DATE&gt;] [ed/&lt;END_DATE&gt;]</code><br>
 e.g. <code>statsbasic sd/11-11-2018 ed/12-12-2018</code></p>
 </li>
 <li>
-<p><strong>Comparison statistics</strong> : <code>statscompare sd1/START_DATE_1 sd2/START_DATE_2</code><br>
+<p><strong>Comparison statistics</strong> : <code>statscompare sd1/&lt;START_DATE_1&gt; sd2/&lt;START_DATE_2&gt;</code><br>
 e.g. <code>statscompare sd1/01-01-2019 sd2/01-02-2019</code></p>
 </li>
 <li>
@@ -1881,4 +1941,4 @@ e.g. <code>alias a/chicken rice c/ add d/ Chicken Rice p/2.50 c/Food</code></p>
 </tbody>
 </table>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-10 04:47:57 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-10 05:14:49 UTC</div></div></div></body></html>
