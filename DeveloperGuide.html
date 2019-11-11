@@ -13,6 +13,7 @@
 <ul class="sectlevel2">
 <li><a href="#purpose-scope">1.1. Purpose &amp; Scope</a></li>
 <li><a href="#software-overview">1.2. Software Overview</a></li>
+<li><a href="#before-we-begin">1.3. Before We Begin</a></li>
 </ul>
 </li>
 <li><a href="#setting-up">2. Setting Up</a></li>
@@ -55,8 +56,17 @@
 <li><a href="#instructions-for-manual-testing">Appendix G: Instructions for Manual Testing</a>
 <ul class="sectlevel2">
 <li><a href="#launch-and-shutdown">G.1. Launch and Shutdown</a></li>
-<li><a href="#deleting-a-expense">G.2. Deleting a expense</a></li>
-<li><a href="#saving-data">G.3. Saving data</a></li>
+<li><a href="#deleting-an-expense">G.2. Deleting an expense</a></li>
+<li><a href="#adding-a-budget">G.3. Adding a budget</a></li>
+<li><a href="#editing-a-budget">G.4. Editing a budget</a></li>
+<li><a href="#deleting-a-budget">G.5. Deleting a budget</a></li>
+<li><a href="#switching-the-primary-budget">G.6. Switching the primary budget</a></li>
+<li><a href="#switching-budget-period">G.7. Switching budget period</a></li>
+<li><a href="#listing-all-budgets">G.8. Listing all budgets</a></li>
+<li><a href="#clearing-all-budgets">G.9. Clearing all budgets</a></li>
+<li><a href="#deleting-an-expense-from-budget-panel">G.10. Deleting an expense from budget panel</a></li>
+<li><a href="#editing-an-expense-from-budget-panel">G.11. Editing an expense from budget panel</a></li>
+<li><a href="#saving-data">G.12. Saving data</a></li>
 </ul>
 </li>
 </ul>
@@ -98,6 +108,36 @@ The intended audience of this document is the developers, designers, and softwar
 <p>MooLah is a desktop CLI application that help users track their expenses.
 The App supports many other extensions such as budgeting, planning and reminders.
 In particular, it is tailored to students in National University of Singapore who dine frequently in school canteens.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="before-we-begin"><a class="link" href="#before-we-begin">1.3. Before We Begin</a></h3>
+<div class="paragraph">
+<p>Here are some widely-used symbols in this document:</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Contains essential information that explains a concept more clearly.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Contains extra information that might be useful.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -381,7 +421,7 @@ and calls <code>#hide()</code> on all other panels.</p>
 <p>This results in a <code>Command</code> object which is executed by the <code>LogicManager</code>.</p>
 </li>
 <li>
-<p>The command execution can affect the <code>Model</code> (e.g. adding a expense).</p>
+<p>The command execution can affect the <code>Model</code> (e.g. adding an expense).</p>
 </li>
 <li>
 <p>The result of the command execution is encapsulated as a <code>CommandResult</code> object which is passed back to the <code>Ui</code>.</p>
@@ -896,7 +936,7 @@ as the budget, except: (i) it flattens the <code>BudgetWindow</code> field into 
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/BudgetActivityDiagram.png" alt="BudgetActivityDiagram" width="50%">
+<img src="images/BudgetActivityDiagram.png" alt="BudgetActivityDiagram" width="55%">
 </div>
 </div>
 </div>
@@ -1808,6 +1848,9 @@ to enter the command as well as a more functional input field.</p>
 <h2 id="documentation"><a class="link" href="#documentation">5. Documentation</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
+<p>This section contains information on how to edit, publish, convert documentation, as well as relevant tools and settings.</p>
+</div>
+<div class="paragraph">
 <p>Refer to the guide <a href="Documentation.html">here</a>.</p>
 </div>
 </div>
@@ -1816,6 +1859,9 @@ to enter the command as well as a more functional input field.</p>
 <h2 id="testing"><a class="link" href="#testing">6. Testing</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
+<p>This section contains information on running tests and troubleshooting.</p>
+</div>
+<div class="paragraph">
 <p>Refer to the guide <a href="Testing.html">here</a>.</p>
 </div>
 </div>
@@ -1823,6 +1869,9 @@ to enter the command as well as a more functional input field.</p>
 <div class="sect1">
 <h2 id="dev-ops"><a class="link" href="#dev-ops">7. Dev Ops</a></h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>This section contains information on project workflow and useful automation tools.</p>
+</div>
 <div class="paragraph">
 <p>Refer to the guide <a href="DevOps.html">here</a>.</p>
 </div>
@@ -1868,13 +1917,13 @@ to enter the command as well as a more functional input field.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>manage contacts faster than a typical mouse/GUI driven app</p>
+<p>manage expenses faster than a typical mouse/GUI driven app</p>
 </li>
 <li>
 <p>optimized for students in National University of Singapore</p>
 </li>
 <li>
-<p>make prediction for future spending based on extrapolation from past statistics and upcoming important dates</p>
+<p>make prediction for future spending based on extrapolation from past statistics and upcoming important dates (Coming in v2.0)</p>
 </li>
 <li>
 <p>customizable categories, budgets and aliases</p>
@@ -2316,9 +2365,6 @@ to enter the command as well as a more functional input field.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>==Idk why==</p>
-</div>
 <h3 id="use-case-viewing-statistics-summary" class="discrete">Use case: Viewing Statistics summary</h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
@@ -2568,9 +2614,6 @@ Use case ends</p>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p><em>{More to be added}</em></p>
-</div>
 </div>
 </div>
 </div>
@@ -2608,9 +2651,6 @@ Use case ends</p>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p><em>{More to be added}</em></p>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -2622,13 +2662,13 @@ Use case ends</p>
 <dd>
 <p>Windows, Linux, Unix, OS-X</p>
 </dd>
-<dt class="hdlist1"><a id="private-contact-detail"></a> Private contact detail</dt>
-<dd>
-<p>A contact detail that is not meant to be shared with others</p>
-</dd>
 <dt class="hdlist1"><a id="alias"></a> Alias</dt>
 <dd>
 <p>A user-defined keyword that represents a specific Expense, acting as a quality-of-life replacement for common Expenses.</p>
+</dd>
+<dt class="hdlist1"><a id="CLI"></a> Command-Line Interface</dt>
+<dd>
+<p>A means of interacting with a computer program where the user issues commands to the program in the form of successive lines of text.</p>
 </dd>
 </dl>
 </div>
@@ -2772,7 +2812,7 @@ These instructions only provide a starting point for testers to work on; testers
 </li>
 <li>
 <p>Double-click the jar file<br>
-Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.</p>
+Expected: Shows the GUI with a set of sample expenses. The window size may not be optimum.</p>
 </li>
 </ol>
 </div>
@@ -2793,16 +2833,12 @@ Expected: The most recent window size and location is retained.</p>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p><em>{ more test cases &#8230;&#8203; }</em></p>
-</div>
 </div>
 <div class="sect2">
-<h3 id="deleting-a-expense"><a class="link" href="#deleting-a-expense">G.2. Deleting a expense</a></h3>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Deleting a expense while all expenses are listed</p>
+<h3 id="deleting-an-expense"><a class="link" href="#deleting-an-expense">G.2. Deleting an expense</a></h3>
+<div class="paragraph">
+<p>Deleting an expense while all expenses are listed</p>
+</div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -2810,14 +2846,120 @@ Expected: The most recent window size and location is retained.</p>
 </li>
 <li>
 <p>Test case: <code>deleteexpense 1</code><br>
-Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.</p>
+Expected: First expense is deleted from the list. Details of the deleted expense shown in the result display message.</p>
 </li>
 <li>
 <p>Test case: <code>deleteexpense 0</code><br>
-Expected: No expense is deleted. Error details shown in the status message. Status bar remains the same.</p>
+Expected: No expense is deleted. Error details shown in the result display message.</p>
 </li>
 <li>
-<p>Other incorrect delete commands to try: <code>deleteexpense</code>, <code>deleteexpense x</code> (where x is larger than the list size) <em>{give more}</em><br>
+<p>Other incorrect delete commands to try: <code>deleteexpense</code>, <code>deleteexpense x</code> (where x is larger than the list size)<br>
+Expected: Similar to previous.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="adding-a-budget"><a class="link" href="#adding-a-budget">G.3. Adding a budget</a></h3>
+<div class="paragraph">
+<p>Adding a budget to MooLah</p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: None.</p>
+</li>
+<li>
+<p>Test case: <code>addbudget d/school p/100 sd/01-10 pr/month</code><br>
+Expected: A budget "school" is added to MooLah, and set as primary budget. The GUI is switched to the Budget Panel.</p>
+</li>
+<li>
+<p>Test case: <code>addbudget d/school p/100</code><br>
+Expected: No budget is added. Error details shown in the result display message.</p>
+</li>
+<li>
+<p>Test case: <code>addbudget d/default budget</code><br>
+Expected: No budget is added. Error details shown in the result display message.</p>
+</li>
+<li>
+<p>Other incorrect addbudget commands to try: <code>addbudget</code>, <code>addbudget p/100</code>, <code>addbudget p/0</code>
+Expected: Similar to previous.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="editing-a-budget"><a class="link" href="#editing-a-budget">G.4. Editing a budget</a></h3>
+<div class="paragraph">
+<p>Editing a budget in MooLah while all budgets are listed</p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: List all budgets using the <code>listbudget</code> command. Multiple budgets in the list.</p>
+</li>
+<li>
+<p>Test case: <code>editbudget 2 d/abc</code><br>
+Expected: Second budget&#8217;s description is updated to "abc".</p>
+</li>
+<li>
+<p>Test case: <code>editbudget 2 p/400</code><br>
+Expected: Second budget&#8217;s limit is updated to 400. Percentage in progress bar is updated accordingly.</p>
+</li>
+<li>
+<p>Test case: <code>editbudget 1 d/abc</code><br>
+Expected: No budget is edited. Error details shown in the result display message.</p>
+</li>
+<li>
+<p>Other incorrect editbudget commands to try: <code>editbudget 2</code>, <code>editbudget x</code> (where x is larger than the list size)<br>
+Expected: Similar to previous.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="deleting-a-budget"><a class="link" href="#deleting-a-budget">G.5. Deleting a budget</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Deleting a budget by index while all budgets are listed</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: List all budgets using the <code>listbudget</code> command. Multiple budgets in the list.</p>
+</li>
+<li>
+<p>Test case: <code>deletebudget-id 2</code><br>
+Expected: Second budget is deleted from the list. Details of the deleted budget shown in the result display message.</p>
+</li>
+<li>
+<p>Test case: <code>deletebudget-id 1</code><br>
+Expected: No budget is deleted. Error details shown in the result display message.</p>
+</li>
+<li>
+<p>Other incorrect deletebudget-id commands to try: <code>deletebudget-id</code>, <code>deletebudget-id x</code> (where x is larger than the list size)<br>
+Expected: Similar to previous.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Deleting a budget by name</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: None.</p>
+</li>
+<li>
+<p>Test case: <code>deletebudget d/school</code> (suppose budget "school" exists)<br>
+Expected: Budget "school" is deleted from MooLah. Details of the deleted budget shown in the result display message.</p>
+</li>
+<li>
+<p>Test case: <code>deletebudget d/default budget</code><br>
+Expected: No budget is deleted. Error details shown in the result display message.</p>
+</li>
+<li>
+<p>Other incorrect deletebudget commands to try: <code>deletebudget</code>, <code>deletebudget d/x</code> (where x does not exist)<br>
 Expected: Similar to previous.</p>
 </li>
 </ol>
@@ -2825,12 +2967,149 @@ Expected: Similar to previous.</p>
 </li>
 </ol>
 </div>
+</div>
+<div class="sect2">
+<h3 id="switching-the-primary-budget"><a class="link" href="#switching-the-primary-budget">G.6. Switching the primary budget</a></h3>
 <div class="paragraph">
-<p><em>{ more test cases &#8230;&#8203; }</em></p>
+<p>Switching the primary budget to another budget</p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: None.</p>
+</li>
+<li>
+<p>Test case: <code>switchbudget d/school</code> (suppose budget "school" exists and is not primary)<br>
+Expected: Budget "school" becomes the primary budget. GUI switches to primary budget panel.</p>
+</li>
+<li>
+<p>Test case: <code>switchbudget d/holiday</code> (suppose budget "holiday" is already primary)<br>
+Expected: No action taken. Error details shown in the result display message.</p>
+</li>
+<li>
+<p>Other incorrect switchbudget commands to try: <code>switchbudget</code>, <code>switchbudget d/x</code> (where x does not exist)<br>
+Expected: Similar to previous.</p>
+</li>
+</ol>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-data"><a class="link" href="#saving-data">G.3. Saving data</a></h3>
+<h3 id="switching-budget-period"><a class="link" href="#switching-budget-period">G.7. Switching budget period</a></h3>
+<div class="paragraph">
+<p>Switching the budget period to view past expenses</p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: None.</p>
+</li>
+<li>
+<p>Test case: <code>switchperiod t/01-09</code><br>
+Expected: Period of primary budget is switched to the period containing 1 Sep.</p>
+</li>
+<li>
+<p>Test case: <code>switchperiod t/now</code><br>
+Expected: Period of primary budget is switched to the period containing the current date.</p>
+</li>
+<li>
+<p>Test case: <code>switchperiod t/01-12</code><br>
+Expected: No action taken. Error details shown in the result display message.</p>
+</li>
+<li>
+<p>Other incorrect switchperiod commands to try: <code>switchperiod</code><br>
+Expected: Similar to previous.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="listing-all-budgets"><a class="link" href="#listing-all-budgets">G.8. Listing all budgets</a></h3>
+<div class="paragraph">
+<p>Listing all budgets in MooLah</p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: None.</p>
+</li>
+<li>
+<p>Test case: <code>listbudget</code><br>
+Expected: GUI switches to budget list panel to show a list of all budgets. The primary budget is marked with red border.</p>
+</li>
+<li>
+<p>Test case: <code>listbudget d/abc</code><br>
+Expected: No action taken. Error details shown in the result display message.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="clearing-all-budgets"><a class="link" href="#clearing-all-budgets">G.9. Clearing all budgets</a></h3>
+<div class="paragraph">
+<p>Clearing all budgets in MooLah</p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: None.</p>
+</li>
+<li>
+<p>Test case: <code>clearbudget</code><br>
+Expected: GUI switches to the budget list panel. All budgets except default budget are deleted. Default budget is marked with red border.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="deleting-an-expense-from-budget-panel"><a class="link" href="#deleting-an-expense-from-budget-panel">G.10. Deleting an expense from budget panel</a></h3>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Go to primary budget panel using the <code>view priamry budget</code> command. Multiple expenses in the list.</p>
+</li>
+<li>
+<p>Test case: <code>deleteexpense-primary 1</code><br>
+Expected: First expense is deleted from the list. Details of the deleted expense shown in the result display message.</p>
+</li>
+<li>
+<p>Test case: <code>deleteexpense-primary 0</code><br>
+Expected: No expense is deleted. Error details shown in the result display message.</p>
+</li>
+<li>
+<p>Other incorrect deleteexpense-primary commands to try: <code>deleteexpense-primary</code>, <code>deleteexpense-primary x</code> (where x is larger than the list size)<br>
+Expected: Similar to previous.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="editing-an-expense-from-budget-panel"><a class="link" href="#editing-an-expense-from-budget-panel">G.11. Editing an expense from budget panel</a></h3>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Go to primary budget panel using the <code>view priamry budget</code> command. Multiple expenses in the list.</p>
+</li>
+<li>
+<p>Test case: <code>editexpense-primary 1 d/a</code><br>
+Expected: First expense&#8217;s description is updated to "a".</p>
+</li>
+<li>
+<p>Test case: <code>editexpense-primary 1 p/5</code><br>
+Expected: First expense&#8217;s price is updated to 5. Percentage in progress bar is updated accordingly.</p>
+</li>
+<li>
+<p>Test case: <code>editexpense-primary 1</code><br>
+Expected: No expense is edited. Error details shown in the result display message.</p>
+</li>
+<li>
+<p>Other incorrect editexpense-primary commands to try: <code>editexpense-primary</code>, <code>editexpense-priamry x d/a</code> (where x is larger than the list size)<br>
+Expected: Similar to previous.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="saving-data"><a class="link" href="#saving-data">G.12. Saving data</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -2850,4 +3129,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 11:58:04 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 13:29:17 UTC</div></div></div></body></html>
