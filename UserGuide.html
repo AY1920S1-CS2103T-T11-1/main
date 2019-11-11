@@ -58,7 +58,7 @@ Although a desktop app optimised for Command Line, MooLah has an elegant Graphic
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/Ui.png" alt="Ui" width="790">
+<img src="images/Ui_annotated.png" alt="Ui annotated" width="790">
 </div>
 <div class="title">Figure 1. The graphical user interface for MooLah</div>
 </div>
@@ -775,45 +775,44 @@ It can help you cultivate better financial management habits in the following wa
 spent as a proportion to the limit.</p>
 </li>
 <li>
-<p>The color of the progress bar implies the following 4 situations:</p>
+<p>The color of the progress bar implies the following 4 status:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>GREEN: Less than half of the limit.</p>
+<p><strong>GREEN</strong>: <code>0% - 49%</code> of the limit.</p>
 </li>
 <li>
-<p>YELLOW: Spent half of the limit.</p>
+<p><strong>YELLOW</strong>: <code>50% - 89%</code> of the limit (MooLah will notify you&#8217;re halfway through)</p>
 </li>
 <li>
-<p>ORANGE: Reached 90% of the limit.</p>
+<p><strong>ORANGE</strong>: <code>90% - 100%</code> of the limit. (MooLah will remind you of the approaching limit)</p>
 </li>
 <li>
-<p>RED: Exceeded the limit.</p>
+<p><strong>RED</strong>: <code>&gt; 100%</code> of the limit. (MooLah will give a warning and advise you to cut down on your spending. However, the
+percentage will continue to update even if you exceed the budget, to give you a better idea of how much you have overspent.)</p>
 </li>
 </ul>
 </div>
 </li>
-<li>
-<p>When your expenses reach 50% of the limit, it will notify that you&#8217;re halfway through.</p>
-</li>
-<li>
-<p>When your expenses reach 90% of the limit, it will give a warning to remind you of the approaching limit.</p>
-</li>
-<li>
-<p>When your expenses exceed the budget limit, it will give another warning to remind you to
-cut down on your spending. However, the percentage will continue to update even you exceed the budget, to give you a
-better idea of how much you have overspent.</p>
-</li>
-<li>
-<p>Note that when the budget is exceeded too much (more than 10^7 times the budget
-limit), you will not be able to add any new expense&#8201;&#8212;&#8201;I hope that won&#8217;t happen!</p>
-</li>
 </ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+When the budget is exceeded too much (more than <code>10^7</code> times the budget
+limit), you will not be able to add any new expense&#8201;&#8212;&#8201;I hope that won&#8217;t happen ;)
+</td>
+</tr>
+</table>
 </div>
 <div class="sect3">
-<h4 id="create-a-new-budget-code-addbudget-code"><a class="link" href="#create-a-new-budget-code-addbudget-code">4.8.1. Create a new budget : <code>addbudget</code></a></h4>
+<h4 id="create-a-new-budget-code-addbudget-code"><a class="link" href="#create-a-new-budget-code-addbudget-code">4.8.1. Create a New Budget : <code>addbudget</code></a></h4>
 <div class="paragraph">
-<p>Want your expenses tracked under a recurring budget? Simple enough with this command: <code>addbudget</code></p>
+<p>Want your expenses tracked under a recurring budget? Simple enough with this command: <code>addbudget</code>.</p>
 </div>
 <div class="paragraph">
 <p>The concrete format is:</p>
@@ -824,7 +823,7 @@ limit), you will not be able to add any new expense&#8201;&#8212;&#8201;I hope t
 </div>
 </div>
 <div class="paragraph">
-<p>For example, given after typing</p>
+<p>For example, after typing:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -832,58 +831,47 @@ limit), you will not be able to add any new expense&#8201;&#8212;&#8201;I hope t
 </div>
 </div>
 <div class="paragraph">
-<p>You&#8217;ll see that a new budget "school" is created, and set to $300, recurring monthly, starting from 1st October 2019.</p>
+<p>You&#8217;ll see that a new budget <code>school</code> is created, and set to <code>$300</code>, recurring <code>monthly</code>, starting from <code>1 Oct 2019</code>.</p>
 </div>
-<div class="paragraph">
-<p>Tips:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>All expenses that do not have a budget will go under "Default Budget", which is not deletable nor modifiable.</p>
-</li>
-<li>
-<p>Each budget must have a unique name (case-insensitive).</p>
-</li>
-<li>
-<p>4 types of budget periods are supported, namely <code>day</code>, <code>week</code>, <code>month</code>, and <code>year</code> (all in lower case).</p>
-</li>
-<li>
-<p>The year in start date is optional, i.e. you can simply input <code>01-10</code> and the year will be automatically set
-to the current year.</p>
-</li>
-<li>
-<p>The start date can be any time in the past or future, the budget period will automatically
-normalize to the current period.
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+All expenses that do not have a budget will go under <code>Default Budget</code>, which is not deletable nor modifiable.<br>
+Each budget must have a <strong>unique (case-insensitive) name</strong>.<br>
+MooLah supports 4 types of budget period input: <code>day</code>, <code>week</code>, <code>month</code>, and <code>year</code> (all in <strong>lower case</strong>).<br>
+The year in &lt;START_DATE&gt; is optional, i.e. you can simply input <code>01-10</code> and the year will be automatically set
+to the current year.<br>
+The &lt;START_DATE&gt; can be any time in the past or future, the budget period will <strong>automatically
+normalize to the current period</strong>.
 For example, if today is <code>23-10-2019</code>, when you type <code>sd/01-07 pr/month</code>, the resulting budget period
-will be <code>01-10-2019 to 31-10-2019</code>, since that&#8217;s the period anchored by today&#8217;s date.</p>
-</li>
-<li>
-<p>All budgets are recurring. Continuing from the example above, at 1 Nov 2019, you&#8217;ll see the budget&#8217;s period refreshed
-to <code>01-11-2019 to 30-11-2019</code>, and all past expenses archived, giving you an empty budget panel to start with.</p>
-</li>
-</ul>
+will be <code>01-10-2019 to 31-10-2019</code>, since that&#8217;s the period anchored by today&#8217;s date.<br>
+All budgets are <strong>recurring</strong>. Continuing from the example above, on 1 Nov 2019, you&#8217;ll see the budget&#8217;s period refreshed
+to <code>01-11-2019 to 30-11-2019</code>, and all past expenses archived, giving you an empty budget panel to start with.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
-<h4 id="switch-between-budgets-code-switchbudget-code"><a class="link" href="#switch-between-budgets-code-switchbudget-code">4.8.2. Switch between budgets : <code>switchbudget</code></a></h4>
+<h4 id="switch-between-budgets-code-switchbudget-code"><a class="link" href="#switch-between-budgets-code-switchbudget-code">4.8.2. Switch Between Budgets : <code>switchbudget</code></a></h4>
 <div class="paragraph">
 <p>Now that you&#8217;ve successfully added a few different budgets, wonder how to toggle between them? Try this magical command:
-<code>switchbudget</code>, which switches the primary budget to any other budget in one shot!</p>
+<code>switchbudget</code>, which switches the primary budget to any other budget in one click!</p>
 </div>
 <div class="paragraph">
 <p>The concrete format is:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>switchbudget d/&lt;BUDGET_NAME&gt;`</pre>
+<pre>switchbudget d/&lt;BUDGET_NAME&gt;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>For example, suppose you&#8217;re at primary budget <code>school</code> now.</p>
-</div>
-<div class="paragraph">
-<p>After typing:</p>
+<p>For example, suppose you&#8217;re at primary budget <code>school</code> now. After typing:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -891,30 +879,27 @@ to <code>01-11-2019 to 30-11-2019</code>, and all past expenses archived, giving
 </div>
 </div>
 <div class="paragraph">
-<p>You will see that the primary budget panel is switched from "school" to "outside school". Every expense you add
-from now on will be tracked under the "outside school" budget instead.</p>
+<p>You will see that the primary budget panel is switched from <code>school</code> to <code>outside school</code>. Every expense you add
+from now on will be tracked under the <code>outside school</code> budget instead.</p>
 </div>
-<div class="paragraph">
-<p>Tips:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>There is one, and only one, "primary budget" in MooLah at all times. Every expense you enter automatically goes under
-this current primary budget. If you wish to let an expense be tracked by a different budget, switch to that
-corresponding budget first, before you add the expense.</p>
-</li>
-<li>
-<p>As a result, every expense can be tracked under one, and only one, budget.</p>
-</li>
-<li>
-<p>The BUDGET_NAME you type is case-insensitive.</p>
-</li>
-</ul>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+There is one, and only one, <strong>primary budget</strong> in MooLah at all times. Every expense you enter automatically goes to
+this current primary budget. If you wish to let an expense be tracked by a different budget, <strong>switch to that
+corresponding budget</strong> first, before you add the expense.<br>
+The &lt;BUDGET_NAME&gt; is case-insensitive.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
-<h4 id="list-all-budgets-code-listbudget-code"><a class="link" href="#list-all-budgets-code-listbudget-code">4.8.3. List all budgets: <code>listbudget</code></a></h4>
+<h4 id="list-all-budgets-code-listbudget-code"><a class="link" href="#list-all-budgets-code-listbudget-code">4.8.3. List All Budgets: <code>listbudget</code></a></h4>
 <div class="paragraph">
 <p>To get an overview of all the budgets at hand, simply type:</p>
 </div>
@@ -926,22 +911,22 @@ corresponding budget first, before you add the expense.</p>
 <div class="paragraph">
 <p>You&#8217;ll see a list of all budgets in MooLah.</p>
 </div>
-<div class="paragraph">
-<p>Tips:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The primary budget is marked with a red border.</p>
-</li>
-<li>
-<p>To go back to primary budget panel, type <code>view Primary Budget</code>.</p>
-</li>
-</ul>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The primary budget is marked with a <strong>red border</strong>.<br>
+To go back to primary budget panel, type <code>view primary budget</code>.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
-<h4 id="edit-a-budget-code-editbudget-code"><a class="link" href="#edit-a-budget-code-editbudget-code">4.8.4. Edit a budget: <code>editbudget</code></a></h4>
+<h4 id="edit-a-budget-code-editbudget-code"><a class="link" href="#edit-a-budget-code-editbudget-code">4.8.4. Edit a Budget: <code>editbudget</code></a></h4>
 <div class="paragraph">
 <p>A typo? On a second thought? No worries, you can easily modify your budget with <code>editbudget</code>.</p>
 </div>
@@ -951,39 +936,38 @@ corresponding budget first, before you add the expense.</p>
 <div class="listingblock">
 <div class="content">
 <pre>listbudget (first go to list of budgets)
-editbudget &lt;INDEX&gt; d/&lt;DESCRIPTION&gt; p/&lt;AMOUNT&gt; sd/&lt;START DATE&gt; pr/&lt;PERIOD&gt;</pre>
+editbudget &lt;INDEX&gt; [d/&lt;DESCRIPTION&gt;] [p/&lt;AMOUNT&gt;] [sd/&lt;START_DATE&gt;] [pr/&lt;PERIOD&gt;]</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>For example, if the second budget shown in the list is "school", recurring monthly, amount set at $300,
-refreshed on the first day of each month, after typing:</p>
+<p>For example, if the second budget shown in the list is <code>school</code>, recurring <code>monthly</code>, amount set as <code>$300</code>,
+refreshed on <code>the 1st of each month</code>, after typing:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>listbudget (first go to list of budgets)
+<pre>listbudget
 editbudget 2 d/school expenses p/400 sd/05-10</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>It will change to "school expenses", capped at $400, refreshed on the 5th of every month.</p>
+<p>It will change to <code>school expenses</code>, capped at <code>$400</code>, refreshed on <code>the 5th of each month</code>.</p>
 </div>
-<div class="paragraph">
-<p>Tips:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>You can choose to edit any of these 4 attributes of a budget: <code>DESCRIPTION</code>, <code>AMOUNT</code>, <code>START DATE</code>
-and <code>PERIOD</code>, more than one at a time.</p>
-</li>
-<li>
-<p>Budgets can&#8217;t have duplicate names (case-insensitive).</p>
-</li>
-</ul>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You can choose to edit any of these 4 attributes of a budget: <code>DESCRIPTION</code>, <code>AMOUNT</code>, <code>START_DATE</code>
+and <code>PERIOD</code>, more than one at a time.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
-<h4 id="delete-a-budget-by-name-code-deletebudget-code"><a class="link" href="#delete-a-budget-by-name-code-deletebudget-code">4.8.5. Delete a budget (by name) : <code>deletebudget</code></a></h4>
+<h4 id="delete-a-budget-by-name-code-deletebudget-code"><a class="link" href="#delete-a-budget-by-name-code-deletebudget-code">4.8.5. Delete a Budget (by Name) : <code>deletebudget</code></a></h4>
 <div class="paragraph">
 <p>Don&#8217;t want it any more? Use <code>deletebudget</code> to say bye to your budget!</p>
 </div>
@@ -1004,27 +988,24 @@ and <code>PERIOD</code>, more than one at a time.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The budget with the name "school" will be deleted.</p>
+<p>The budget with the name <code>school</code> will be deleted.</p>
 </div>
-<div class="paragraph">
-<p>Tips:</p>
-</div>
-<div class="paragraph">
-<p>Tips:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The Default Budget cannot be deleted or modified. It archives all expenses without a proper budget defined by you.</p>
-</li>
-<li>
-<p>After a budget is deleted, its expenses will be transferred to the Default Budget.</p>
-</li>
-</ul>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <strong>Default Budget</strong> cannot be deleted or modified. It archives all expenses without a proper budget defined by you.<br>
+After a budget is deleted, its expenses will be transferred to the Default Budget.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
-<h4 id="delete-a-budget-by-index-code-deletebudget-id-code"><a class="link" href="#delete-a-budget-by-index-code-deletebudget-id-code">4.8.6. Delete a budget (by index) : <code>deletebudget-id</code></a></h4>
+<h4 id="delete-a-budget-by-index-code-deletebudget-id-code"><a class="link" href="#delete-a-budget-by-index-code-deletebudget-id-code">4.8.6. Delete a Budget (by Index) : <code>deletebudget-id</code></a></h4>
 <div class="paragraph">
 <p>Budget names are too long? Don&#8217;t worry, there&#8217;s an easier way to delete them: <code>deletebudget-id</code>.</p>
 </div>
@@ -1040,26 +1021,28 @@ deletebudget-id &lt;INDEX&gt;</pre>
 <div class="paragraph">
 <p>You&#8217;ll see the corresponding budget disappear from the list.</p>
 </div>
-<div class="paragraph">
-<p>Tips:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Regretted? Type <code>undo</code> to get it back ;D</p>
-</li>
-</ul>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Regretted? Type <code>undo</code> to get it back ;D
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
 <h4 id="delete-all-budgets-code-clearbudget-code"><a class="link" href="#delete-all-budgets-code-clearbudget-code">4.8.7. Delete all budgets: <code>clearbudget</code></a></h4>
 <div class="paragraph">
-<p>Don&#8217;t feel like living on budgets any more? You can clear them all, just by a simple command:
+<p>Don&#8217;t feel like living on budgets any more? You can clear them all, just using this simple command:
 <code>clearbudget</code>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="view-expenses-in-a-different-period-code-switchperiod-code"><a class="link" href="#view-expenses-in-a-different-period-code-switchperiod-code">4.8.8. View expenses in a different period: <code>switchperiod</code></a></h4>
+<h4 id="view-expenses-in-a-different-period-code-switchperiod-code"><a class="link" href="#view-expenses-in-a-different-period-code-switchperiod-code">4.8.8. View Expenses in a Different Period: <code>switchperiod</code></a></h4>
 <div class="paragraph">
 <p>Wanna see your archived expenses in the past? The command <code>switchperiod</code> is the time machine you need.</p>
 </div>
@@ -1072,9 +1055,8 @@ deletebudget-id &lt;INDEX&gt;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>For example, suppose you have a monthly budget "school", refreshed at the first day of each month; and
-suppose it is November now.
-After typing:</p>
+<p>For example, suppose you have a monthly budget <code>school</code>, refreshed on <code>the 1st of each month</code>; and
+suppose it is November now. After typing:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1082,80 +1064,84 @@ After typing:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>You&#8217;ll see all expenses tracked under "school" from 1 May to 31 May this year.</p>
+<p>You&#8217;ll see all expenses tracked under <code>school</code> from <code>1 May to 31 May</code> this year.</p>
 </div>
-<div class="paragraph">
-<p>Tips:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The time machine can only travel back in time! That is, you will only be able to switch to periods
-<strong>before or equal to</strong> the current period. If the date you enter is in a future period, you&#8217;ll need to input again.</p>
-</li>
-<li>
-<p>Only expenses tracked under <strong>the current budget</strong> are shown.</p>
-</li>
-</ul>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The time machine can only travel <strong>back</strong> in time! That is, you will only be able to switch to periods
+<strong>before or equal to</strong> the current period. If the date you enter is in a future period, you&#8217;ll need to input again.<br>
+Only expenses tracked under <strong>the current budget</strong> are shown.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
-<h4 id="edit-expenses-inside-a-budget-code-editexpense-primary-code"><a class="link" href="#edit-expenses-inside-a-budget-code-editexpense-primary-code">4.8.9. Edit expenses inside a budget: <code>editexpense-primary</code></a></h4>
+<h4 id="edit-expenses-inside-a-budget-code-editexpense-primary-code"><a class="link" href="#edit-expenses-inside-a-budget-code-editexpense-primary-code">4.8.9. Edit Expenses Inside a Budget: <code>editexpense-primary</code></a></h4>
 <div class="paragraph">
-<p>When you are staring at the primary budget panel, and suddenly want to modify an expense,
-there&#8217;s a quicker way to do it than switching back to the general expense list: you can edit it directly from
-this primary budget! The trick is: <code>editexpense-primary</code></p>
+<p>When you are staring at the primary budget panel, and suddenly want to modify an expense&#8230;&#8203;
+Rather than switch back to the general expense list, there&#8217;s a quicker way to do it: you can edit it <strong>directly from
+this budget panel</strong>! The trick is: <code>editexpense-primary</code>.</p>
 </div>
 <div class="paragraph">
 <p>The concrete format is:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>editexpense-primary INDEX [d/DESCRIPTION] [p/PRICE] [c/CATEGORY] [t/TIMESTAMP]</pre>
+<pre>editexpense-primary &lt;INDEX&gt; [d/&lt;DESCRIPTION&gt;] [p/&lt;PRICE&gt;] [c/&lt;CATEGORY&gt;] [t/&lt;TIMESTAMP&gt;]</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The INDEX depends on the current budget&#8217;s expenses, rather than the general expense list.</p>
+<p>The <code>INDEX</code> depends on the current budget&#8217;s expenses, instead of the general expense list.</p>
 </div>
-<div class="paragraph">
-<p>Tips:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Editing an expense from a budget has the same effect as editing it from the general expense list.
-That is, this expense will also be updated in the general expense list.</p>
-</li>
-</ul>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Editing an expense from a budget has the same effect as editing it from the general expense list.
+That is, this expense will also be updated in the general expense list.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
 <h4 id="delete-expense-inside-a-budget-code-deleteexpense-primary-code"><a class="link" href="#delete-expense-inside-a-budget-code-deleteexpense-primary-code">4.8.10. Delete expense inside a budget: <code>deleteexpense-primary</code></a></h4>
 <div class="paragraph">
-<p>Similarly to editing expense inside a budget, you can delete an expense directly from the
-primary budget: <code>deleteexpense-primary</code></p>
+<p>Similarly to editing expense inside a budget, you can delete an expense <strong>directly from the
+budget panel</strong>: <code>deleteexpense-primary</code>.</p>
 </div>
 <div class="paragraph">
 <p>The concrete format is:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>deleteexpense-primary INDEX</pre>
+<pre>deleteexpense-primary &lt;INDEX&gt;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The INDEX depends on the current budget&#8217;s expenses, rather than the general expense list.</p>
+<p>The <code>INDEX</code> depends on the current budget&#8217;s expenses, instead of the general expense list.</p>
 </div>
-<div class="paragraph">
-<p>Tips:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Deleting an expense from a budget has the same effect as deleting it from the general expense list.
-That is, this expense will also disappear from the general expense list.</p>
-</li>
-</ul>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Deleting an expense from a budget has the same effect as deleting it from the general expense list.
+That is, this expense will also disappear from the general expense list.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -1821,7 +1807,7 @@ e.g. <code>editexpense 1 p/2.50 t/15-09-2019 1230 c/Food</code></p>
 </div>
 <hr>
 <div class="paragraph">
-<p><strong>All about budgeting:</strong></p>
+<p><strong>All About Budgeting:</strong></p>
 </div>
 <div class="ulist">
 <ul>
@@ -1837,7 +1823,7 @@ e.g. <code>switchbudget d/outside school</code></p>
 <p><strong>List all budgets</strong> : <code>listbudget</code></p>
 </li>
 <li>
-<p><strong>Edit a budget</strong> (<em>undoable</em>): <code>editbudget &lt;INDEX&gt; d/&lt;DESCRIPTION&gt; p/&lt;AMOUNT&gt; sd/&lt;START_DATE&gt; pr/&lt;PERIOD&gt;</code><br>
+<p><strong>Edit a budget</strong> (<em>undoable</em>): <code>editbudget &lt;INDEX&gt; [d/&lt;DESCRIPTION&gt;] [p/&lt;AMOUNT&gt;] sd/&lt;START_DATE&gt; pr/&lt;PERIOD&gt;</code><br>
 e.g. <code>editbudget 2 d/school expenses p/400 sd/05-10 pr/week</code></p>
 </li>
 <li>
@@ -1845,21 +1831,23 @@ e.g. <code>editbudget 2 d/school expenses p/400 sd/05-10 pr/week</code></p>
 e.g. <code>deletebudget d/school</code></p>
 </li>
 <li>
-<p><strong>Delete a budget by index</strong> (<em>undoable</em>): <code>deletebudgetid &lt;INDEX&gt;</code><br>
+<p><strong>Delete a budget by index</strong> (<em>undoable</em>): <code>deletebudget-id &lt;INDEX&gt;</code><br>
 e.g. <code>deletebudget-id 2</code></p>
 </li>
 <li>
-<p><strong>Clear all budgets</strong> : <code>clearbudget</code></p>
+<p><strong>Clear all budgets</strong> : <code>clearbudget</code> (<em>undoable</em>)</p>
 </li>
 <li>
 <p><strong>View expenses in a different period</strong> (<em>undoable</em>): <code>switchperiod t/&lt;DATE&gt;</code><br>
 e.g. <code>switchperiod t/01-05</code></p>
 </li>
 <li>
-<p><strong>Edit expense inside a budget</strong> : <code>editexpense-primary</code></p>
+<p><strong>Edit expense inside a budget</strong> (<em>undoable</em>): <code>editexpense-primary &lt;INDEX&gt; [d/&lt;DESCRIPTION&gt;] [p/&lt;PRICE&gt;] [c/&lt;CATEGORY&gt;] [t/&lt;TIMESTAMP&gt;]</code><br>
+e.g. <code>editexpense-primary 1 d/chicken</code></p>
 </li>
 <li>
-<p><strong>Delete expense inside a budget</strong> : <code>deleteexpense-primary</code></p>
+<p><strong>Delete expense inside a budget</strong> : <code>deleteexpense-primary</code> &lt;INDEX&gt;<br>
+e.g. <code>deleteexpense-primary 2</code></p>
 </li>
 </ul>
 </div>
@@ -1941,4 +1929,4 @@ e.g. <code>alias a/chicken rice c/ add d/ Chicken Rice p/2.50 c/Food</code></p>
 </tbody>
 </table>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 08:49:24 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 08:54:56 UTC</div></div></div></body></html>
