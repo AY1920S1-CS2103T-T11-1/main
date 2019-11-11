@@ -117,7 +117,7 @@ is command-line based but presented with a GUI created with JavaFX for display p
 <p>Did something wrong? You can undo it.</p>
 </div>
 <div class="paragraph">
-<p>However, do keep in mind that you can only undo commands that modify the data in MooLah, such as <code>addexpense</code>, <code>deleteexpense</code>, and so on.
+<p>However, do keep in mind that you can only undo commands that modify the data in MooLah, such as <code>addexpense</code>, <code>deleteexpense-primary</code>, and so on.
 Head over to <a href="#Command Summary">[Command Summary]</a> for list of commands that are undoable.</p>
 </div>
 <div class="paragraph">
@@ -132,13 +132,13 @@ particular command it undid to help you confirm that you undid the right thing.<
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>deleteexpense 5
+<pre>deleteexpense-primary 5
 undo</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Result:
-The deletion of expense #5 will be undone, or in other words, re-added to MooLah.
+The deletion of expense #5 in the primary budget will be undone, or in other words, re-added back to MooLah.
 MooLah will then display the message <code>Undid "Delete expense with index 5"</code>.</p>
 </div>
 </div>
@@ -158,14 +158,15 @@ MooLah will then display the message <code>Undid "Delete expense with index 5"</
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>deleteexpense 5
+<pre>deleteexpense-primary 5
 undo
 redo</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Result:
-At the end, expense #5 will keep being deleted (poor thing!). MooLah will also display a message <code>Redid "Delete expense with index 5"</code>.</p>
+At the end, expense #5 in the primary budget will keep being deleted (poor thing!).
+MooLah will also display a message <code>Redid "Delete expense with index 5"</code>.</p>
 </div>
 </div>
 </div>
@@ -351,4 +352,4 @@ by the <code>add</code> command.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 13:46:01 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 15:04:00 UTC</div></div></div></body></html>
