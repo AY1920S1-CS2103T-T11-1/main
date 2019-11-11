@@ -1394,7 +1394,22 @@ taken as a percentage of the total expenditure in the budget the command was cal
 <p><code>START_DATE</code> will be checked to be earlier than <code>END_DATE</code></p>
 </li>
 <li>
+<p>The success message for this command is "Pie Chart calculated!"</p>
+</li>
+<li>
 <p>Categories where no tracked expenses fall under will not be reflected in the Statistics Panel.</p>
+</li>
+<li>
+<p>Even though the <code>Default Budget</code> can contain expenses and has a valid budget period, it is not
+recommended to type this command when in that budget. It is after all a placeholder budget that
+is meant to hold expenses not associated to any budgets when starting out, which also implies it
+doesn&#8217;t support editing any of its attributes, especially period. Also, the budget period is set to
+a large interval by design, so the output might not make sense.</p>
+</li>
+<li>
+<p>When there are no expenses in the current window of the current budget, a successful <code>statsbasic</code>
+can stil be called. However, the same success message "Pie Chart calculated!" is still seen on the result display,
+but now with a blank screen in the StatsPanel.</p>
 </li>
 </ul>
 </div>
@@ -1419,7 +1434,7 @@ the unit of time and statistics is calculated starting from one unit of time bef
 </li>
 <li>
 <p>If both <code>START_DATE</code> and <code>END_DATE</code> are empty, statistics will be calculated using the start date and end date
-of the current window of the budget.</p>
+of the current window of the budget, seen on the top right of the budget progress bar.</p>
 </li>
 <li>
 <p>As the 3 alternative configurations involve the knowledge of the budget&#8217;s period, be familiar with the
@@ -1457,7 +1472,7 @@ the current window of the Budget from start of 18 Oct to the end of 24 Oct. Ther
 <p>Type <code>statsbasic</code> into the command box and press <code>Enter</code> to execute it.</p>
 </li>
 <li>
-<p>The result box will display the message "Pie Chart calculated!".</p>
+<p>The result display will display the message "Pie Chart calculated!".</p>
 </li>
 <li>
 <p>The screen will be switched into the Statistics Panel where the Pie Chart will be generated
@@ -1526,9 +1541,19 @@ the values for differences in frequency and differences in total expenditure for
 is calculated using the formula <code>second period – first period</code>.</p>
 </li>
 <li>
+<p>The success message for this command is "Statistics Comparison Calculated!"</p>
+</li>
+<li>
 <p>The default size of the application window accounts just sufficiently for a nicely fitted view of the
 table columns. Adjustments to the program window should not be made, otherwise some columns may be covered
 or excess space will be revealed. Currently the default startup dimension is Height = 800 and Width = 1254.</p>
+</li>
+<li>
+<p>Even though the <code>Default Budget</code> can contain expenses and has a valid budget period, it is not
+recommended to type this command when in that budget. It is after all a placeholder budget that
+is meant to hold expenses not associated to any budgets when starting out, which also implies it
+doesn&#8217;t support editing any of its attributes, especially period. Also, the budget period is set to
+a large interval by design, so the output might not make sense.</p>
 </li>
 </ul>
 </div>
@@ -1546,6 +1571,10 @@ overlap between the 2 periods or there are no expenses recorded in the common pe
 <li>
 <p>It is possible to reorder the columns generated after the Table is being generated for better
 comparison.</p>
+</li>
+<li>
+<p>As the 2 intervals to be compared are constructed with the budget&#8217;s period, be familiar with the
+procedure of editing a budget&#8217;s period.</p>
 </li>
 </ul>
 </div>
@@ -1571,7 +1600,7 @@ stats sd2/ 23-09-2019 sd1/1 year ago</pre>
 <p>Type <code>statscompare sd1/27-10 sd2/ 28-10' into the command box and press `Enter</code> to execute it.</p>
 </li>
 <li>
-<p>The result box will display the message "Statistics Comparison Calculated!".</p>
+<p>The result display will display the message "Statistics Comparison Calculated!".</p>
 </li>
 <li>
 <p>The screen will be switched into the Statistics Panel where the Table View will be generated.</p>
@@ -1651,8 +1680,18 @@ This also applies to budget windows which have intervals that are future to the 
 from 18 Oct to 24 Oct for a weekly budget is a legal point even when it is currently 19 Oct.</p>
 </li>
 <li>
+<p>The success message for this command is "Statistics Trend Calculated!"</p>
+</li>
+<li>
 <p>The categories that do not have any expenses in any of the time intervals will not be reflected
 as trend lines in the Statistics Panel.</p>
+</li>
+<li>
+<p>Even though the <code>Default Budget</code> can contain expenses and has a valid budget period, it is not
+recommended to type this command when in that budget. It is after all a placeholder budget that
+is meant to hold expenses not associated to any budgets when starting out, which also implies it
+doesn&#8217;t support editing any of its attributes, especially period. Also, the budget period is set to
+a large interval by design, so the output might not make sense.</p>
 </li>
 </ul>
 </div>
@@ -1683,6 +1722,10 @@ start date of the current window of the current budget.</p>
 <li>
 <p>The unit interval of time is set to always be the period of the current budget,
 hence to access other time modes of this command, please edit the budget&#8217;s period.</p>
+</li>
+<li>
+<p>As the 3 alternative configurations involve the knowledge of the budget&#8217;s period, be familiar with the
+procedure of editing a budget&#8217;s period.</p>
 </li>
 </ul>
 </div>
@@ -1929,4 +1972,4 @@ e.g. <code>alias a/chicken rice c/ add d/ Chicken Rice p/2.50 c/Food</code></p>
 </tbody>
 </table>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 09:01:45 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 09:19:04 UTC</div></div></div></body></html>
