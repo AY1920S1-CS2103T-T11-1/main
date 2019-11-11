@@ -13,7 +13,7 @@
 <p>This Project Portfolio documents my contributions to MooLah, a project made in NUS' Software Engineering module.</p>
 </div>
 <div class="paragraph">
-<p>My team consisting of 5 Computer Science students were tasked to enhance an existing project, Address Book Level 3.
+<p>My team, consisting of 5 Computer Science students, was tasked to enhance an existing project, Address Book Level 3.
 Over the course of the semester, we morphed the original Address Book code into MooLah, an expense tracker that accepts input
 through the Command Line Interface (CLI). We found many existing expense trackers on the market to be relatively
 troublesome and hence sought to create a hassle-free expense tracker specifically tailored to NUS students. MooLah has
@@ -93,7 +93,7 @@ natural language date-time parsing (e.g. 'tomorrow', '1 week ago').</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Oversaw code quality across the project (i.e. made sure code adhered to good software engineering principles)</p>
+<p>Oversaw code quality across the project (i.e. made sure code adhered to good software engineering principles) (<a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/288">Example</a>)</p>
 </li>
 <li>
 <p>Managed and assigned issues that arose from the bug-testing session of the Mock Practical Examination</p>
@@ -163,328 +163,11 @@ and <a href="https://ay1920s1-cs2103t-t11-1.github.io/main/DeveloperGuide.html#p
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are the <strong>major</strong> sections I contributed to the User Guide.
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are my <strong>major</strong> contributions to MooLah&#8217;s User Guide.
 They showcase my ability to write documentation targeting end-users.</em></p></td>
 </tr>
 </tbody>
 </table>
-<div class="sect2">
-<h3 id="expense-related-commands"><a class="link" href="#expense-related-commands">Expense-related Commands</a></h3>
-<div class="sect3">
-<h4 id="adding-an-expense-code-addexpense-code"><a class="link" href="#adding-an-expense-code-addexpense-code">Adding an expense: <code>addexpense</code></a></h4>
-<div class="paragraph">
-<p>The bread an butter of any expense tracker, adding an expense!
-In order to begin tracking your expenses, you are going to need to enter some expenses to track.</p>
-</div>
-<div class="paragraph">
-<p>This is the format:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>addexpense d/&lt;DESCRIPTION&gt; p/&lt;PRICE&gt; c/&lt;CATEGORY&gt; [t/TIMESTAMP]</pre>
-</div>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>If you don&#8217;t specify the time, your expense will be added with its time being the current system time.</p>
-</li>
-<li>
-<p>You cannot input an expense from the future. There&#8217;s a better way to do that, see <a href="#adding-an-event-code-addevent-code">here</a>!</p>
-</li>
-<li>
-<p>You should only input one of the following into the CATEGORY field: <code>FOOD</code>, <code>TRAVEL</code>, <code>TRANSPORT</code>,
-<code>SHOPPING</code>, <code>UTILITIES</code>, <code>HEALTHCARE</code>, <code>ENTERTAINMENT</code>, <code>EDUCATION</code>, <code>OTHERS</code>.
-These categories are case-insensitive.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>Examples:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>addexpense d/birthday p/40 c/Shopping t/10-10</code></p>
-</li>
-<li>
-<p><code>addexpense d/Buffet c/Food p/250</code></p>
-</li>
-<li>
-<p><code>addexpense d/Chicken rice p/2.50 c/Food t/yesterday noon</code></p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The highest amount for Price is <code>100000</code>.<br>
-The accepted &lt;TIMESTAMP&gt; range is <code>1 Jan 2000 to 31 Dec 2099</code>.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>After typing in the command and entering it.</p>
-</div>
-<div class="imageblock" style="text-align: center">
-<div class="content">
-<img src="../images/addexpense_before.png" alt="addexpense before" width="700">
-</div>
-<div class="title">Figure 1. Entering an addexpense command into the command box</div>
-</div>
-<div class="paragraph">
-<p>Your new expense will appear in the list!</p>
-</div>
-<div class="imageblock" style="text-align: center">
-<div class="content">
-<img src="../images/addexpense_after.png" alt="addexpense after" width="700">
-</div>
-<div class="title">Figure 2. a new Food is added to the list.</div>
-</div>
-<div class="paragraph">
-<p>A new Food expense  is added</p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="paragraph">
-<p><strong>Category Icons</strong></p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="../images/food.png" alt="food" width="70"></span> Food<br>
-<span class="image"><img src="../images/transport.png" alt="transport" width="70"></span> Transport<br>
-<span class="image"><img src="../images/education.png" alt="education" width="70"></span> Education<br>
-<span class="image"><img src="../images/travel.png" alt="travel" width="70"></span> Travel<br>
-<span class="image"><img src="../images/utilities.png" alt="utilities" width="70"></span> Utilities<br>
-<span class="image"><img src="../images/shopping.png" alt="shopping" width="70"></span> Shopping<br>
-<span class="image"><img src="../images/entertainment.png" alt="entertainment" width="70"></span> Entertainment<br>
-<span class="image"><img src="../images/others.png" alt="others" width="70"></span> Others</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="adding-an-expense-from-nus-canteens-menu-code-addmenuexpense-code"><a class="link" href="#adding-an-expense-from-nus-canteens-menu-code-addmenuexpense-code">Adding an expense from NUS canteens' menu : <code>addmenuexpense</code></a></h4>
-<div class="paragraph">
-<p>This is what makes MooLah special for NUS students.
-Shortcut your way to adding expenses for foods and drinks in NUS!</p>
-</div>
-<div class="paragraph">
-<p>Currently, MooLah only supports just a handful of menu items, though. Head over to our <a href="#Menu Items List">menu items list</a> to see the
-supported menu items. A more comprehensive menu list is on its way in v2.0!</p>
-</div>
-<div class="paragraph">
-<p>Format:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>addmenuexpense m/&lt;MENU_ITEM&gt; [t/TIMESTAMP]</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>addmenuexpense m/deck chicken rice</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This will add a new expense that corresponds to The Deck&#8217;s Chicken Rice and MooLah will automatically fill in
-the description, price, and category for you.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="listing-all-expenses-code-listexpense-code"><a class="link" href="#listing-all-expenses-code-listexpense-code">Listing all expenses : <code>listexpense</code></a></h4>
-<div class="paragraph">
-<p>You can list every single expense you have added into MooLah.</p>
-</div>
-<div class="paragraph">
-<p>Format: <code>listexpense</code></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="updating-an-expense-code-editexpense-code"><a class="link" href="#updating-an-expense-code-editexpense-code">Updating an expense: <code>editexpense</code></a></h4>
-<div class="paragraph">
-<p>Made a mistake? You can edit expenses too.</p>
-</div>
-<div class="paragraph">
-<p>Format:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>editexpense &lt;INDEX&gt; [p/&lt;PRICE&gt;] [d/&lt;DESCRIPTION&gt;] [t/&lt;TIMESTAMP&gt;] [c/&lt;CATEGORY&gt;]</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>editexpense 2 p/2.30</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Executing this command will change the <code>PRICE</code> of the second expense in the list to 2.30.</p>
-</div>
-<div class="imageblock" style="text-align: center">
-<div class="content">
-<img src="../images/editexpense_before.png" alt="editexpense before" width="500">
-</div>
-<div class="title">Figure 3. expense #2 has a price of $123.00</div>
-</div>
-<div class="imageblock" style="text-align: center">
-<div class="content">
-<img src="../images/editexpense_after.png" alt="editexpense after" width="500">
-</div>
-<div class="title">Figure 4. expense #2 has a price of $2.30 after executing the command</div>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>Edits the expense at the specified <code>INDEX</code>. The index refers to the index number shown in the currently displayed list.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock" style="text-align: center">
-<div class="content">
-<img src="../images/editexpense_during.png" alt="editexpense during" width="350">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
-</li>
-<li>
-<p>You must provide at least one of the optional fields.</p>
-</li>
-<li>
-<p>Existing values will be updated to the input values.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="locating-expenses-by-name-code-findexpense-code"><a class="link" href="#locating-expenses-by-name-code-findexpense-code">Locating expenses by name: <code>findexpense</code></a></h4>
-<div class="paragraph">
-<p>You can find expenses whose description contains any of the keywords you inputted.</p>
-</div>
-<div class="paragraph">
-<p>Format:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>findexpense &lt;KEYWORD&gt; [&lt;MORE_KEYWORDS&gt;]</pre>
-</div>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>The search is case insensitive. e.g "chicken" will match "Chicken"</p>
-</li>
-<li>
-<p>The order of the keywords does not matter. e.g. "Puff Curry" will match "Curry Puff"</p>
-</li>
-<li>
-<p>Only the description is searched.</p>
-</li>
-<li>
-<p>Only full words will be matched. e.g. "chick" will not match "chicken"</p>
-</li>
-<li>
-<p>Expenses matching at least one keyword will be returned (i.e. OR search). e.g. an expense with description
-"Chicken rice", and expense with description "Duck Rice" will both match "rice"</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>Examples:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>findexpense rice</code><br>
-will show you all expenses with rice in their description.</p>
-</li>
-<li>
-<p><code>findexpense chicken taxi schoolfee</code><br>
-will show you all expenses with either "chicken", "taxi", "schoolfee", or a
-combination of those in their description.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="deleting-an-expense-code-deleteexpense-code"><a class="link" href="#deleting-an-expense-code-deleteexpense-code">Deleting an expense: <code>deleteexpense</code></a></h4>
-<div class="paragraph">
-<p>You can also delete an expense from the expenses list in MooLah.</p>
-</div>
-<div class="paragraph">
-<p>Format:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>deleteexpense &lt;INDEX&gt;</pre>
-</div>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>Deletes the expense at the specified <code>INDEX</code>.</p>
-</li>
-<li>
-<p>The index refers to the index number shown in the currently displayed list.</p>
-</li>
-<li>
-<p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>Examples:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>listexpense
-delete 2</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Deletes the 2nd expense in the list of expenses, shown after <code>listexpenses</code> is executed.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>listexpense
-findexpense chicken
-deleteexpense 1</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Deletes the 1st expense in the results of the <code>findexpense</code> command.</p>
-</div>
-</div>
-</div>
 <div class="sect2">
 <h3 id="event-related-commands"><a class="link" href="#event-related-commands">Event-related Commands</a></h3>
 <div class="paragraph">
@@ -500,6 +183,19 @@ asking you whether you wish to add these events as corresponding expenses.</p>
 <div class="content">
 <img src="../images/TranspiredEventsPopup.png" alt="TranspiredEventsPopup" width="790">
 </div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Once an event has transpired, it is permanently deleted from MooLah and you cannot get it back! Undoing MooLah to a state where
+that event was still present would not restore the event.
+</td>
+</tr>
+</table>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -533,6 +229,10 @@ event popups!
 <ul>
 <li>
 <p>Events are potential future expenses, so the <code>TIMESTAMP</code> field is compulsory and must contain a future time.</p>
+</li>
+<li>
+<p>Due to how MooLah rounds all seconds to zero, inputting events with very precise timings such as <code>1 second from now</code>
+will likely result in errors since MooLah will interpret it as a past datetime input.</p>
 </li>
 <li>
 <p>You should only input one of the following into the <code>CATEGORY</code> field:
@@ -655,12 +355,12 @@ editevent 2 p/300</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>listevents
+<pre>listevent
 delete 2</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Deletes the 2nd event in the list of events, shown by <code>listevents</code>.</p>
+<p>Deletes the 2nd event in the list of events, shown by <code>listevent</code>.</p>
 </div>
 </div>
 </div>
@@ -675,7 +375,7 @@ delete 2</pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are the <strong>major</strong> sections I contributed to the Developer Guide.
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are my <strong>major</strong> contributions to MooLah&#8217;s Developer Guide.
 They showcase my ability to write technical documentation and the technical depth of
 my contributions to the project.</em></p></td>
 </tr>
@@ -686,25 +386,40 @@ my contributions to the project.</em></p></td>
 <div class="sect3">
 <h4 id="implementation"><a class="link" href="#implementation">Implementation</a></h4>
 <div class="paragraph">
-<p>The Events feature allows users to add events that are supposed to occur on a future date. On launch, MooLah will
-remind users of upcoming events. MooLah will also notify the user about any events that are supposed to have
-transpired, and allow them to automatically add these events as expenses.</p>
+<p>The Events feature allows users to add events that are supposed to occur on a future date.</p>
 </div>
 <div class="paragraph">
-<p>The Events feature supports the <code>add</code>, <code>delete</code> and <code>events</code> command words.</p>
-</div>
-<div class="paragraph">
-<p>Events are added the same way expenses are added on the command line. When the user inputs an add command,
-MooLah determines whether an event or an expense should be added based on the date the user inputted in his command.
-This is illustrated below:</p>
+<p>On launch, MooLah will remind users of upcoming events. While the app is open, MooLah will also notify the user about any events that have transpired,
+and allow them to automatically add these events as expenses.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../images/AddExpenseOrEventActivityDiagram.png" alt="AddExpenseOrEventActivityDiagram">
+<img src="../images/EventClassDiagram.png" alt="EventClassDiagram">
 </div>
 </div>
 <div class="paragraph">
-<p>The following sequence diagram shows how MooLah handles transpired events on launch:</p>
+<p>Like expenses, events hold two Descriptions (one for its details and one fir the budget it belongs to), a Price, a Timestamp
+and a Category. The <code>setBudget</code> method of Event is used for the Event to remember which budget it was added to. This facilitates
+the potential conversion of the Event into an Expense through the <code>convertToExpense</code> method. This method is called when the user
+accepts the automated addition of an expense from the corresponding event, into the budget that the event was added into a while back.
+Since Event&#8217;s fields are a subset of that of Expense, all its fields are passed into the Expense constructor during the conversion, and a
+unique identifier is then generated to complete the creation of the expense, allowing it to be added to MooLah.</p>
+</div>
+<div class="paragraph">
+<p>The Events feature supports the <code>addevent</code>, <code>deleteevent</code>, <code>editevent</code> and <code>listevent</code> command words.</p>
+</div>
+<div class="paragraph">
+<p>As mentioned earlier, MooLah displays reminders of upcoming events during launch. The implementation is shown below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/DisplayReminders.png" alt="DisplayReminders">
+</div>
+</div>
+<div class="paragraph">
+<p>To allow for accurate prompting of transpired events, MooLah tracks system time every 10 seconds using a <code>Timer</code> running
+on a parallel thread. An event is then deemed to have transpired if its timestamp has gone past system time.
+The following sequence diagram shows how MooLah handles transpired events:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -714,20 +429,19 @@ This is illustrated below:</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>When MooLah launches, the <code>start</code> method of <code>UiManager</code> is called. <code>UiManager</code> then calls the <code>handleTranspiredEvents</code>
-of <code>MainWindow</code>, which fetches all transpired events and notifies the user about them. It does so by first obtaining the
-transpired events from the <code>Timekeeper</code> class by calling a series of getter methods.</p>
+<p>When MooLah launches, the <code>start</code> method of <code>UiManager</code> is called. Every 10 seconds, <code>UiManager</code> calls <code>updateTime</code> of
+Timekeeper to update system time, then calls the <code>handleTranspiredEvents</code> of <code>MainWindow</code>, which fetches all transpired
+events and notifies the user about them. It does so by first obtaining the transpired events from the <code>Timekeeper</code> class.</p>
 </li>
 <li>
 <p>Once the transpired events have been obtained, for each transpired event, a new <code>TranspiredEventWindow</code> will be
-constructed. The transpired event will then be passed via <code>show</code>, a method of the newly constructed <code>TranspiredEventWindow</code>.
+constructed. The transpired event is deleted from the model and will then be passed via <code>show</code>, a method of the newly constructed <code>TranspiredEventWindow</code>.
 <code>show</code> will create a popup window that details the transpired event, and asks the user whether it should be added as an
 expense. This popup window will have a 'Yes' and 'No' button.</p>
 </li>
 <li>
-<p>If the user presses the 'Yes' button, the original command that the user inputted to add this particular event is fetched
-and passed to the <code>execute</code> method of <code>LogicManager</code>, which executes command line inputs. Since the timestamp within this
-original command now denotes a past or present date, an expense will be added.</p>
+<p>If the user presses the 'Yes' button, the event is passed to the <code>addExpenseFromEvent</code> method of <code>LogicManager</code>, where
+it is then converted into its corresponding expense, and a command to add the expense is run.</p>
 </li>
 <li>
 <p>If the user presses the 'No' button, the expense is not added.</p>
@@ -736,18 +450,6 @@ original command now denotes a past or present date, an expense will be added.</
 <p>After pressing either button, the popup window closes.</p>
 </li>
 </ol>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-As of Week 10, adding expenses to the same budget the event was added to is still a work in progress.
-</td>
-</tr>
-</table>
 </div>
 </div>
 <div class="sect3">
@@ -784,10 +486,10 @@ As of Week 10, adding expenses to the same budget the event was added to is stil
 </li>
 <li>
 <p><strong>Solution (Current Implementation): </strong>
-Adopt Alternative 2. Since an event is ultimately an optional future expense that triggers on its
-due date, it is significantly more intuitive and natural to allow users to add events the same way they add expenses.
-MooLah can then easily tell whether the user intends to add an expense or an event by looking at the timestamp
-the user inputs in the command.</p>
+Adopt Alternative 1. Although Alternative 2 is more intuitive, it is not suited to our current implementation of
+generic command words. Since command words such as <code>add</code> and <code>delete</code> now result in different commands based on which
+panel the user is on, MooLah&#8217;s parser would not know whether users want to add an event or expense if they type <code>add</code> while on an event
+or expense panel. This necessitates the splitting of expense and event commands into two separate command words.</p>
 </li>
 </ul>
 </div>
@@ -802,4 +504,4 @@ the user&#8217;s decision) that can then be added as expenses when their due dat
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 15:33:46 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 17:27:19 UTC</div></div></div></body></html>

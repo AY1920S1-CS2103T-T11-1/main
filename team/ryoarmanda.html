@@ -10,57 +10,91 @@
 <h2 id="overview"><a class="link" href="#overview">Overview</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>MooLah is an expense tracker application developed in Java by and for students from National University of Singapore. The application
-is command-line based but presented with a GUI created with JavaFX for display purposes.</p>
+<p>MooLah is a Command Line Interface (CLI)-centered expense tracker poised to be hassle-free and tailored for students of National University of Singapore (NUS).
+This project is developed by me and 4 Computer Science students in NUS. In developing the project, we were initially tasked to enhance or morph an existing project, Address Book Level 3.
+Throughout the semester, we decided to morph the original codebase into MooLah and developed features for it incrementally. Although MooLah is CLI-centered, it also has
+a neat Graphical User Interface (GUI) made by JavaFX code, and supports features such as autosuggestion to achieve the intended convenience of using MooLah.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="summary-of-contributions"><a class="link" href="#summary-of-contributions">Summary of contributions</a></h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="strong-major-enhancement-strong"><a class="link" href="#strong-major-enhancement-strong"><strong>Major enhancement</strong></a></h3>
+<div class="paragraph">
+<p>I implemented the functionality to <strong>undo and redo commands</strong> that have been executed by the user. The details are
+as follows:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Major enhancement</strong>: implemented <strong>undo/redo functionality</strong></p>
-<div class="ulist">
-<ul>
-<li>
-<p>What it does: The functionality enables the user to undo commands that have been executed in a one-by-one manner. Commands that have been undone can be reverted back by using the redo command, provided that the user have not executed any new commands at the time.</p>
+<p>What it does: The functionality enables the user to undo commands that have been executed one-by-one. Commands that have been undone can be reverted back by using the redo command, provided that the user has not executed any new commands at the time.</p>
 </li>
 <li>
 <p>Justification: This component improves the application significantly as a user can make mistakes in commands and the component helps the user amend them.</p>
 </li>
 <li>
-<p>Highlights: This enhancement affects existing commands and commands to be added in future. It required a thoughtful analysis of design approaches and resource trade-offs. The implementation too was challenging as it hinges on the immutability of the data structures of the model.</p>
+<p>Highlights: This enhancement affects existing commands and commands to be added in future, as commands can now be either undoable or non-undoable in nature.
+It required a thoughtful analysis of design approaches and resource trade-offs, namely in computation time versus memory.
+The implementation too was challenging as it hinges on the immutability of the data structures of the model, and persistence of model states throughout execution.</p>
 </li>
 </ul>
 </div>
-</li>
-<li>
-<p><strong>Other contributions</strong>:</p>
+</div>
+<div class="sect2">
+<h3 id="strong-minor-enhancements-strong"><a class="link" href="#strong-minor-enhancements-strong"><strong>Minor enhancements</strong></a></h3>
+<div class="paragraph">
+<p>Other than the major enhancement described above, I have also:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Project management:</p>
+<p>Added a new command that adds an expense from the list of NUS canteens' food and drinks supported by MooLah. This command
+is a shorthand form of the general add expense command tailored for NUS students.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="strong-code-contributed-strong"><a class="link" href="#strong-code-contributed-strong"><strong>Code contributed</strong></a></h3>
+<div class="paragraph">
+<p>Refer <a href="https://nus-cs2103-ay1920s1.github.io/tp-dashboard/#search=ryoarmanda&amp;sort=groupTitle&amp;sortWithin=title&amp;since=2019-09-06&amp;timeframe=commit&amp;mergegroup=false&amp;groupSelect=groupByRepos&amp;breakdown=false&amp;tabOpen=true&amp;tabType=authorship&amp;tabAuthor=ryoarmanda&amp;tabRepo=AY1920S1-CS2103T-T11-1%2Fmain%5Bmaster%5D">here</a>
+for the list of code contributions I have done for the project.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="strong-other-contributions-strong"><a class="link" href="#strong-other-contributions-strong"><strong>Other contributions</strong></a></h3>
+<div class="sect3">
+<h4 id="project-management"><a class="link" href="#project-management">Project management</a></h4>
+<div class="paragraph">
+<p>As the person-in-charge for project integration, my responsibility is to streamline the process of proposing code
+changes and contributions, and to preserve the integrity of the codebase. The measures I have taken to achieve that, are
+namely:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
 <p>Ensured the master branch is protected from rogue code pushes</p>
 </li>
 <li>
-<p>Made passing Travis build a requirement for merging pull requests to ensure passing build of the master branch.</p>
+<p>Made passing Travis build a requirement for merging pull requests to ensure the integrity of the master branch.</p>
 </li>
 <li>
-<p>Configured Coveralls to post coverage status to pull requests after passing Travis build, with a warning if coverage drops by 5%.</p>
+<p>Configured Coveralls to post coverage status to pull requests after passing Travis build with a warning if coverage drops by 5%.</p>
 </li>
 <li>
 <p>Set the requirement for one teammate approval to be able to merge pull requests to improve codebase quality.</p>
 </li>
 </ul>
 </div>
-</li>
-<li>
-<p>Improvements to existing components:</p>
+</div>
+<div class="sect3">
+<h4 id="improvements-to-existing-components"><a class="link" href="#improvements-to-existing-components">Improvements to existing components</a></h4>
+<div class="paragraph">
+<p>I improved some aspects of the original codebase to better complement my enhancements and to improve
+the quality of the project as a whole. For the improvements, I have:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -68,31 +102,36 @@ is command-line based but presented with a GUI created with JavaFX for display p
 </li>
 </ul>
 </div>
-</li>
-<li>
-<p>Community:</p>
+</div>
+<div class="sect3">
+<h4 id="community"><a class="link" href="#community">Community</a></h4>
+<div class="paragraph">
+<p>As part of a project community with my teammates, I have done the following as contributions to the group discussion:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>PRs reviewed (with non-trivial review comments): <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/">#62</a>, <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/">#89</a></p>
+<p>Reviewing pull requests (with in-depth comments): <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/">#62</a>, <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/">#89</a></p>
 </li>
 </ul>
 </div>
-</li>
-<li>
-<p>Tools:</p>
+</div>
+<div class="sect3">
+<h4 id="integration-tools"><a class="link" href="#integration-tools">Integration Tools</a></h4>
+<div class="paragraph">
+<p>I have incorporated third-party tools to help automate or manage the development of the project. In summary, I have:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Integrated Coveralls to the team repo</p>
+<p>Integrated Coveralls to the team repo to keep track of the project&#8217;s line coverage.</p>
+</li>
+<li>
+<p>Integrated Trello to manage project issues and backlog throughout the development process.</p>
 </li>
 </ul>
 </div>
-</li>
-</ul>
 </div>
-</li>
-</ul>
 </div>
 </div>
 </div>
@@ -105,7 +144,7 @@ is command-line based but presented with a GUI created with JavaFX for display p
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users.</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Below are the <strong>major</strong> sections that I contributed to the User Guide. These showcase my ability to write documentation targeting end-users.</em></p></td>
 </tr>
 </tbody>
 </table>
@@ -181,39 +220,63 @@ MooLah will also display a message <code>Redid "Delete expense with index 5"</co
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project.</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Below are the <strong>major</strong> sections that I contributed to the Developer Guide. These showcase my ability to write technical documentation and the technical depth of my contributions to the project.</em></p></td>
 </tr>
 </tbody>
 </table>
 <div class="sect2">
-<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">Undo/Redo feature</a></h3>
+<h3 id="undo-and-redo-feature"><a class="link" href="#undo-and-redo-feature">Undo and Redo feature</a></h3>
 <div class="sect3">
 <h4 id="implementation"><a class="link" href="#implementation">Implementation</a></h4>
 <div class="paragraph">
-<p>The undo/redo functionality is facilitated by <code>ModelHistory</code> which is an instance-level member for models.
-Internally, it stores model snapshots by using two stacks: <code>pastModels</code> and <code>futureModels</code>.
-With the addition of model history, now <code>Model</code> also supports these operations:</p>
+<p>The undo and redo functionality is facilitated by <code>ModelHistory</code>, which is available as an instance-level member of <code>Model</code>. It keeps track of the model&#8217;s history
+by storing the changed fields of the model throughout execution, which will be represented as <code>ModelChanges</code>. Internally, <code>ModelHistory</code> stores the history by using two stacks of <code>ModelChanges</code>, namely: <code>pastChanges</code> and <code>futureChanges</code>.</p>
+</div>
+<div class="paragraph">
+<p>With the addition of model history, <code>Model</code> can support these operations:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>Model#addToHistory()</code>&#8201;&#8212;&#8201;Moves the history forward by saving the current model snapshot in its past history and clearing the future history.</p>
+<p><code>Model#commit(String, Model)</code>&#8201;&#8212;&#8201;Saves the changes between the current model and the given previous model to the past changes history, keeping the previous model&#8217;s data should there be any differences. This adds the changes to the past history, and clearing the future history.</p>
 </li>
 <li>
-<p><code>Model#rollback()</code>&#8201;&#8212;&#8201;Restores the state to the immediate previous model in the history.</p>
+<p><code>Model#applyChanges(ModelChanges)</code>&#8201;&#8212;&#8201;Applies the changes in history</p>
 </li>
 <li>
-<p><code>Model#migrate()</code>&#8201;&#8212;&#8201;Forwards the state to the immediate next model in the history.</p>
+<p><code>Model#canRollback()</code>&#8201;&#8212;&#8201;Checks whether the model can be rolled-back</p>
+</li>
+<li>
+<p><code>Model#rollback()</code>&#8201;&#8212;&#8201;Restores the model one step back by applying the changes described in the immediate previous changes in history.</p>
+</li>
+<li>
+<p><code>Model#canMigrate()</code>&#8201;&#8212;&#8201;Checks whether the model can be migrated</p>
+</li>
+<li>
+<p><code>Model#migrate()</code>&#8201;&#8212;&#8201;Moves the model one step forward in history by applying the changes described in the immediate next changes.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p><code>ModelHistory</code> only stores histories of models which were about to be (or are going to be) executed by model-changing commands.
-As some of the commands available are intuitively not undoable (e.g. <code>help</code>), we make commands extend to either <code>UndoableCommand</code> or a non-undoable <code>Command</code> classes.
-So, the <code>Model#addToHistory()</code> will only be called if the command to be executed is an instance of <code>UndoableCommand</code>.</p>
+<p>To support these capabilities, <code>ModelChanges</code> offers these methods as well:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>ModelChanges#compareModels(Model, Model)</code>&#8201;&#8212;&#8201;Compares two models' data and creates a new <code>ModelChanges</code> object that c</p>
+</li>
+<li>
+<p><code>ModelChanges#revertChanges(Model)</code>&#8201;&#8212;&#8201;Reverts the current changes with respect to the base model given.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.</p>
+<p><code>ModelHistory</code> only stores changes of models that were (or are going to be) executed by model-manipulating - or simply, undoable - commands.
+As some of the commands available are intuitively not undoable (e.g. <code>help</code>), every command is configured to extend either <code>UndoableCommand</code> or a non-undoable <code>Command</code> classes.
+With the division, <code>Model#commit(String, Model)</code> will only be called if the command to be executed is an instance of <code>UndoableCommand</code>.</p>
+</div>
+<div class="paragraph">
+<p>Given below is an example usage scenario and how the undo and redo functionality behaves at each step.</p>
 </div>
 <div class="paragraph">
 <p>Step 1. The user launches the application for the first time. The current <code>ModelHistory</code> is now empty.</p>
@@ -224,8 +287,8 @@ So, the <code>Model#addToHistory()</code> will only be called if the command to 
 </div>
 </div>
 <div class="paragraph">
-<p>Step 2. The user executes <code>add d/Chicken Rice p/2.50 &#8230;&#8203;</code> command to add an expense.
-The <code>add</code> command, being an <code>UndoableCommand</code>, calls <code>Model#addToHistory()</code>, which saves the state of the model just before the command executes to <code>pastModels</code>, and <code>futureModels</code> is cleared.</p>
+<p>Step 2. The user executes <code>addexpense d/chicken rice p/2.50 c/food</code> command to add an expense.
+The <code>addexpense</code> command, being an <code>UndoableCommand</code>, calls <code>Model#commit(String, Model)</code>, which saves the state of the model just before the command executes to <code>pastChanges</code>, and <code>futureChanges</code> is cleared.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -233,7 +296,7 @@ The <code>add</code> command, being an <code>UndoableCommand</code>, calls <code
 </div>
 </div>
 <div class="paragraph">
-<p>Step 3. The user executes <code>delete 1</code> to delete the first expense on the list. The <code>delete</code> command, also an <code>UndoableCommand</code>, calls <code>Model#addToHistory()</code>, inserting another entry to the <code>pastModels</code> and clearing <code>futureModels</code> again.</p>
+<p>Step 3. The user executes <code>deleteexpense-primary 1</code> to delete the first expense on the list. The <code>deleteexpense-primary</code> command, also an <code>UndoableCommand</code>, calls <code>Model#commit(String, Model)</code>, inserting another entry to the <code>pastChanges</code> and clearing <code>futureChanges</code> again.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -247,13 +310,13 @@ The <code>add</code> command, being an <code>UndoableCommand</code>, calls <code
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If a command fails its execution, it will not call <code>Model#addToHistory()</code>, so the model will not be saved into <code>ModelHistory</code>.
+If a command fails its execution, it will not call <code>Model#commit(String, Model)</code>, so the model will not be saved into <code>ModelHistory</code>.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Step 4. The user now decides that deleting the expense was a mistake, and decides to undo that action by executing the <code>undo</code> command. The <code>undo</code> command will call <code>Model#rollbackModel()</code>, which will retrieve the immediate previous model in history, adding the current model to the future history of the retrieved model, and restores the model according to that state.</p>
+<p>Step 4. The user now decides that deleting the expense was a mistake, and decides to undo that action by executing the <code>undo</code> command. The <code>undo</code> command will call <code>Model#rollback()</code>, which will retrieve the immediate previous change in history, adding the reverting change to the future history of the retrieved model, and applies the change to the model.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -267,7 +330,7 @@ If a command fails its execution, it will not call <code>Model#addToHistory()</c
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If <code>pastModels</code> is empty, then there are no previous models to roll back. The <code>undo</code> command uses <code>Model#canRollback()</code> to check if this is the case. If so, it will return an error to the user rather than attempting to perform the undo.
+If <code>pastChanges</code> is empty, then there are no previous changes to roll back. The <code>undo</code> command uses <code>Model#canRollback()</code> to check if this is the case. If so, it will return an error to the user rather than attempting to perform the undo.
 </td>
 </tr>
 </table>
@@ -293,7 +356,7 @@ The lifeline for <code>UndoCommand</code> should end at the destroy marker (X) b
 </table>
 </div>
 <div class="paragraph">
-<p>Inversely, the <code>redo</code> command calls <code>Model#migrate()</code>, which retrieves the immediate next model in history, adds the current model to the past history of the retrieved model, and resets the model according to that snapshot.</p>
+<p>Inversely, the <code>redo</code> command calls <code>Model#migrate()</code>, which retrieves the immediate next changes in history, adds the reverting change to the past history, and applies the changes to the model.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -302,10 +365,19 @@ The lifeline for <code>UndoCommand</code> should end at the destroy marker (X) b
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If <code>futureModels</code> is empty, then there are no snapshots to be redone. The <code>redo</code> command uses <code>Model#canMigrate()</code> to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+If <code>futureChanges</code> is empty, then there are no snapshots to be redone. The <code>redo</code> command uses <code>Model#canMigrate()</code> to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>As explained earlier, additions of entry to <code>ModelHistory</code> will only be performed when the command being executed is an instance of <code>UndoableCommand</code>.
+The following diagram briefly describes how the execution of undoable commands will do so:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/UndoableCommandActivityDiagram.png" alt="UndoableCommandActivityDiagram">
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -315,41 +387,79 @@ If <code>futureModels</code> is empty, then there are no snapshots to be redone.
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Saves the entire model.</p>
+<p><strong>Alternative 1:</strong> Saves the model data.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Easier to implement.</p>
+<p>Pros: It is easier to implement.</p>
 </li>
 <li>
-<p>Cons: May have performance issues in terms of memory usage.</p>
+<p>Cons: The approach introduces a new</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><strong>Alternative 2:</strong> Individual commands have their own counter-command that can negate the effects.</p>
+<p><strong>Alternative 2:</strong> Individual commands have their own counter-command that negate the effects.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Quite intuitive (e.g. for <code>add</code>, just do <code>delete</code> to counter it).</p>
+<p>Pros: This approach is quite intuitive (e.g. for <code>addmenuexpense</code>, we can do <code>deleteexpense-primary</code> to counter it).</p>
 </li>
 <li>
-<p>Cons: We must ensure that the implementation of each individual command are correct.</p>
+<p>Cons: It has to be ensured that the implementation of each individual command is correct.</p>
 </li>
 </ul>
 </div>
 </li>
-</ul>
-</div>
-<div class="paragraph">
-<p>We choose Alternative 1 as this approach will be less likely to cause problems specific to restoring the state to the way it was before the execution of a command,
+<li>
+<p><strong>Current implementation (Alternative 1)</strong>:
+We choose this approach as it will be less likely to cause problems specific to restoring the state precisely to the state before the execution of a command,
 as some commands will create a problem specific on their own which might not be supported by the proposed counter-command.
-As an example, to undo <code>delete 3</code>, we must re-add that expense to that specific position, which at the moment is not supported
-by the <code>add</code> command.</p>
+As an example, to undo <code>delete 3</code>, we must re-add that expense to that specific position (third from beginning), which at the moment is not supported
+by the <code>addexpense</code> command.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-how-to-store-the-model-data"><a class="link" href="#aspect-how-to-store-the-model-data">Aspect: How to store the model data</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1:</strong> Saves the entire model.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: It is easier to implement.</p>
+</li>
+<li>
+<p>Cons: The approach introduces a lot of memory usage.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Saves the members of the model that were (or are going to be) changed.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: This approach is more conservative in memory usage.</p>
+</li>
+<li>
+<p>Cons: We have to make sure every field is immutable to preserve changes.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Current implementation (Alternative 2)</strong>:
+We choose this approach as the time and memory resource trade-off is less significant compared to Alternative 1.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 15:33:46 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 17:27:19 UTC</div></div></div></body></html>

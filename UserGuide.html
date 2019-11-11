@@ -115,11 +115,11 @@ Contains key information relevant to the execution of commands.
 <p>Double-click the file to start the app. The GUI should appear in a few seconds.</p>
 </li>
 <li>
-<p>Type a command in the command box and press <kbd>Enter</kbd> to execute it.<br>
-e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> will open the help window.</p>
+<p>Type a command in the command box and press <code>Enter</code> to execute it.<br>
+e.g. typing <strong><code>help</code></strong> and pressing <code>Enter</code> will open the help window.</p>
 </li>
 <li>
-<p>Press <kbd>TAB</kbd> if you want to enable the suggestion feature.</p>
+<p>Press <code>TAB</code> if you want to enable the suggestion feature.</p>
 </li>
 <li>
 <p>Some example commands you can try:</p>
@@ -450,7 +450,7 @@ nanoseconds are rounded down to 0.)
 <div class="sect3">
 <h4 id="adding-an-expense-code-addexpense-code"><a class="link" href="#adding-an-expense-code-addexpense-code">4.6.1. Adding an expense: <code>addexpense</code></a></h4>
 <div class="paragraph">
-<p>The bread an butter of any expense tracker, adding an expense!
+<p>The bread and butter of any expense tracker: adding an expense!
 In order to begin tracking your expenses, you are going to need to enter some expenses to track.</p>
 </div>
 <div class="paragraph">
@@ -510,7 +510,7 @@ The accepted &lt;TIMESTAMP&gt; range is <code>1 Jan 2000 to 31 Dec 2099</code>.
 </table>
 </div>
 <div class="paragraph">
-<p>After typing in the command and entering it.</p>
+<p>After typing in the command and entering it&#8230;&#8203;</p>
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
@@ -528,7 +528,7 @@ The accepted &lt;TIMESTAMP&gt; range is <code>1 Jan 2000 to 31 Dec 2099</code>.
 <div class="title">Figure 3. a new Food is added to the list.</div>
 </div>
 <div class="paragraph">
-<p>A new Food expense  is added</p>
+<p>A new Food expense is added.</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -748,7 +748,7 @@ delete 2</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Deletes the 2nd expense in the list of expenses, shown after <code>listexpenses</code> is executed.</p>
+<p>Deletes the 2nd expense in the list of expenses, shown after <code>listexpense</code> is executed.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -777,6 +777,19 @@ asking you whether you wish to add these events as corresponding expenses.</p>
 <div class="content">
 <img src="images/TranspiredEventsPopup.png" alt="TranspiredEventsPopup" width="790">
 </div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Once an event has transpired, it is permanently deleted from MooLah and you cannot get it back! Undoing MooLah to a state where
+that event was still present would not restore the event.
+</td>
+</tr>
+</table>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -810,6 +823,10 @@ event popups!
 <ul>
 <li>
 <p>Events are potential future expenses, so the <code>TIMESTAMP</code> field is compulsory and must contain a future time.</p>
+</li>
+<li>
+<p>Due to how MooLah rounds all seconds to zero, inputting events with very precise timings such as <code>1 second from now</code>
+will likely result in errors since MooLah will interpret it as a past datetime input.</p>
 </li>
 <li>
 <p>You should only input one of the following into the <code>CATEGORY</code> field:
@@ -932,12 +949,12 @@ editevent 2 p/300</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>listevents
+<pre>listevent
 delete 2</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Deletes the 2nd event in the list of events, shown by <code>listevents</code>.</p>
+<p>Deletes the 2nd event in the list of events, shown by <code>listevent</code>.</p>
 </div>
 </div>
 </div>
@@ -1470,12 +1487,12 @@ suggest valid commands, as well as prefixes when you already have a command word
 </div>
 <div class="paragraph">
 <p><strong>Enable</strong><br>
-To enable the suggestion feature, press the <kbd>TAB</kbd> key. This will enable the suggestion feature!
+To enable the suggestion feature, press the <code>TAB</code> key. This will enable the suggestion feature!
 You will see that the command box has a green border. This indicates that the feature is enabled.</p>
 </div>
 <div class="paragraph">
 <p><strong>Disable</strong><br>
-To disable the suggestion feature, press the <kbd>TAB</kbd> key again. This will disable the suggestion feature!
+To disable the suggestion feature, press the <code>TAB</code> key again. This will disable the suggestion feature!
 You will see that the command box no longer has a green border. This indicates that the feature is no longer enabled.</p>
 </div>
 <div class="paragraph">
@@ -1495,8 +1512,8 @@ You will see that the command box no longer has a green border. This indicates t
 </div>
 </div>
 <div class="paragraph">
-<p>You can cycle through the choices using the <kbd>UP</kbd> and <kbd>DOWN</kbd> keys. To confirm your choice, push the <kbd>ENTER</kbd> or <kbd>SPACE</kbd> key!
-<kbd>LEFT</kbd>, <kbd>RIGHT</kbd>, and <kbd>ESC</kbd> can be used to close the menu without disabling suggestions.</p>
+<p>You can cycle through the choices using the <code>UP</code> and <code>DOWN</code> keys. To confirm your choice, push the <code>ENTER</code> or <code>SPACE</code> key!
+<code>LEFT</code>, <code>RIGHT</code>, and <code>ESC</code> can be used to close the menu without disabling suggestions.</p>
 </div>
 <div class="paragraph">
 <p>When you have entered a valid command, MooLah will show you a list of prefixes that are supported by this command and that
@@ -1580,8 +1597,8 @@ However, it will not validate them for you!</p>
 you may cycle through the history of successfully executed inputs within the current session.</p>
 </div>
 <div class="paragraph">
-<p>Press <kbd>UP</kbd> to scroll through previously executed commands.<br>
-Press <kbd>DOWN</kbd> to go back the more recent commands.</p>
+<p>Press <code>UP</code> to scroll through previously executed commands.<br>
+Press <code>DOWN</code> to go back the more recent commands.</p>
 </div>
 <div class="paragraph">
 <p>For example, if you entered these commands previously.</p>
@@ -1594,7 +1611,7 @@ Press <kbd>DOWN</kbd> to go back the more recent commands.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Pressing the <kbd>UP</kbd> key to quickly enter the previous input.</p>
+<p>Pressing the <code>UP</code> key to quickly enter the previous input.</p>
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
@@ -1609,7 +1626,7 @@ Press <kbd>DOWN</kbd> to go back the more recent commands.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-When the suggestion menu is open, the <kbd>UP</kbd> and <kbd>DOWN</kbd> keys will cycle through the suggestions instead!
+When the suggestion menu is open, the <code>UP</code> and <code>DOWN</code> keys will cycle through the suggestions instead!
 </td>
 </tr>
 </table>
@@ -2110,11 +2127,11 @@ e.g. <code>statstrend sd/11-11-2018 ed/12-12-2018 mode/category</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Add alias</strong> (<em>undoable</em>) : <code>addalias a/&lt;ALIAS_NAME&gt; c/&lt;INPUT&gt;</code><br>
+<p><strong>Add alias</strong> (<em>undoable</em>) : <code>addalias a/&lt;ALIAS_NAME&gt; i/&lt;INPUT&gt;</code><br>
 e.g. <code>alias a/chicken rice c/ add d/ Chicken Rice p/2.50 c/Food</code></p>
 </li>
 <li>
-<p><strong>See all aliases</strong> : <code>listaliases</code></p>
+<p><strong>See all aliases</strong> : <code>listalias</code></p>
 </li>
 <li>
 <p><strong>Delete an alias</strong> : <code>deletealias &lt;DESCRIPTION&gt;</code></p>
@@ -2165,4 +2182,4 @@ e.g. <code>alias a/chicken rice c/ add d/ Chicken Rice p/2.50 c/Food</code></p>
 </tbody>
 </table>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 15:33:46 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 17:27:19 UTC</div></div></div></body></html>

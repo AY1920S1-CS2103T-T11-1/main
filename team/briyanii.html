@@ -10,14 +10,15 @@
 <h2 id="overview"><a class="link" href="#overview">Overview</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This portfolio aims to document the contributions made to MooLah by Brian Fung.</p>
+<p>This portfolio aims to document my contributions to MooLah</p>
 </div>
 <div class="paragraph">
-<p>MooLah is a desktop expense tracking application, which was morphed from the code of Software Engineering Education&#8217;s AddressBook - Level 3 used for teaching Software Engineering principles.
-MooLah is a hassle-free expense tracker aimed at NUS students.</p>
+<p>MooLah is a desktop expense tracking application, which was morphed from the code of Software Engineering Education&#8217;s AddressBook - Level 3 used for teaching Software Engineering principles.</p>
 </div>
 <div class="paragraph">
-<p>The user interacts with it using a Command-Line Interface (CLI), and it has a GUI created with JavaFX. It is written in Java, and has about 17 kLoC.</p>
+<p>MooLah is written in Java and has around 23 kLoC. It aims to provide a streamlined expense tracking solution to NUS students who are more comfortable with
+Command-Line Interfaces (CLI). With features such as auto-completion, and syntax highlighting, and expense analysis features like budgeting, and statistics.
+MooLah provides users an expense tracking solution which is both useful and easy to use.</p>
 </div>
 </div>
 </div>
@@ -27,64 +28,42 @@ MooLah is a hassle-free expense tracker aimed at NUS students.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Major enhancement</strong>: added <strong>shortcut feature</strong></p>
-<div class="ulist">
-<ul>
-<li>
-<p>What it does:</p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>allows the user to assign an alias to an input, allowing them to create shortcuts for command which they
-frequently require. this saves them a lot of time entering all the arguments for a command, as well as reduces the need to
-remember what exactly needs to be entered.</p>
-</li>
-<li>
-<p>saves successfully inputted commands to history to allow reentering of commands used within the same session</p>
-</li>
-<li>
-<p>generic commands</p>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p>Justification: as this is a CLI-Interface application, users would generally have to remember a lot of commands as
-well as command syntax. This feature allows users to reduce the keystrokes needed to complete a task, and
-reduce the need to remember commands.</p>
-</li>
-<li>
-<p>Highlights:</p>
+<p><strong>Major enhancement</strong>: added <strong>Easier Command-Line</strong> feature.<br></p>
 </li>
 </ul>
 </div>
-</li>
-<li>
-<p><strong>Major enhancement</strong>: added *autocomplete and syntax highlighting</p>
+<div class="paragraph">
+<p>As this project required the use of a Command-Line interface for user interaction, user input can sometimes require a lot
+of typing and users may find it difficult to remember all the different commands available and the syntax required to use
+these commands.</p>
+</div>
+<div class="paragraph">
+<p>This feature consists of several features which make Command-Line easier to use, and to reduce the need for users
+to refer to the user guide.</p>
+</div>
+<div class="paragraph">
+<p><strong>Component 1:</strong> Aliases</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>What it does:</p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>highlights syntax to show which arguments belong under which prefix in the CLI-interface.</p>
+<p>What it does:<br>
+This feature allows the user to save input to an alias, allowing them to create shortcuts for command which they
+frequently require. This saves them time by reducing the keystrokes required to enter a command, as well as reduces the need to
+remember what exactly needs to be entered.</p>
 </li>
-<li>
-<p>adds placeholders to indicate what argument a prefix is expecting after a user enters the prefix</p>
-</li>
-<li>
-<p>shows what are the valid commands the user can enter</p>
-</li>
-<li>
-<p>shows what are the required prefixes and optional prefixes which the command requires.</p>
-</li>
-</ol>
+</ul>
 </div>
-</li>
+<div class="paragraph">
+<p><strong>Component 2:</strong> Syntax highlighting</p>
+</div>
+<div class="ulist">
+<ul>
 <li>
-<p>What it does: allows the user to see what arguments they may have missed, and help them remember what each the arguments needed
-for each command</p>
+<p>What it does:<br>
+This feature provides some validation of user input. It highlights valid command words used for commands as well as the
+prefixes delimiting arguments within the command. It also makes the user&#8217;s input more readable, as commands may require many
+arguments and prefixes, it may be difficult for users to read their input before entering the command.</p>
 </li>
 <li>
 <p>Justification: This feature improves the product significantly because a user does not need to remember confusing commands and syntax.
@@ -92,42 +71,64 @@ Especially due to the fact that our application supports a large number of comma
 as what arguments are required without having to press enter the command and see an error message.</p>
 </li>
 <li>
-<p>Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives.
-The implementation too was challenging as it required changes to existing commands as well heavy use of javafx elements.</p>
+<p>Highlights: This feature required in-depth analysis of the command syntax of the original code base. The implementation was challenging
+as it required the use of regular expressions to analyse user input so that the right sections of text were properly highlighted. This
+feature also required integration of RichTextFx JavaFx extensions. As RichTextFx only provided a text styling for multi-line
+text areas, this feature required significant usage of JavaFx&#8217;s event dispatch and in order to ensure that the text area can properly simulate
+a single-line textfield.</p>
 </li>
 <li>
-<p>Credits: {richtextfx demo&#8230;&#8203; }</p>
+<p>Credits: The RichTextFx demo&#8217;s included some existing logic for syntax highlighting which was modified for use
+in MooLash as the behaviour of syntax highlighting in the demo&#8217;s code did not require different highlighting behaviour in different context.</p>
 </li>
 </ul>
 </div>
-</li>
-<li>
-<p><strong>Major enhancement</strong>: add <strong>GUI elements for Budget List, Budgets, Expense List</strong></p>
+<div class="paragraph">
+<p><strong>Component 3:</strong> Input suggestions
+** What it does:<br>
+As with the previous components, the main reason this feature was implemented was to reduce the need for users to have to refer
+to user guides or remember a lot of commands and their syntax. This feature suggests completions to the user&#8217;s current input to
+provide them with possible commands they may enter, as well as provide them information of what arguments are required by the command
+and what the prefixes for the argument stand for.</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>What it does &#8230;&#8203;</p>
+<p>Highlights: This feature required in-depth analysis of the command syntax of the original code base. It required modification to the existing
+Prefix class for it to provide more information to the user. The implementation was challenging as MooLah supports almost 30
+commands, all of which have different arguments. As such the feature needed to be designed such that it was scalable to
+support new commands as well as modification to existing commands. Similar to the syntax highlighting
+feature, this feature uses a significant use of JavaFx as well.</p>
 </li>
 </ul>
 </div>
-</li>
-<li>
-<p><strong>Minor enhancement</strong>: add <strong>GUI support adding of future panels</strong>
-&#8230;&#8203;</p>
-</li>
-<li>
-<p><strong>Minor enhancement</strong>: <strong>initial refactoring of AddressBook into MooLah</strong></p>
+<div class="paragraph">
+<p><strong>Component 4:</strong> Generic commands.
+As mentioned previously, MooLah supports around 30 commands, several of which do similar thing (e.g. There are several commands which
+add information to MooLah use the word 'add'. In order to differentiate these commands, they require a much longer name to be clear as to
+what the command does. This feature allows multiple commands to use the same word and be parsed differently based on the context
+they are used.</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>refactor Person class to expense
-&#8230;&#8203;</p>
-</li>
-</ul>
-</div>
+<p><strong>Major enhancement</strong>: Design <strong>GUI elements for Budget List, Budgets, Expense, and Aliases</strong>
+Except for the most recent change to the colour theme of Moolah, most of the code to visualise changes to Aliases, Budgets, Expenses were
+written by me.
+<a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/106">#106</a>
+<a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/231">#231</a></p>
 </li>
 <li>
-<p><strong>Code contributed</strong>: [<a href="https://github.com">Functional code</a>] [<a href="https://github.com">Test code</a>] <em>{give links to collated code files}</em></p>
+<p><strong>Minor enhancement</strong>: <strong>initial refactoring of AddressBook into MooLah to allow tracking of expenses</strong><br>
+While expenses trackers are similar to an address book such they keep a record of items, the requirements to store expenses are
+much different. The person class needed to be refactored quite heavily. Additionally, as Expense should be able to share a name
+unlike the behaviour of the existing Person class, a new way to differentiate Expenses needed to be implemented.
+<a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/40">#40</a>
+<a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/42">#42</a></p>
+</li>
+<li>
+<p><strong>Code contributed</strong>:
+<a href="https://nus-cs2103-ay1920s1.github.io/tp-dashboard/#search=briyanii&amp;sort=groupTitle&amp;sortWithin=title&amp;since=2019-09-06&amp;timeframe=commit&amp;mergegroup=false&amp;groupSelect=groupByRepos&amp;breakdown=false&amp;tabOpen=true&amp;tabType=authorship&amp;tabAuthor=briyanii&amp;tabRepo=AY1920S1-CS2103T-T11-1%2Fmain%5Bmaster%5D">RepoSense link </a></p>
 </li>
 <li>
 <p><strong>Other contributions</strong>:</p>
@@ -138,58 +139,52 @@ The implementation too was challenging as it required changes to existing comman
 <div class="ulist">
 <ul>
 <li>
-<p>Managed releases <code>v1.3</code> - <code>v1.5rc</code> (3 releases) on GitHub</p>
+<p>Managed release for <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/releases/tag/1.3.2">v1.3.2</a>
+(the release used for Practical Exam Dry Run) on GitHub</p>
+</li>
+<li>
+<p>In charge of ensuring code is tested.</p>
+</li>
+<li>
+<p>Designed mock up for inital GUI design
+<a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/60">#60</a></p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>Enhancements to existing features:</p>
+<p>Wrote tests to significantly increase coverage:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Updated the GUI color scheme (---)</p>
-</li>
-<li>
-<p>Refactored the GUI to support of adding extra Panels</p>
+<p><a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/271">#271</a> <a href="https://coveralls.io/builds/26885574">65% to 80%</a><br>
+<a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/247">#247</a> <a href="https://coveralls.io/builds/26731561">46% to 52%</a></p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>Documentation:</p>
+<p>Documentation:<br>
+Made changes to UG diagrams to match changes to the code <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/285">#285</a></p>
 </li>
-<li>
-<p>Community:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Some parts of the syntax highlighting/autocomplete feature was &#8230;&#8203;</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="ulist">
-<ul>
 <li>
 <p>Tools:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Integrated a third party library (RichTextFX) to the project (#&#8230;&#8203;)</p>
+<p>Integrated a third party library (RichTextFX) to the project <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/93">#93</a></p>
+</li>
+<li>
+<p>Integrated TestFx into the project for Testing GUI components. <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/271">#271</a><br>
+(* much of the code was sourced from <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test">AddressBook4 GUI-Tests</a>)</p>
 </li>
 </ul>
 </div>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p><em>{you can add/remove categories in the list above}</em></p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -273,229 +268,6 @@ this alias in place of using the full command.</p>
 <pre>addexpense c/Food d/chickenrice p/2.30</pre>
 </div>
 </div>
-<div class="sidebarblock">
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>Alias names can only contain alphanumeric characters.</p>
-</li>
-<li>
-<p>Alias names cannot be a command word used by a built-in command, e.g. you may not save a command
-to an alias named "addexpense".<br>
-For the list of built-in command words, see: <a href="#Command Summary">[Command Summary]</a>.</p>
-</li>
-<li>
-<p>Only one input may be saved to each alias name. Saving an input to an alias name which already
-exists will overwrite the existing input if it exists.</p>
-</li>
-<li>
-<p>Repeated prefixes are not allowed! 'a/' and 'i/' may only be used once.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="listing-the-shortcuts-you-have-saved-code-listalias-code"><a class="link" href="#listing-the-shortcuts-you-have-saved-code-listalias-code">Listing the shortcuts you have saved: <code>listalias</code></a></h4>
-<div class="paragraph">
-<p>To list all of the aliases you have saved, you can the the <code>listalias</code> command. Alternatively, you
-may use the <code>view</code> command by typing <code>view Aliases</code>. Either of these will bring you to the <em>User Defined Aliases</em> panel where
-you can see the list of aliases you have created.</p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="imageblock" style="text-align: center">
-<div class="content">
-<img src="../images/aliases.png" alt="aliases" width="600">
-</div>
-<div class="title">Figure 1. User Defined Aliases panel</div>
-</div>
-<div class="paragraph">
-<p>The <em>user defined aliases</em> showing some valid aliases.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="deleting-the-shortcuts-you-no-longer-want-to-use-code-deletealias-code"><a class="link" href="#deleting-the-shortcuts-you-no-longer-want-to-use-code-deletealias-code">Deleting the shortcuts you no longer want to use: <code>deletealias</code></a></h4>
-<div class="paragraph">
-<p>To delete an <code>alias</code> you no longer wish to use, you may use the <code>deletealias</code> command.</p>
-</div>
-<div class="paragraph">
-<p>This is the format:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>deletealias &lt;ALIAS_NAME&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This will delete the <code>Alias</code> with the name you specified. For example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>addalias a/hello i/helloworld
-deletealias hello</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This will delete the <code>hello</code> alias from your saved aliases.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="autocomplete-and-suggestions"><a class="link" href="#autocomplete-and-suggestions">Autocomplete and Suggestions</a></h4>
-<div class="paragraph">
-<p>If you find yourself forgetting the syntax for some commands, enable the suggestion feature. This will enable MooLah to
-suggest valid commands, as well as prefixes when you already have a command word entered.</p>
-</div>
-<div class="paragraph">
-<p><strong>Enable</strong><br>
-To enable the suggestion feature, press the <kbd>TAB</kbd> key. This will enable the suggestion feature!
-You will see that the command box has a green border. This indicates that the feature is enabled.</p>
-</div>
-<div class="paragraph">
-<p><strong>Disable</strong><br>
-To disable the suggestion feature, press the <kbd>TAB</kbd> key again. This will disable the suggestion feature!
-You will see that the command box no longer has a green border. This indicates that the feature is no longer enabled.</p>
-</div>
-<div class="paragraph">
-<p>The suggestion menu will show you the command words which match your current input.</p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="imageblock" style="text-align: center">
-<div class="content">
-<img src="../images/suggestions3.png" alt="suggestions3" width="400">
-</div>
-<div class="title">Figure 2. suggestions for command words beginning with "add"</div>
-</div>
-<div class="paragraph">
-<p>The suggestion menu showing suggestions for built-in commands which begin with 'add' when the feature has been enabled</p>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>You can cycle through the choices using the <kbd>UP</kbd> and <kbd>DOWN</kbd> keys. To confirm your choice, push the <kbd>ENTER</kbd> or <kbd>SPACE</kbd> key!
-<kbd>LEFT</kbd>, <kbd>RIGHT</kbd>, and <kbd>ESC</kbd> can be used to close the menu without disabling suggestions.</p>
-</div>
-<div class="paragraph">
-<p>When you have entered a valid command, MooLah will show you a list of prefixes that are supported by this command and that
-you have not yet entered.</p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="imageblock" style="text-align: center">
-<div class="content">
-<img src="../images/suggestions2.png" alt="suggestions2" width="600">
-</div>
-<div class="title">Figure 3. suggestions for "addexpense" command</div>
-</div>
-<div class="paragraph">
-<p>The suggestion menu showing the missing prefixes in the current input, "addexpense d/", along with what the prefix
-represents.</p>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>When the suggestion menu shows you the prefixes that you are missing, you may see these 3 tags:</p>
-</div>
-<div class="ulist None">
-<ul class="None">
-<li>
-<p><span class="image"><img src="../images/missingprefixtag.png" alt="missingprefixtag"></span> indicates that this prefix is mandatory and you have yet to include it.</p>
-</li>
-<li>
-<p><span class="image"><img src="../images/allmissingprefixtag.png" alt="allmissingprefixtag"></span> represents all the missing mandatory prefixes.</p>
-</li>
-<li>
-<p><span class="image"><img src="../images/optionalprefixtag.png" alt="optionalprefixtag"></span> indicates that this prefix is missing, but is not compulsory to enter.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="syntax-highlighting"><a class="link" href="#syntax-highlighting">Syntax Highlighting</a></h4>
-<div class="paragraph">
-<p>MooLah will highlight valid command words and prefixes, as well as the arguments that will be used with that argument.</p>
-</div>
-<div class="paragraph">
-<p>When you are entering a command, MooLah will highlight command words which are supported built-in commands.</p>
-</div>
-<div class="imageblock" style="text-align: center">
-<div class="content">
-<img src="../images/correctcommand.png" alt="correctcommand" width="200">
-</div>
-<div class="title">Figure 4. addexpense is valid and highlighted</div>
-</div>
-<div class="imageblock" style="text-align: center">
-<div class="content">
-<img src="../images/wrongcommand.png" alt="wrongcommand" width="200">
-</div>
-<div class="title">Figure 5. addmonkey is not built-in and not highlighted</div>
-</div>
-<div class="paragraph">
-<p>After entering a valid command word, MooLah will also highlight the prefixes that are supported by this command.
-However, it will not validate them for you!</p>
-</div>
-<div class="imageblock" style="text-align: center">
-<div class="content">
-<img src="../images/highlight1.png" alt="highlight1" width="400">
-</div>
-<div class="title">Figure 6. Highlighting of prefixes and arguments for the add.</div>
-</div>
-<div class="imageblock" style="text-align: center">
-<div class="content">
-<img src="../images/highlight_wrong.png" alt="highlight wrong" width="400">
-</div>
-<div class="title">Figure 7. Wrong arguments are also highlighted.</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="input-history"><a class="link" href="#input-history">Input history</a></h4>
-<div class="paragraph">
-<p>MooLah remembers what commands you have previously entered, and allows you to access them to use them again.</p>
-</div>
-<div class="paragraph">
-<p>If you need to enter the same input multiple times but do not want to save it as an <code>alias</code>
-you may cycle through the history of successfully executed inputs within the current session.</p>
-</div>
-<div class="paragraph">
-<p>Press <kbd>UP</kbd> to scroll through previously executed commands.<br>
-Press <kbd>DOWN</kbd> to go back the more recent commands.</p>
-</div>
-<div class="paragraph">
-<p>For example, if you entered these commands previously.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>&gt; addexpense d/chickenrice p/12.3 c/food
-&gt; addexpense d/chickenrice p/12.3 c/food
-&gt; add d/chicken rice p/2.30 c/food</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Pressing the <kbd>UP</kbd> key to quickly enter the previous input.</p>
-</div>
-<div class="imageblock" style="text-align: center">
-<div class="content">
-<img src="../images/highlight1.png" alt="highlight1" width="400">
-</div>
-<div class="title">Figure 8. the last input which was successfully executed will be entered into the command box.</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-When the suggestion menu is open, the <kbd>UP</kbd> and <kbd>DOWN</kbd> keys will cycle through the suggestions instead!
-</td>
-</tr>
-</table>
-</div>
 </div>
 </div>
 </div>
@@ -513,8 +285,218 @@ When the suggestion menu is open, the <kbd>UP</kbd> and <kbd>DOWN</kbd> keys wil
 </tr>
 </tbody>
 </table>
+<div class="sect2">
+<h3 id="alias-feature"><a class="link" href="#alias-feature">Alias feature</a></h3>
 <div class="paragraph">
-<p><em>{Optionally, you may include other projects in your portfolio.}</em></p>
+<p>The Alias feature allows users to assign inputs they may use very often to a shortcut, and execute the input by entering
+the shortcut, (a.k.a <code>Alias</code>), in place of the full or partial command.</p>
+</div>
+<div class="sect3">
+<h4 id="implementation"><a class="link" href="#implementation">Implementation</a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="../images/AliasMappingsClassDiagram.png" alt="AliasMappingsClassDiagram">
+</div>
+<div class="title">Figure 1. AliasMappings Class Diagram</div>
+</div>
+<div class="paragraph">
+<p>These user defined <code>Alias</code>es are saved in an <code>AliasMappings</code> object within <code>UserPref</code> as seen in the above diagram.
+Internally, the <code>AliasMappings</code> object stores an <code>Alias</code> in a Map&lt;Strings, Alias&gt; object. With the addition of <code>AliasMappings</code> object to <code>UserPref</code>,
+<code>UserPref</code> supports these additional operations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>UserPref#addUserAlias(Alias)</code>&#8201;&#8212;&#8201;Saves a specified <code>Alias</code> to the user preferences for future use.</p>
+</li>
+<li>
+<p><code>UserPref#hasAlias(String)</code>&#8201;&#8212;&#8201;Query if the there is an <code>Alias</code> with this name already defined.</p>
+</li>
+<li>
+<p><code>UserPref#getAlias(String)</code>&#8201;&#8212;&#8201;To get an <code>Alias</code> with this name if it exists.</p>
+</li>
+<li>
+<p><code>UserPref#aliasNameIsReservedCommandWord(Alias)</code>&#8201;&#8212;&#8201;To query if this <code>Alias</code> is uses a name which clashes with existing built-in
+commands.</p>
+</li>
+<li>
+<p><code>UserPref#aliasCommandWordIsAlias(Alias)</code>&#8201;&#8212;&#8201;To query if this <code>Alias</code> <code>input</code> begins with another <code>Alias</code>, this is used
+to validate that an <code>Alias</code> will not cause an infinite loop by chaining multiple aliases in a loop.</p>
+</li>
+<li>
+<p><code>UserPref#getAliasMappings()</code>&#8201;&#8212;&#8201;To access the <code>Alias</code> saved by the user.</p>
+</li>
+<li>
+<p><code>UserPref#setAliasMappings(AliasMappings mappings)</code>&#8201;&#8212;&#8201;To overwrite all the <code>Alias</code> saved by the user.</p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="alias-creation"><a class="link" href="#alias-creation">Alias creation</a></h5>
+<div class="imageblock">
+<div class="content">
+<img src="../images/AliasCommandClassDiagram.png" alt="AliasCommandClassDiagram">
+</div>
+<div class="title">Figure 2. AddAliasCommand Class Diagram</div>
+</div>
+<div class="paragraph">
+<p>In order for the user to save an <code>Alias</code>, they first define it using the <code>AliasCommand</code>. The <code>AliasCommand</code> command extends
+<code>UndoableCommand</code> to allow users to undo defining an <code>Alias</code>. The following sequence diagram describe in more detail how an <code>Alias</code>
+is added.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>Note:<br>
+Alias and AliasMapping are in Model and not Core. This change has yet to be reflected in the following sequence diagrams.</p>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 15:33:46 UTC</div></div></div></body></html>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/HighLevelAddAliasSequenceDiagram.png" alt="HighLevelAddAliasSequenceDiagram">
+</div>
+<div class="title">Figure 3. AddAliasCommand execution Sequence Diagram</div>
+</div>
+<div class="olist None">
+<ol class="None">
+<li>
+<p>1. The user enters a command with the following syntax <code> alias a/ &lt;name&gt; i/ &lt;input&gt;</code>.</p>
+</li>
+<li>
+<p>2. The <code>UI</code> passes this command string to the <code>LogicManager</code> which passes it onto the <code>MooLahParser</code>.</p>
+</li>
+<li>
+<p>3. The parser extracts the argument string and passes it to an <code>AliasCommandParser</code>.</p>
+</li>
+</ol>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>ref : extract arguments create alias</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ParseAliasCommandSequenceDiagram.png" alt="ParseAliasCommandSequenceDiagram">
+</div>
+<div class="title">Figure 4. AliasCommandParser Sequence Diagram</div>
+</div>
+</div>
+</div>
+<div class="olist None">
+<ol class="None">
+<li>
+<p>4. The <code>AliasCommandParser</code> uses the <code>ArgumentTokenizer</code> to tokenize the argument string and extract the
+<code>alias name</code> and <code>input</code> fields into an <code>ArgumentMultimap</code>.</p>
+</li>
+<li>
+<p>5. The arguments are obtained and to create a new <code>Alias</code> using the the <code>Alias</code> parser in <code>ParserUtil</code>.</p>
+</li>
+<li>
+<p>6. An <code>AliasCommand</code> is created containing this new <code>Alias</code> to add to the <code>UserPref</code>.</p>
+</li>
+<li>
+<p>7. This is passed back to the <code>LogicManager</code> to call <code>AliasCommand#run()</code>.</p>
+</li>
+</ol>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>ref: validate command</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/verifyAlias.png" alt="verifyAlias">
+</div>
+<div class="title">Figure 5. AliasCommand #Validate Sequence Diagram</div>
+</div>
+</div>
+</div>
+<div class="olist None">
+<ol class="None">
+<li>
+<p>8. The <code>AliasCommand</code> is validated using <code>AliasCommand#validate()</code>. The <code>Alias</code> is checked to ensure it does not</p>
+<div class="ulist None">
+<ul class="None">
+<li>
+<p>a. Have a clashing name used by an existing <code>Command</code> as a CommandWord.</p>
+</li>
+<li>
+<p>b. Have an input beginning with a supported <code>Alias</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>If is not valid, handled exception is thrown.</p>
+</li>
+</ol>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>ref: execute command</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/addAlias.png" alt="addAlias">
+</div>
+<div class="title">Figure 6. AliasCommand #execute Sequence Diagram</div>
+</div>
+</div>
+</div>
+<div class="olist None">
+<ol class="None">
+<li>
+<p>9. If it was validated that the <code>Alias</code> can be added.</p>
+</li>
+<li>
+<p>10. The <code>Alias</code> is then added to the <code>AliasMappings</code> object within <code>UserPref</code>.</p>
+</li>
+<li>
+<p>11. The <code>Alias</code> is now usable  by the user.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="usage-of-aliases-in-input"><a class="link" href="#usage-of-aliases-in-input">Usage of aliases in input</a></h5>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="../images/CommandParsingActivityDiagram.png" alt="CommandParsingActivityDiagram" width="500">
+</div>
+<div class="title">Figure 7. Activity Diagram showing the a high level view of the events that occur when parsing a command.</div>
+</div>
+<div class="paragraph">
+<p>When a user enters an <code>input</code> to be executed, the <code>MooLahParser</code> will do the following:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Attemps to parse the <code>input</code> as an input which begins with a valid <code>CommandWord</code></p>
+</li>
+<li>
+<p>If that fails, it will try to parse it as an input which begins with an <code>Alias</code>.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>If it successfully does so, it replaces the alias in the original <code>input</code> with the <code>input</code> stored in the <code>Alias</code>.</p>
+</li>
+<li>
+<p>Finally, the <code>MooLahParser</code> re-parses the modified <code>input</code>.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>If this too fails, an exception is thrown indicating that the command was invalid</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 17:27:19 UTC</div></div></div></body></html>

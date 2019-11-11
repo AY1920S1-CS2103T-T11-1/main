@@ -29,15 +29,14 @@
 </li>
 <li><a href="#implementation">4. Implementation</a>
 <ul class="sectlevel2">
-<li><a href="#undo-redo-feature">4.1. Undo/Redo feature</a></li>
+<li><a href="#undo-and-redo-feature">4.1. Undo and Redo feature</a></li>
 <li><a href="#budgeting-feature">4.2. Budgeting Feature</a></li>
 <li><a href="#events-feature">4.3. Events feature</a></li>
 <li><a href="#statistics-feature">4.4. Statistics Feature</a></li>
 <li><a href="#alias-feature">4.5. Alias feature</a></li>
-<li><a href="#syntax-highlighting-and-autofill-feature">4.6. Syntax Highlighting and Autofill feature</a></li>
-<li><a href="#proposed-data-encryption">4.7. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">4.8. Logging</a></li>
-<li><a href="#Implementation-Configuration">4.9. Configuration</a></li>
+<li><a href="#easier-command-line-feature">4.6. Easier Command-Line feature</a></li>
+<li><a href="#logging">4.7. Logging</a></li>
+<li><a href="#Implementation-Configuration">4.8. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">5. Documentation</a></li>
@@ -66,6 +65,11 @@
 <li><a href="#clearing-all-budgets">G.9. Clearing all budgets</a></li>
 <li><a href="#deleting-an-expense-from-budget-panel">G.10. Deleting an expense from budget panel</a></li>
 <li><a href="#editing-an-expense-from-budget-panel">G.11. Editing an expense from budget panel</a></li>
+<li><a href="#testing-events">G.12. Testing events</a></li>
+<li><a href="#testing-of-aliases">G.13. Testing of aliases</a></li>
+<li><a href="#testing-of-suggestions">G.14. Testing of suggestions</a></li>
+<li><a href="#testing-of-input-history">G.15. Testing of input history</a></li>
+<li><a href="#testing-of-generic-commands">G.16. Testing of generic commands</a></li>
 </ul>
 </li>
 </ul>
@@ -529,34 +533,58 @@ The lifeline for <code>DeleteCommandParser</code> should end at the destroy mark
 <p>This section describes some noteworthy details on how certain features are implemented.</p>
 </div>
 <div class="sect2">
-<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">4.1. Undo/Redo feature</a></h3>
+<h3 id="undo-and-redo-feature"><a class="link" href="#undo-and-redo-feature">4.1. Undo and Redo feature</a></h3>
 <div class="sect3">
 <h4 id="implementation-2"><a class="link" href="#implementation-2">4.1.1. Implementation</a></h4>
 <div class="paragraph">
-<p>The undo/redo functionality is facilitated by <code>ModelHistory</code> which is an instance-level member for models.
-Internally, it stores model snapshots by using two stacks: <code>pastModels</code> and <code>futureModels</code>.
-With the addition of model history, now <code>Model</code> also supports these operations:</p>
+<p>The undo and redo functionality is facilitated by <code>ModelHistory</code>, which is available as an instance-level member of <code>Model</code>. It keeps track of the model&#8217;s history
+by storing the changed fields of the model throughout execution, which will be represented as <code>ModelChanges</code>. Internally, <code>ModelHistory</code> stores the history by using two stacks of <code>ModelChanges</code>, namely: <code>pastChanges</code> and <code>futureChanges</code>.</p>
+</div>
+<div class="paragraph">
+<p>With the addition of model history, <code>Model</code> can support these operations:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>Model#addToHistory()</code>&#8201;&#8212;&#8201;Moves the history forward by saving the current model snapshot in its past history and clearing the future history.</p>
+<p><code>Model#commit(String, Model)</code>&#8201;&#8212;&#8201;Saves the changes between the current model and the given previous model to the past changes history, keeping the previous model&#8217;s data should there be any differences. This adds the changes to the past history, and clearing the future history.</p>
 </li>
 <li>
-<p><code>Model#rollback()</code>&#8201;&#8212;&#8201;Restores the state to the immediate previous model in the history.</p>
+<p><code>Model#applyChanges(ModelChanges)</code>&#8201;&#8212;&#8201;Applies the changes in history</p>
 </li>
 <li>
-<p><code>Model#migrate()</code>&#8201;&#8212;&#8201;Forwards the state to the immediate next model in the history.</p>
+<p><code>Model#canRollback()</code>&#8201;&#8212;&#8201;Checks whether the model can be rolled-back</p>
+</li>
+<li>
+<p><code>Model#rollback()</code>&#8201;&#8212;&#8201;Restores the model one step back by applying the changes described in the immediate previous changes in history.</p>
+</li>
+<li>
+<p><code>Model#canMigrate()</code>&#8201;&#8212;&#8201;Checks whether the model can be migrated</p>
+</li>
+<li>
+<p><code>Model#migrate()</code>&#8201;&#8212;&#8201;Moves the model one step forward in history by applying the changes described in the immediate next changes.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p><code>ModelHistory</code> only stores histories of models which were about to be (or are going to be) executed by model-changing commands.
-As some of the commands available are intuitively not undoable (e.g. <code>help</code>), we make commands extend to either <code>UndoableCommand</code> or a non-undoable <code>Command</code> classes.
-So, the <code>Model#addToHistory()</code> will only be called if the command to be executed is an instance of <code>UndoableCommand</code>.</p>
+<p>To support these capabilities, <code>ModelChanges</code> offers these methods as well:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>ModelChanges#compareModels(Model, Model)</code>&#8201;&#8212;&#8201;Compares two models' data and creates a new <code>ModelChanges</code> object that c</p>
+</li>
+<li>
+<p><code>ModelChanges#revertChanges(Model)</code>&#8201;&#8212;&#8201;Reverts the current changes with respect to the base model given.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.</p>
+<p><code>ModelHistory</code> only stores changes of models that were (or are going to be) executed by model-manipulating - or simply, undoable - commands.
+As some of the commands available are intuitively not undoable (e.g. <code>help</code>), every command is configured to extend either <code>UndoableCommand</code> or a non-undoable <code>Command</code> classes.
+With the division, <code>Model#commit(String, Model)</code> will only be called if the command to be executed is an instance of <code>UndoableCommand</code>.</p>
+</div>
+<div class="paragraph">
+<p>Given below is an example usage scenario and how the undo and redo functionality behaves at each step.</p>
 </div>
 <div class="paragraph">
 <p>Step 1. The user launches the application for the first time. The current <code>ModelHistory</code> is now empty.</p>
@@ -567,8 +595,8 @@ So, the <code>Model#addToHistory()</code> will only be called if the command to 
 </div>
 </div>
 <div class="paragraph">
-<p>Step 2. The user executes <code>add d/Chicken Rice p/2.50 &#8230;&#8203;</code> command to add an expense.
-The <code>add</code> command, being an <code>UndoableCommand</code>, calls <code>Model#addToHistory()</code>, which saves the state of the model just before the command executes to <code>pastModels</code>, and <code>futureModels</code> is cleared.</p>
+<p>Step 2. The user executes <code>addexpense d/chicken rice p/2.50 c/food</code> command to add an expense.
+The <code>addexpense</code> command, being an <code>UndoableCommand</code>, calls <code>Model#commit(String, Model)</code>, which saves the state of the model just before the command executes to <code>pastChanges</code>, and <code>futureChanges</code> is cleared.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -576,7 +604,7 @@ The <code>add</code> command, being an <code>UndoableCommand</code>, calls <code
 </div>
 </div>
 <div class="paragraph">
-<p>Step 3. The user executes <code>delete 1</code> to delete the first expense on the list. The <code>delete</code> command, also an <code>UndoableCommand</code>, calls <code>Model#addToHistory()</code>, inserting another entry to the <code>pastModels</code> and clearing <code>futureModels</code> again.</p>
+<p>Step 3. The user executes <code>deleteexpense-primary 1</code> to delete the first expense on the list. The <code>deleteexpense-primary</code> command, also an <code>UndoableCommand</code>, calls <code>Model#commit(String, Model)</code>, inserting another entry to the <code>pastChanges</code> and clearing <code>futureChanges</code> again.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -590,13 +618,13 @@ The <code>add</code> command, being an <code>UndoableCommand</code>, calls <code
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If a command fails its execution, it will not call <code>Model#addToHistory()</code>, so the model will not be saved into <code>ModelHistory</code>.
+If a command fails its execution, it will not call <code>Model#commit(String, Model)</code>, so the model will not be saved into <code>ModelHistory</code>.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Step 4. The user now decides that deleting the expense was a mistake, and decides to undo that action by executing the <code>undo</code> command. The <code>undo</code> command will call <code>Model#rollbackModel()</code>, which will retrieve the immediate previous model in history, adding the current model to the future history of the retrieved model, and restores the model according to that state.</p>
+<p>Step 4. The user now decides that deleting the expense was a mistake, and decides to undo that action by executing the <code>undo</code> command. The <code>undo</code> command will call <code>Model#rollback()</code>, which will retrieve the immediate previous change in history, adding the reverting change to the future history of the retrieved model, and applies the change to the model.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -610,7 +638,7 @@ If a command fails its execution, it will not call <code>Model#addToHistory()</c
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If <code>pastModels</code> is empty, then there are no previous models to roll back. The <code>undo</code> command uses <code>Model#canRollback()</code> to check if this is the case. If so, it will return an error to the user rather than attempting to perform the undo.
+If <code>pastChanges</code> is empty, then there are no previous changes to roll back. The <code>undo</code> command uses <code>Model#canRollback()</code> to check if this is the case. If so, it will return an error to the user rather than attempting to perform the undo.
 </td>
 </tr>
 </table>
@@ -636,7 +664,7 @@ The lifeline for <code>UndoCommand</code> should end at the destroy marker (X) b
 </table>
 </div>
 <div class="paragraph">
-<p>Inversely, the <code>redo</code> command calls <code>Model#migrate()</code>, which retrieves the immediate next model in history, adds the current model to the past history of the retrieved model, and resets the model according to that snapshot.</p>
+<p>Inversely, the <code>redo</code> command calls <code>Model#migrate()</code>, which retrieves the immediate next changes in history, adds the reverting change to the past history, and applies the changes to the model.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -645,10 +673,19 @@ The lifeline for <code>UndoCommand</code> should end at the destroy marker (X) b
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If <code>futureModels</code> is empty, then there are no snapshots to be redone. The <code>redo</code> command uses <code>Model#canMigrate()</code> to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+If <code>futureChanges</code> is empty, then there are no snapshots to be redone. The <code>redo</code> command uses <code>Model#canMigrate()</code> to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>As explained earlier, additions of entry to <code>ModelHistory</code> will only be performed when the command being executed is an instance of <code>UndoableCommand</code>.
+The following diagram briefly describes how the execution of undoable commands will do so:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/UndoableCommandActivityDiagram.png" alt="UndoableCommandActivityDiagram">
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -658,38 +695,76 @@ If <code>futureModels</code> is empty, then there are no snapshots to be redone.
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Saves the entire model.</p>
+<p><strong>Alternative 1:</strong> Saves the model data.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Easier to implement.</p>
+<p>Pros: It is easier to implement.</p>
 </li>
 <li>
-<p>Cons: May have performance issues in terms of memory usage.</p>
+<p>Cons: The approach introduces a new</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><strong>Alternative 2:</strong> Individual commands have their own counter-command that can negate the effects.</p>
+<p><strong>Alternative 2:</strong> Individual commands have their own counter-command that negate the effects.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Quite intuitive (e.g. for <code>add</code>, just do <code>delete</code> to counter it).</p>
+<p>Pros: This approach is quite intuitive (e.g. for <code>addmenuexpense</code>, we can do <code>deleteexpense-primary</code> to counter it).</p>
 </li>
 <li>
-<p>Cons: We must ensure that the implementation of each individual command are correct.</p>
+<p>Cons: It has to be ensured that the implementation of each individual command is correct.</p>
 </li>
 </ul>
 </div>
 </li>
-</ul>
-</div>
-<div class="paragraph">
-<p>We choose Alternative 1 as this approach will be less likely to cause problems specific to restoring the state to the way it was before the execution of a command,
+<li>
+<p><strong>Current implementation (Alternative 1)</strong>:
+We choose this approach as it will be less likely to cause problems specific to restoring the state precisely to the state before the execution of a command,
 as some commands will create a problem specific on their own which might not be supported by the proposed counter-command.
-As an example, to undo <code>delete 3</code>, we must re-add that expense to that specific position, which at the moment is not supported
-by the <code>add</code> command.</p>
+As an example, to undo <code>delete 3</code>, we must re-add that expense to that specific position (third from beginning), which at the moment is not supported
+by the <code>addexpense</code> command.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-how-to-store-the-model-data"><a class="link" href="#aspect-how-to-store-the-model-data">Aspect: How to store the model data</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1:</strong> Saves the entire model.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: It is easier to implement.</p>
+</li>
+<li>
+<p>Cons: The approach introduces a lot of memory usage.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Saves the members of the model that were (or are going to be) changed.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: This approach is more conservative in memory usage.</p>
+</li>
+<li>
+<p>Cons: We have to make sure every field is immutable to preserve changes.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Current implementation (Alternative 2)</strong>:
+We choose this approach as the time and memory resource trade-off is less significant compared to Alternative 1.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -1091,25 +1166,40 @@ storage.</p>
 <div class="sect3">
 <h4 id="implementation-3"><a class="link" href="#implementation-3">4.3.1. Implementation</a></h4>
 <div class="paragraph">
-<p>The Events feature allows users to add events that are supposed to occur on a future date. On launch, MooLah will
-remind users of upcoming events. MooLah will also notify the user about any events that are supposed to have
-transpired, and allow them to automatically add these events as expenses.</p>
+<p>The Events feature allows users to add events that are supposed to occur on a future date.</p>
 </div>
 <div class="paragraph">
-<p>The Events feature supports the <code>add</code>, <code>delete</code> and <code>events</code> command words.</p>
-</div>
-<div class="paragraph">
-<p>Events are added the same way expenses are added on the command line. When the user inputs an add command,
-MooLah determines whether an event or an expense should be added based on the date the user inputted in his command.
-This is illustrated below:</p>
+<p>On launch, MooLah will remind users of upcoming events. While the app is open, MooLah will also notify the user about any events that have transpired,
+and allow them to automatically add these events as expenses.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/AddExpenseOrEventActivityDiagram.png" alt="AddExpenseOrEventActivityDiagram">
+<img src="images/EventClassDiagram.png" alt="EventClassDiagram">
 </div>
 </div>
 <div class="paragraph">
-<p>The following sequence diagram shows how MooLah handles transpired events on launch:</p>
+<p>Like expenses, events hold two Descriptions (one for its details and one fir the budget it belongs to), a Price, a Timestamp
+and a Category. The <code>setBudget</code> method of Event is used for the Event to remember which budget it was added to. This facilitates
+the potential conversion of the Event into an Expense through the <code>convertToExpense</code> method. This method is called when the user
+accepts the automated addition of an expense from the corresponding event, into the budget that the event was added into a while back.
+Since Event&#8217;s fields are a subset of that of Expense, all its fields are passed into the Expense constructor during the conversion, and a
+unique identifier is then generated to complete the creation of the expense, allowing it to be added to MooLah.</p>
+</div>
+<div class="paragraph">
+<p>The Events feature supports the <code>addevent</code>, <code>deleteevent</code>, <code>editevent</code> and <code>listevent</code> command words.</p>
+</div>
+<div class="paragraph">
+<p>As mentioned earlier, MooLah displays reminders of upcoming events during launch. The implementation is shown below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/DisplayReminders.png" alt="DisplayReminders">
+</div>
+</div>
+<div class="paragraph">
+<p>To allow for accurate prompting of transpired events, MooLah tracks system time every 10 seconds using a <code>Timer</code> running
+on a parallel thread. An event is then deemed to have transpired if its timestamp has gone past system time.
+The following sequence diagram shows how MooLah handles transpired events:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1119,20 +1209,19 @@ This is illustrated below:</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>When MooLah launches, the <code>start</code> method of <code>UiManager</code> is called. <code>UiManager</code> then calls the <code>handleTranspiredEvents</code>
-of <code>MainWindow</code>, which fetches all transpired events and notifies the user about them. It does so by first obtaining the
-transpired events from the <code>Timekeeper</code> class by calling a series of getter methods.</p>
+<p>When MooLah launches, the <code>start</code> method of <code>UiManager</code> is called. Every 10 seconds, <code>UiManager</code> calls <code>updateTime</code> of
+Timekeeper to update system time, then calls the <code>handleTranspiredEvents</code> of <code>MainWindow</code>, which fetches all transpired
+events and notifies the user about them. It does so by first obtaining the transpired events from the <code>Timekeeper</code> class.</p>
 </li>
 <li>
 <p>Once the transpired events have been obtained, for each transpired event, a new <code>TranspiredEventWindow</code> will be
-constructed. The transpired event will then be passed via <code>show</code>, a method of the newly constructed <code>TranspiredEventWindow</code>.
+constructed. The transpired event is deleted from the model and will then be passed via <code>show</code>, a method of the newly constructed <code>TranspiredEventWindow</code>.
 <code>show</code> will create a popup window that details the transpired event, and asks the user whether it should be added as an
 expense. This popup window will have a 'Yes' and 'No' button.</p>
 </li>
 <li>
-<p>If the user presses the 'Yes' button, the original command that the user inputted to add this particular event is fetched
-and passed to the <code>execute</code> method of <code>LogicManager</code>, which executes command line inputs. Since the timestamp within this
-original command now denotes a past or present date, an expense will be added.</p>
+<p>If the user presses the 'Yes' button, the event is passed to the <code>addExpenseFromEvent</code> method of <code>LogicManager</code>, where
+it is then converted into its corresponding expense, and a command to add the expense is run.</p>
 </li>
 <li>
 <p>If the user presses the 'No' button, the expense is not added.</p>
@@ -1141,18 +1230,6 @@ original command now denotes a past or present date, an expense will be added.</
 <p>After pressing either button, the popup window closes.</p>
 </li>
 </ol>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-As of Week 10, adding expenses to the same budget the event was added to is still a work in progress.
-</td>
-</tr>
-</table>
 </div>
 </div>
 <div class="sect3">
@@ -1189,10 +1266,10 @@ As of Week 10, adding expenses to the same budget the event was added to is stil
 </li>
 <li>
 <p><strong>Solution (Current Implementation): </strong>
-Adopt Alternative 2. Since an event is ultimately an optional future expense that triggers on its
-due date, it is significantly more intuitive and natural to allow users to add events the same way they add expenses.
-MooLah can then easily tell whether the user intends to add an expense or an event by looking at the timestamp
-the user inputs in the command.</p>
+Adopt Alternative 1. Although Alternative 2 is more intuitive, it is not suited to our current implementation of
+generic command words. Since command words such as <code>add</code> and <code>delete</code> now result in different commands based on which
+panel the user is on, MooLah&#8217;s parser would not know whether users want to add an event or expense if they type <code>add</code> while on an event
+or expense panel. This necessitates the splitting of expense and event commands into two separate command words.</p>
 </li>
 </ul>
 </div>
@@ -1395,16 +1472,17 @@ other than being restricted within the same budget</p>
 </div>
 <div class="sect2">
 <h3 id="alias-feature"><a class="link" href="#alias-feature">4.5. Alias feature</a></h3>
-<div class="sect3">
-<h4 id="implementation-5"><a class="link" href="#implementation-5">4.5.1. Implementation</a></h4>
 <div class="paragraph">
 <p>The Alias feature allows users to assign inputs they may use very often to a shortcut, and execute the input by entering
 the shortcut, (a.k.a <code>Alias</code>), in place of the full or partial command.</p>
 </div>
+<div class="sect3">
+<h4 id="implementation-5"><a class="link" href="#implementation-5">4.5.1. Implementation</a></h4>
 <div class="imageblock">
 <div class="content">
 <img src="images/AliasMappingsClassDiagram.png" alt="AliasMappingsClassDiagram">
 </div>
+<div class="title">Figure 12. AliasMappings Class Diagram</div>
 </div>
 <div class="paragraph">
 <p>These user defined <code>Alias</code>es are saved in an <code>AliasMappings</code> object within <code>UserPref</code> as seen in the above diagram.
@@ -1438,20 +1516,32 @@ to validate that an <code>Alias</code> will not cause an infinite loop by chaini
 </li>
 </ul>
 </div>
+<div class="sect4">
+<h5 id="alias-creation"><a class="link" href="#alias-creation">Alias creation</a></h5>
 <div class="imageblock">
 <div class="content">
 <img src="images/AliasCommandClassDiagram.png" alt="AliasCommandClassDiagram">
 </div>
+<div class="title">Figure 13. AddAliasCommand Class Diagram</div>
 </div>
 <div class="paragraph">
 <p>In order for the user to save an <code>Alias</code>, they first define it using the <code>AliasCommand</code>. The <code>AliasCommand</code> command extends
 <code>UndoableCommand</code> to allow users to undo defining an <code>Alias</code>. The following sequence diagram describe in more detail how an <code>Alias</code>
 is added.</p>
 </div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>Note:<br>
+Alias and AliasMapping are in Model and not Core. This change has yet to be reflected in the following sequence diagrams.</p>
+</div>
+</div>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="images/HighLevelAddAliasSequenceDiagram.png" alt="HighLevelAddAliasSequenceDiagram">
 </div>
+<div class="title">Figure 14. AddAliasCommand execution Sequence Diagram</div>
 </div>
 <div class="olist None">
 <ol class="None">
@@ -1466,9 +1556,17 @@ is added.</p>
 </li>
 </ol>
 </div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>ref : extract arguments create alias</p>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="images/ParseAliasCommandSequenceDiagram.png" alt="ParseAliasCommandSequenceDiagram">
+</div>
+<div class="title">Figure 15. AliasCommandParser Sequence Diagram</div>
+</div>
 </div>
 </div>
 <div class="olist None">
@@ -1488,9 +1586,17 @@ is added.</p>
 </li>
 </ol>
 </div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>ref: validate command</p>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="images/verifyAlias.png" alt="verifyAlias">
+</div>
+<div class="title">Figure 16. AliasCommand #Validate Sequence Diagram</div>
+</div>
 </div>
 </div>
 <div class="olist None">
@@ -1513,9 +1619,17 @@ is added.</p>
 </li>
 </ol>
 </div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>ref: execute command</p>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="images/addAlias.png" alt="addAlias">
+</div>
+<div class="title">Figure 17. AliasCommand #execute Sequence Diagram</div>
+</div>
 </div>
 </div>
 <div class="olist None">
@@ -1531,15 +1645,54 @@ is added.</p>
 </li>
 </ol>
 </div>
+</div>
+<div class="sect4">
+<h5 id="usage-of-aliases-in-input"><a class="link" href="#usage-of-aliases-in-input">Usage of aliases in input</a></h5>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/CommandParsingActivityDiagram.png" alt="CommandParsingActivityDiagram" width="500">
+</div>
+<div class="title">Figure 18. Activity Diagram showing the a high level view of the events that occur when parsing a command.</div>
+</div>
 <div class="paragraph">
-<p>When a user enters an <code>input</code> to be executed, the <code>MooLahParser</code> will first try to parse first token in
-the <code>input</code> as a <code>CommandWord</code>, failing which, it will try to parse it as an <code>Alias</code>. If it successfully does so,
-it replaces the first token in the original command string with the <code>input</code> stored in the <code>Alias</code>.
-Finally, the <code>MooLahParser</code> re-parses the modified <code>input</code>.</p>
+<p>When a user enters an <code>input</code> to be executed, the <code>MooLahParser</code> will do the following:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Attemps to parse the <code>input</code> as an input which begins with a valid <code>CommandWord</code></p>
+</li>
+<li>
+<p>If that fails, it will try to parse it as an input which begins with an <code>Alias</code>.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>If it successfully does so, it replaces the alias in the original <code>input</code> with the <code>input</code> stored in the <code>Alias</code>.</p>
+</li>
+<li>
+<p>Finally, the <code>MooLahParser</code> re-parses the modified <code>input</code>.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>If this too fails, an exception is thrown indicating that the command was invalid</p>
+</li>
+</ol>
+</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">4.5.2. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="potential-recusive-aliases"><a class="link" href="#potential-recusive-aliases">Potential Recusive aliases</a></h5>
+<div class="paragraph">
+<p>As users may modify the data files of MooLah, they may modify the aliases directly. As such it was necessary to validate
+that the modified aliases will not cause infinite recursion. This is done by traversing between aliases which chain to each other
+and ensuring that none of them lead back to themselves. Otherwise, if it is detected that an alias can loop to itself, the
+alias data is reset.</p>
+</div>
+</div>
 <div class="sect4">
 <h5 id="aspect-why-can-an-code-alias-code-only-be-used-at-the-beginning-of-an-input-versus-anywhere-within-an-input"><a class="link" href="#aspect-why-can-an-code-alias-code-only-be-used-at-the-beginning-of-an-input-versus-anywhere-within-an-input">Aspect: Why can an <code>Alias</code> only be used at the beginning of an input versus anywhere within an input.</a></h5>
 <div class="ulist">
@@ -1592,9 +1745,6 @@ However, that is far out of the scope of the module and would require much more 
 <p>Another alternative would have been to have an alias name follow the following convention <code>'aliasName'</code> (i.e. some character before and after)
 clear what is an <code>Alias</code> within an input.</p>
 </div>
-</div>
-<div class="sect4">
-<h5 id="future-implementation-coming-in-v2-0-3"><a class="link" href="#future-implementation-coming-in-v2-0-3">Future Implementation (Coming in v2.0)</a></h5>
 <div class="paragraph">
 <p>The purpose behind this feature was to make CLI input less troublesome, so users do not need to type in the full input string
 to carry out commands they may use frequently. In v2.0 we want to look into using data analysis track users' input habits in
@@ -1651,149 +1801,275 @@ set cannot contain duplicates, and makes it easier to handle overwriting of exis
 </div>
 </div>
 <div class="sect2">
-<h3 id="syntax-highlighting-and-autofill-feature"><a class="link" href="#syntax-highlighting-and-autofill-feature">4.6. Syntax Highlighting and Autofill feature</a></h3>
+<h3 id="easier-command-line-feature"><a class="link" href="#easier-command-line-feature">4.6. Easier Command-Line feature</a></h3>
 <div class="sect3">
-<h4 id="implementation-6"><a class="link" href="#implementation-6">4.6.1. Implementation</a></h4>
+<h4 id="necessity-of-feature"><a class="link" href="#necessity-of-feature">4.6.1. Necessity of feature.</a></h4>
 <div class="paragraph">
-<p>The Autofill feature was implemented to make it less important for users to remember the appropriate syntax for each command which
-can be a common issue in CLI based applications. This feature utilises regular expressions and JavaFX&#8217;s TextFormatter to extend the
-functionality of the existing TextField used in the original AB3 application.</p>
+<p>Due to the constraints of this project, the application had to be designed such that the main interaction
+between the user and the application was the Command Line Interface. However, this required the user to be able to
+remember the commands as well as the syntax for these commands, or be forced to heavily refer to the user guide or to
+refer to the error messages.</p>
 </div>
 <div class="paragraph">
-<p>The Autofill feature also inserts <code>placeholders</code> into the text area to make it clearer which arguments each prefix delimit in the input.
-e.g. <code>add d/ &lt;description&gt; p/ &lt;price&gt; c/ &lt;category&gt;</code>. These <code>placeholder</code> are removed when the user types over them and
-are filtered from the input and not parsed by the <code>Parser</code> if the user forgets to type over them. The following diagram briefly describe
-the logic used to insert auto fill a command&#8217;s syntax.</p>
+<p>The Easier Command-Line feature was implemented to remove the need to refer to the user guide just to
+find out the syntax needed to use a command, as well as to provide some quality-of-life features found in most Command Line
+Interfaces not present in the original Address Book 3. This feature consists of several features:</p>
 </div>
-<div class="paragraph">
-<p>::<span class="image"><img src="images/AutoFillActivityDiagram.png" alt="AutoFillActivityDiagram"></span></p>
+<div class="imageblock">
+<div class="content">
+<img src="images/CommandBoxClassDiagram.png" alt="CommandBoxClassDiagram">
 </div>
+<div class="title">Figure 19. Command Box class diagram</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Syntax highlighting</p>
+</li>
+<li>
+<p>Input Suggestion and auto complete</p>
+</li>
+<li>
+<p>Input History</p>
+</li>
+<li>
+<p>Context based Generic Commands</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="syntax-highlighting-implementation"><a class="link" href="#syntax-highlighting-implementation">4.6.2. Syntax highlighting Implementation</a></h4>
 <div class="paragraph">
 <p>The Syntax highlighting feature was implemented to make it easier to differentiate the different arguments after typing
 as well as to implement some basic realtime input validation. This feature utilises RichTextFX&#8217;s StyleClassTextArea to
-apply different styles to different regions of the text, and regular expressions to determine which to highlight.</p>
+apply different styles to different regions of the text, and regular expressions to determine how to to highlight user input.</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/SyntaxHighlightingActivityDiagram.png" alt="SyntaxHighlightingActivityDiagram" width="70%">
+</div>
+<div class="title">Figure 20. Activity diagram of depicting the events triggering text to be highlighted</div>
 </div>
 <div class="paragraph">
-<p>::<span class="image"><img src="images/SyntaxHighlightingActivityDiagram.png" alt="SyntaxHighlightingActivityDiagram"></span></p>
+<p>As it would be quite resource intensive to recalculate the syntax highlighting every time the user types,
+the updated highlighting is only computed after a delay of 300 milliseconds after the user stops typing.</p>
 </div>
 <div class="paragraph">
-<p>Because RichTextFX&#8217;s TextAreas do not support JavaFX&#8217;s TextFormatter, the <code>SyntaxHighlightingTextArea</code> actually has two different
-TextAreas. One as the visible TestArea (RichTextFX) and one as the functional one (JavaFX).</p>
+<p>When the <code>MainWindow</code> is initialized and the inner UI parts are created, the commands which are supported by the <code>syntax
+highlighting</code> feature are configured. Each <code>SyntaxHighlightingSupportedInput</code> object contains a <code>CommandWord</code> to highlight
+prefixes the command supports. When it is created it creates a regex pattern such as below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>(?&lt;command-word&gt;COMMAND)|(?&lt;prefix0&gt;PREFIX0)|(?&lt;prefix1&gt;PREFIX1)|...
+
+(?&lt;command-word&gt;addalias)|(?&lt;prefix0&gt; a/)|(?&lt;prefix1&gt; i/)(?&lt;arg&gt;\S+)</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>::<span class="image"><img src="images/SyntaxHighlightingTextAreaClassDiagram.png" alt="SyntaxHighlightingTextAreaClassDiagram"></span></p>
-</div>
-<div class="paragraph">
-<p>The two TextArea are layered on top of each other. The invisible functional TextArea overlays the visible one, and mirrors the TextProperty of the
-visible one mirrors the functional TextArea. The KeyEvents which occur in the functional text area are also mirrored by the visible text area.</p>
+<p>This pattern is used to find the command word in the user input, as well as the prefixes.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-6"><a class="link" href="#design-considerations-6">4.6.2. Design Considerations</a></h4>
+<h4 id="syntax-highlighting-design-considerations"><a class="link" href="#syntax-highlighting-design-considerations">4.6.3. Syntax highlighting Design Considerations</a></h4>
 <div class="sect4">
-<h5 id="aspect-which-configuration-of-input-fields-to-use-richtextfx-textarea-alone-javafx-alone-both-together"><a class="link" href="#aspect-which-configuration-of-input-fields-to-use-richtextfx-textarea-alone-javafx-alone-both-together">Aspect: Which configuration of Input fields to use? - RichTextFX TextArea alone, JavaFX alone, both together?</a></h5>
+<h5 id="aspect-how-long-should-the-delay-between-updating-text-and-recomputing-highlighting"><a class="link" href="#aspect-how-long-should-the-delay-between-updating-text-and-recomputing-highlighting">Aspect: How long should the delay between updating text and recomputing highlighting?</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p><strong> Alternative 1:</strong>  JavaFX alone (JavaFX <code>TextField</code>) and manually place coloured elements to handle highlighting.</p>
+<p><strong> Alternative 1:</strong>  Text is re-highlighted immediately upon a change to the text</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Already supports single line input.</p>
+<p>Pros: Looks much more natural without a delay</p>
 </li>
 <li>
-<p>Pros: Easy to implement autofill.</p>
-</li>
-<li>
-<p>Cons: Does not inherently support styling of text with multiple styles.</p>
-</li>
-<li>
-<p>Cons: Manually inserting worked, but not all the time.</p>
+<p>Cons: Much more resource intensive as typing involves multiple changes to the text.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><strong> Alternative 2:</strong> <code>RichTextFX StyleClassTextArea</code> and <code>Listener</code>s to handle formatting of text.</p>
+<p><strong> Alternative 2 (Chosen):</strong> Text is re-highlighted after a delay</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Supports styling of text.</p>
+<p>Pros: Can reduce the computations needed to highlight the text.</p>
 </li>
 <li>
-<p>Cons: Needs have certain <code>Events</code> blocked and functionality removed in order to act as a single line input field. e.g.
-preventing users from pasting text with newlines and the enter key event from making a new line.</p>
-</li>
-<li>
-<p>Cons: Does not support javafx <code>TextFormatter</code>, intermediate results (unwanted text) can possibly be evaluated.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><strong> Alternative 3(Chosen):</strong> Both</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Pros: Utilise best of both worlds, with <code>TextFormatter</code> and <code>RichTextFX StyleClassTextArea</code></p>
-</li>
-<li>
-<p>Cons: Need to properly align the two text areas so visible text and caret position is accurate.</p>
-</li>
-<li>
-<p>Cons: Needs have certain <code>Events</code> blocked and functionality removed in order to act as a single line input field. e.g.
-preventing users from pasting text with newlines and the enter key event from making a new line.</p>
+<p>Cons: Does not look at natural, and is less helpful in validating input.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
 <p><strong>Solution (Current Implementation): </strong>
-With alternative 1, using a <code>TextFlow</code> was a problem when the text needed to remain in
-a single line. Manually layering coloured elements over the text was also an issue as the the position and size of elements
-eeded to be recalculated every time the text change, the UI moved, or was resized.</p>
+In the end, despite the fact alternative 1 was more natural looking, alternative 2 was chosen as this option would make
+the application less taxing for less powerful systems.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-extent-of-input-validation"><a class="link" href="#aspect-extent-of-input-validation">Aspect: Extent of input validation</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong> Alternative 1:</strong>  All parts of the input are validated (including the arguments)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: This would make it more obvious to the user what is valid</p>
+</li>
+<li>
+<p>Cons: This is more resource intensive</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong> Alternative 2 (Chosen):</strong> Only the command word and prefixes are validated.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Less resource intensive while still being helpful to the user</p>
+</li>
+<li>
+<p>Cons: Not as helpful to the user.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Solution (Current Implementation): </strong><br>
+In the end, despite the fact alternative 1 provides more use to the user, input is already validated when it is parsed,
+and the error provides sufficient details on what is wrong with the user input. Validation by constantly parsing the text and then
+applying some sort of style to indicate an invalid input does not give as detailed information on why the input is invald.
+While it may be a nice feature to have, it may not be worth the resources required to repeatedly calculate the
+positions I should move my bones.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>While it was possible to use RichTextFX text areas alone, the text that the user inputs before it is formatted
-still enters the text area. Which interferes with realtime parsing as the text is not properly sanitized, which was
-why the uses <code>TextFormatter</code> was necessary.</p>
-</div>
-<div class="paragraph">
-<p>This meant only alternative 3 was viable, but because of layer of the two text areas, the events causing a change in text
-or what text was visible needed to be properly mirrored from the invisible to the visible text area. As a result, certain behaviours
-supported by a normal textfield needed to be blocked to ensure proper alignment e.g. copy and paste.</p>
-</div>
-<div class="paragraph">
-<p>At the moment, mass deletion and selection of text (e.g. Ctrl/Cmd+A &gt; Backspace) has been prevented in order to properly align the
-two textarea.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="future-implementation-coming-in-v2-0-4"><a class="link" href="#future-implementation-coming-in-v2-0-4">Future Implementation (Coming in v2.0)</a></h5>
-<div class="paragraph">
-<p>MooLah v2.0 should support better real time parsing of input and support validation of input without requiring the user
+<p>In future implementations, MooLah v2.0 should support better real time parsing of input and support validation of input without requiring the user
 to enter the command as well as a more functional input field.</p>
 </div>
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">4.7. [Proposed] Data Encryption</a></h3>
+<div class="sect3">
+<h4 id="suggestion-feature-implementation"><a class="link" href="#suggestion-feature-implementation">4.6.4. Suggestion Feature Implementation.</a></h4>
 <div class="paragraph">
-<p><em>{Explain here how the data encryption feature will be implemented}</em></p>
+<p>The Suggestion feature is the main part of this feature and provides users with suggestions of valid inputs they may need.
+There are three states of the suggestion feature</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Disabled</p>
+</li>
+<li>
+<p>Suggesting command word</p>
+</li>
+<li>
+<p>Suggesting prefixes</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>When the user chooses to disable the feature, the suggestion feature does not analyse the user input.</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/SuggestionActivityDiagram.png" alt="SuggestionActivityDiagram" width="60%">
+</div>
+<div class="title">Figure 21. Activity Diagram depicting what</div>
+</div>
+<div class="paragraph">
+<p>When the user chooses to enable it, if the user has only entered one or zero tokens (a string of characters without spaces),
+the suggestion menu will be populated with command words which begin with the user input.
+If the user has entered multiple tokens, and the command word (first token) if a valid command, the suggestion menu
+searches for the command&#8217;s supported prefixes and populates the menu with the prefixes the user has not entered yet.</p>
+</div>
+<div class="paragraph">
+<p>This feature uses the <code>ArgumentTokenizer</code> from the <code>Logic</code> to determine what prefixes are present in the input
+and which ones have yet to be provided by the user.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="suggestion-feature-design-considerations"><a class="link" href="#suggestion-feature-design-considerations">4.6.5. Suggestion Feature Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-automatically-complete-upon-typing-or-show-suggestions-and-auto-complete-upon-selection"><a class="link" href="#aspect-automatically-complete-upon-typing-or-show-suggestions-and-auto-complete-upon-selection">Aspect: Automatically complete upon typing, or show suggestions and auto complete upon selection</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong> Alternative 1:</strong>  Auto complete upon typing</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: This would make result in the least keystrokes required to enter a command.</p>
+</li>
+<li>
+<p>Cons: Requires a lot of logic for behaviour of autocomplete depending what the user is typing or deleting
+form the input and a very rigid syntax for commands.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong> Alternative 2(Chosen):</strong>  Show suggestions and complete upon selection</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Gives user more information on what commands are available and allows for more options for command syntax.</p>
+</li>
+<li>
+<p>Cons: Requires more steps to use suggestion</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Solution (Current Implementation): </strong><br>
+Between the two, Alternative 1 was the first way this feature was implemented. However, as the number of commands increased,
+the time taken to generate the suggestions increased to a point where suggestions were not shown immediately. Alternative 2 was
+chosen as this method is less prone to bugs, less resource intensive, and allows the menu to display more information
+for the user such as what each prefix stands for.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In the future, MooLah v2.0 will support suggestions for arguments on top of prefixes and command words.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="input-history-feature-implementation"><a class="link" href="#input-history-feature-implementation">4.6.6. Input History Feature Implementation.</a></h4>
+<div class="paragraph">
+<p>This feature enables users to re-enter previous input without having to retype the entire input.
+It is a relatively simple feature which saves user input into a list and iterates through the list when the user
+presses the <code>up</code> or <code>down</code> arrow keys. When a user enters a new input, the position of the iterator is reset.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="generic-command-implementation"><a class="link" href="#generic-command-implementation">4.6.7. Generic Command Implementation</a></h4>
+<div class="paragraph">
+<p>This feature allows allows different commands to use the same command word. As MooLah has around 30 commands with only the current
+features, it may becomes a problem that command words become very long in order to make it clear what the command
+does when there are multiple commands which do similar things in different context. This feature reduces the ambiguity of
+a command by enabling certain common command words to behave differently depending on which <code>panel</code> of the UI the user is viewing.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">4.8. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">4.7. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 4.9, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 4.8, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -1824,7 +2100,7 @@ to enter the command as well as a more functional input field.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">4.9. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">4.8. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g user prefs file location, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -3074,7 +3350,7 @@ Expected: Similar to previous.</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Prerequisites: Go to primary budget panel using the <code>view priamry budget</code> command. Multiple expenses in the list.</p>
+<p>Prerequisites: Go to primary budget panel using the <code>view primary budget</code> command. Multiple expenses in the list.</p>
 </li>
 <li>
 <p>Test case: <code>editexpense-primary 1 d/a</code><br>
@@ -3095,5 +3371,158 @@ Expected: Similar to previous.</p>
 </ol>
 </div>
 </div>
+<div class="sect2">
+<h3 id="testing-events"><a class="link" href="#testing-events">G.12. Testing events</a></h3>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Test case: <code>addevent d/ test p/ 10 c/ Shopping t/ a week from now</code><br>
+Expected: A success message will appear.</p>
+</li>
+<li>
+<p>Now, view the event list using either <code>listevent</code> or <code>view event list</code>.
+Expected: The event with description <code>test</code> should be at the bottom of the event list.</p>
+</li>
+<li>
+<p>Edit the expense via the command <code>editevent &lt;INDEX&gt; t/ now</code>, where &lt;INDEX&gt; is the index of the event you want to test.<br>
+Expected: A success message will appear.</p>
+</li>
+<li>
+<p>Within 10 seconds, a popup will appear to prompt for the automatic addition of an expense corresponding to the event.
+Pressing 'Yes' will add the expense into whichever primary budget you were on when you added the event.</p>
+</li>
+</ol>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 15:33:46 UTC</div></div></div></body></html>
+</div>
+<div class="sect2">
+<h3 id="testing-of-aliases"><a class="link" href="#testing-of-aliases">G.13. Testing of aliases</a></h3>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Test case: <code>addalias a/ cr i/ addexpense d/ chicken rice p/1.3 c/food</code><br>
+Expected: Successful creation of alias.</p>
+</li>
+<li>
+<p>The alias can be seen in your list of aliases, accessible by the <code>view aliases</code> or <code>listalias</code>
+Expected: displays list of aliases.</p>
+</li>
+<li>
+<p>Try using the alias by entering <code>cr</code> and pressing enter.<br>
+This should execute the command saved in the alias.<br>
+Expected: an expense is made with description <code>chicken rice</code> and price <code>1.30</code> in the food category in your current primary budget.</p>
+</li>
+<li>
+<p>Delete the alias by typing <code>deletealias cr</code></p>
+</li>
+<li>
+<p>Test case : <code>addalias a/ addexpense i/ anything</code><br>
+Expected: error complaining that an alias name cannot use a reserved command word</p>
+</li>
+<li>
+<p>Test case :`addalias a/ magic i/ magic` (or any case where the alias name is the same as the first word of the input)<br>
+Expected: error message complaining that an alias cannot be be recursive.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="testing-of-suggestions"><a class="link" href="#testing-of-suggestions">G.14. Testing of suggestions</a></h3>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>When you first open the applications, the suggestion feature is off by default (no green border around textfield).</p>
+</li>
+<li>
+<p>Click the command box and press <code>tab</code> to enable suggestions (textfield should have a green border)<br>
+   Dropdown menu should show all possible commands you may enter (if the textfield is empty)<br>
+   Type <code>add</code>, commands starting with add should be shown (you may have to scroll with arrow keys if the context menu shrinks and
+you do not see all the options.).</p>
+</li>
+<li>
+<p>Type <code>addexpense</code> with a space behind, the menu should show the prefixes available for the command:<br>
+<code>d/</code> <code>p/</code> <code>c/</code> and <code>t/</code> and <code>ALLMISSING</code><br>
+ Use arrow keys to scroll to <code>ALLMISSING</code><br>
+ Press enter<br>
+ Expected: the non-optional prefixes <code>d/</code> <code>p/</code> and <code>c/</code> should be appended.</p>
+</li>
+<li>
+<p>Press <code>tab</code> again. This should disable suggestions.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="testing-of-input-history"><a class="link" href="#testing-of-input-history">G.15. Testing of input history</a></h3>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>On a <strong>fresh session</strong> (restart the app), execute the following commands:<br>
+<code>listevent</code><br>
+ <code>listexpense</code><br>
+ <code>listalias</code><br>
+These 3 commands should execute properly and be saved to your input history<br>
+With the <code>suggestion</code> feature disabled (no green box around text field)<br>
+Press <code>up</code> to re-enter the past inputs.<br>
+1st <code>up</code> : <code>listalias</code> shown<br>
+2nd  <code>up</code> : <code>listexpense</code> shown<br>
+3rd <code>up</code> : <code>listevent</code> shown<br>
+4th <code>up</code> : no change, <code>listevent</code> still shown<br>
+1st <code>down</code>: no change, <code>listevent</code> still shown<br>
+2nd <code>down</code>: <code>listexpense</code> shown<br>
+3rd <code>down</code>: <code>listalias</code> shown<br>
+4th <code>down</code>: no change, <code>listalias</code> still shown</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="testing-of-generic-commands"><a class="link" href="#testing-of-generic-commands">G.16. Testing of generic commands</a></h3>
+<div class="paragraph">
+<p>Navigate to the panels on the left column of the table below using the <code>view</code> command.
+Execute a valid input for the commands in their respective
+sections.  It should behave as the command stated next to it.
+i.e. <code>add</code> on the Expense List panel, should behave as <code>addexpense</code></p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. List of all generic command configurations</caption>
+<colgroup>
+<col style="width: 0%;">
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Expense List</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>add</code> addexpense<br>
+                <code>delete</code> deleteexpense<br>
+                <code>list</code> listexpense<br>
+                <code>edit</code> edit expense</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Budget List</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>add</code> addbudget<br>
+                <code>list</code> listbudget</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event List</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>add</code> addevent<br>
+                <code>delete</code> deleteevent<br>
+                <code>list</code> listevent<br>
+                <code>edit</code> editevent</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aliases</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>add</code> addalias<br>
+                <code>list</code> listalias<br>
+                <code>delete</code> deletealias</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Primary Budget</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>add</code> addexpense<br>
+                 <code>delete</code> deleteexpense-primary<br>
+                 <code>edit</code> editexpense-primary</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 17:27:19 UTC</div></div></div></body></html>
