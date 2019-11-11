@@ -18,9 +18,9 @@
 <li><a href="#undo-and-redo">4.2. Undo and Redo</a></li>
 <li><a href="#changing-panels-code-view-code">4.3. Changing panels: <code>view</code></a></li>
 <li><a href="#generic-commands">4.4. Generic commands</a></li>
-<li><a href="#natural-language-datetime-parsing">4.5. Natural language DateTime parsing</a></li>
-<li><a href="#basic-expense-related-commands">4.6. Basic Expense-related Commands</a></li>
-<li><a href="#basic-event-related-commands">4.7. Basic Event-related Commands</a></li>
+<li><a href="#natural-language-datetime-parsing">4.5. Natural language Datetime parsing</a></li>
+<li><a href="#expense-related-commands">4.6. Expense-related Commands</a></li>
+<li><a href="#event-related-commands">4.7. Event-related Commands</a></li>
 <li><a href="#let-s-do-budgeting">4.8. Let&#8217;s Do Budgeting</a></li>
 <li><a href="#making-inputs-quick-and-easy">4.9. Making inputs quick and easy.</a></li>
 <li><a href="#viewing-statistics">4.10. Viewing Statistics</a></li>
@@ -28,7 +28,9 @@
 <li><a href="#saving-the-data">4.12. Saving the data</a></li>
 <li><a href="#encrypting-data-files-code-coming-in-v2-0-code">4.13. Encrypting data files <code>[coming in v2.0]</code></a></li>
 <li><a href="#email-notification-code-coming-in-v2-0-code">4.14. Email notification <code>[coming in v2.0]</code></a></li>
-<li><a href="#input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code">4.15. Input expenses by scanning a receipt <code>[coming in v2.0]</code></a></li>
+<li><a href="#input-expenses-using-speech-code-coming-in-v2-0-code">4.15. Input expenses using speech <code>[coming in v2.0]</code></a></li>
+<li><a href="#input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code">4.16. Input expenses by scanning a receipt <code>[coming in v2.0]</code></a></li>
+<li><a href="#splitting-a-shared-bill-code-coming-in-v2-0-code">4.17. Splitting a shared bill <code>[coming in v2.0]</code></a></li>
 </ul>
 </li>
 <li><a href="#faq">5. FAQ</a></li>
@@ -91,12 +93,11 @@ Although a desktop app optimised for Command Line, MooLah has an elegant Graphic
 <p>Double-click the file to start the app. The GUI should appear in a few seconds.</p>
 </li>
 <li>
-<p>Make sure the window is not in fullscreen and there is some space below the textfield in order
-for the autocomplete popup to show properly.</p>
+<p>Type a command in the command box and press <kbd>Enter</kbd> to execute it.<br>
+e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> will open the help window.</p>
 </li>
 <li>
-<p>Type the command in the command box and press <kbd>Enter</kbd> to execute it.<br>
-e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> will open the help window.</p>
+<p>Press <kbd>TAB</kbd> if you want to enable the suggestion feature.</p>
 </li>
 <li>
 <p>Some example commands you can try:</p>
@@ -139,8 +140,14 @@ quickly.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Words in between <code>&lt;</code> and <code>&gt;</code> are the parameters which are to be supplied by you!<br>
-e.g. <code>add p/&lt;PRICE&gt;</code>, you will need to supply a value to be used as the <code>PRICE</code> such as <code>add p/2.50</code> .</p>
+<p>Words in between <code>&lt;</code> and <code>&gt;</code> are the parameters which are to be supplied by you!</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>add p/&lt;PRICE&gt;</code>, you will need to supply a value to be used as the <code>PRICE</code> such as <code>add p/2.50</code>.</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
 <p>You don&#8217;t have to input the parameters in square brackets if you don&#8217;t want to. These arguments are optional, and you
@@ -151,13 +158,13 @@ may use them to specify more details.</p>
 <p><code>addexpense d/&lt;DESCRIPTION&gt; p/&lt;PRICE&gt; c/&lt;CATEGORY&gt; [t/&lt;DATE&gt;]</code> means that both<br>
 <code>addexpense d/Chicken Rice p/2.50 c/Food</code> and<br>
 <code>addexpense d/Chicken Rice p/2.50 c/Food t/25-01</code><br>
-are valid inputs</p>
+are valid inputs.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>You may also enter parameters which have a prefix in any order.</p>
+<p>You may also enter parameters with prefixes in any order.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -168,7 +175,7 @@ are valid inputs</p>
 </div>
 </li>
 <li>
-<p>However, for commands which require an argument without a prefix require that the argument be supplied immediately after the command word.</p>
+<p>However, commands that require indexes will only be successful if the index is supplied immediately after the command word.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -213,8 +220,8 @@ particular command it undid to help you confirm that you undid the right thing.<
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>deleteexpense 5
-undo</code></pre>
+<pre>deleteexpense 5
+undo</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -239,9 +246,9 @@ MooLah will then display the message <code>Undid "Delete expense with index 5"</
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>deleteexpense 5
+<pre>deleteexpense 5
 undo
-redo</code></pre>
+redo</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -281,7 +288,7 @@ attempting to modify data. You may do so with the <code>view</code> command.</p>
 - <code>Primary Budget</code><br>
 - <code>Event List</code><br>
 - <code>Budget List</code><br>
-- <code>Statistics</code> (see Note below!)</p>
+- <code>Statistics</code>* (see Note below!)</p>
 </div>
 </div>
 </div>
@@ -293,10 +300,11 @@ attempting to modify data. You may do so with the <code>view</code> command.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Panel names are case-sensitive.</p>
+<p>Panel names are case-insensitive.</p>
 </li>
 <li>
-<p>Statistics panel is not viewable until statistics have been generated.</p>
+<p>* Attempting to <code>view</code> the Statistics panel will lead to an empty panel until you have used one of the statistic
+commands to populate it.</p>
 </li>
 </ol>
 </div>
@@ -305,12 +313,18 @@ attempting to modify data. You may do so with the <code>view</code> command.</p>
 <pre>view Statistics</pre>
 </div>
 </div>
+<div class="paragraph">
+<p>No statistics will be shown in this situation.</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre>stats
-listexpenses
+listexpense
 view Statistics</pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Using it after a prior statistic command will show you the previous statistics generated.</p>
 </div>
 </div>
 </div>
@@ -318,31 +332,81 @@ view Statistics</pre>
 <div class="sect2">
 <h3 id="generic-commands"><a class="link" href="#generic-commands">4.4. Generic commands</a></h3>
 <div class="paragraph">
-<p>MooLah has 5 generic commands which behave differently depending on which Panel in the UI is being shown at the moment.
-These commands are <code>add</code>, <code>list</code>, <code>clear</code>, <code>delete</code>, and <code>edit</code>. These generic commands differ from Panel to Panel.</p>
+<p>MooLah has 4 generic commands which behave differently depending on which Panel you are viewing.</p>
 </div>
 <div class="paragraph">
-<p>For example, you are in the Expense List Panel, then the following command:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>add d/chicken duck p/3 c/food</pre>
-</div>
+<p>These commands are <code>add</code>, <code>list</code>, <code>delete</code>, and <code>edit</code>. These generic commands differ from Panel to Panel.</p>
 </div>
 <div class="paragraph">
-<p>will be interpreted as:</p>
+<p>For example, if you are in the Expense List Panel, then:<br>
+<code>add</code> = <code>addexpense</code></p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre>addexpense d/chicken duck p/3 c/food</pre>
+<div class="paragraph">
+<p>However, in the Aliases panel:<br>
+ <code>add</code> = <code>addalias</code></p>
 </div>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. List of all generic command configurations</caption>
+<colgroup>
+<col style="width: 0%;">
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Expense List</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>add</code> addexpense<br>
+                <code>delete</code> deleteexpense<br>
+                <code>list</code> listexpense<br>
+                <code>edit</code> edit expense</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Budget List</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>add</code> addbudget<br>
+                <code>list</code> listbudget</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event List</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>add</code> addevent<br>
+                <code>delete</code> deleteevent<br>
+                <code>list</code> listevent<br>
+                <code>edit</code> editevent</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aliases</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>add</code> addalias<br>
+                <code>list</code> listalias<br>
+                <code>delete</code> deletealias</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Primary Budget</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>add</code> addexpense<br>
+                 <code>delete</code> deleteexpense-primary<br>
+                 <code>edit</code> editexpense-primary</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect2">
-<h3 id="natural-language-datetime-parsing"><a class="link" href="#natural-language-datetime-parsing">4.5. Natural language DateTime parsing</a></h3>
+<h3 id="natural-language-datetime-parsing"><a class="link" href="#natural-language-datetime-parsing">4.5. Natural language Datetime parsing</a></h3>
 <div class="paragraph">
-<p>DateTime formats accepted are handled mostly by a third-party Natural Language Parser library, Natty, which supports human jargon.
+<p>In MooLah, you can type all dates and times in natural language! You no longer have to remember what date it was a week ago;
+just type '1 week ago' into the appropriate parameter in the command line and MooLah will handle the rest!
+Datetime formats are parsed mostly by a third-party Natural Language Parser library, Natty, which supports human jargon.
 Please refer to <a href="http://natty.joestelmach.com/" class="bare">http://natty.joestelmach.com/</a> for documentation and more information.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Natty naturally parses all datetime formats in the American format (e.g. MM/dd, MM-dd).
+In MooLah however, we have modified the parser such that all formats are parsed in the international format (e.g. dd/MM).
+So, the tryout page on Natty&#8217;s official website will parse dates differently in this aspect.
+</td>
+</tr>
+</table>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -351,19 +415,20 @@ Please refer to <a href="http://natty.joestelmach.com/" class="bare">http://natt
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Natty naturally parses all datetime formats in the American format (e.g. MM/dd, MM-dd).
-In MooLah however, we have modified the parser such that all formats are parsed in the international format (e.g. dd/MM).
+The seconds or even nanoseconds you add to your datetime inputs won&#8217;t be processed by MooLah! (i.e. all seconds and
+nanoseconds are rounded down to 0.)
 </td>
 </tr>
 </table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="basic-expense-related-commands"><a class="link" href="#basic-expense-related-commands">4.6. Basic Expense-related Commands</a></h3>
+<h3 id="expense-related-commands"><a class="link" href="#expense-related-commands">4.6. Expense-related Commands</a></h3>
 <div class="sect3">
 <h4 id="adding-an-expense-code-addexpense-code"><a class="link" href="#adding-an-expense-code-addexpense-code">4.6.1. Adding an expense: <code>addexpense</code></a></h4>
 <div class="paragraph">
-<p>This is MooLah&#8217;s fundamental feature: you can add your expenses.</p>
+<p>The bread an butter of any expense tracker, adding an expense!
+In order to begin tracking your expenses, you are going to need to enter some expenses to track.</p>
 </div>
 <div class="paragraph">
 <p>This is the format:</p>
@@ -381,6 +446,9 @@ In MooLah however, we have modified the parser such that all formats are parsed 
 <p>If you don&#8217;t specify the time, your expense will be added with its time being the current system time.</p>
 </li>
 <li>
+<p>You cannot input an expense from the future. There&#8217;s a better way to do that, see <a href="#adding-an-event-code-addevent-code">here</a>!</p>
+</li>
+<li>
 <p>You should only input one of the following into the CATEGORY field: <code>FOOD</code>, <code>TRAVEL</code>, <code>TRANSPORT</code>,
 <code>SHOPPING</code>, <code>UTILITIES</code>, <code>HEALTHCARE</code>, <code>ENTERTAINMENT</code>, <code>EDUCATION</code>, <code>OTHERS</code>.
 These categories are case-insensitive.</p>
@@ -395,7 +463,7 @@ These categories are case-insensitive.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>addexpense d/Brian birthday p/40 c/Shopping t/10-10</code></p>
+<p><code>addexpense d/birthday p/40 c/Shopping t/10-10</code></p>
 </li>
 <li>
 <p><code>addexpense d/Buffet c/Food p/250</code></p>
@@ -405,15 +473,53 @@ These categories are case-insensitive.</p>
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>After typing in the command and entering it.</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/addexpense_before.png" alt="addexpense before" width="700">
+</div>
+<div class="title">Figure 2. Entering an addexpense command into the command box</div>
+</div>
+<div class="paragraph">
+<p>Your new expense will appear in the list!</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/addexpense_after.png" alt="addexpense after" width="700">
+</div>
+<div class="title">Figure 3. a new Food is added to the list.</div>
+</div>
+<div class="paragraph">
+<p>A new Food expense  is added</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><strong>Category Icons</strong></p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="images/food.png" alt="food" width="70"></span> Food<br>
+<span class="image"><img src="images/transport.png" alt="transport" width="70"></span> Transport<br>
+<span class="image"><img src="images/education.png" alt="education" width="70"></span> Education<br>
+<span class="image"><img src="images/travel.png" alt="travel" width="70"></span> Travel<br>
+<span class="image"><img src="images/utilities.png" alt="utilities" width="70"></span> Utilities<br>
+<span class="image"><img src="images/shopping.png" alt="shopping" width="70"></span> Shopping<br>
+<span class="image"><img src="images/entertainment.png" alt="entertainment" width="70"></span> Entertainment<br>
+<span class="image"><img src="images/others.png" alt="others" width="70"></span> Others</p>
+</div>
+</div>
+</div>
 </div>
 <div class="sect3">
 <h4 id="adding-an-expense-from-nus-canteens-menu-code-addmenuexpense-code"><a class="link" href="#adding-an-expense-from-nus-canteens-menu-code-addmenuexpense-code">4.6.2. Adding an expense from NUS canteens' menu : <code>addmenuexpense</code></a></h4>
 <div class="paragraph">
 <p>This is what makes MooLah special for NUS students.
-Shortcut your way on adding expenses for foods and drinks in NUS!</p>
+Shortcut your way to adding expenses for foods and drinks in NUS!</p>
 </div>
 <div class="paragraph">
-<p>Currently, MooLah only supports just a handful of menu items, though. Head over to <a href="#menu-items-list">Section 7, &#8220;Menu Items List&#8221;</a> to see the
+<p>Currently, MooLah only supports just a handful of menu items, though. Head over to our <a href="#menu-items-list">menu items list</a> to see the
 supported menu items. A more comprehensive menu list is on its way in v2.0!</p>
 </div>
 <div class="paragraph">
@@ -438,12 +544,12 @@ the description, price, and category for you.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="listing-all-expenses-code-listexpenses-code"><a class="link" href="#listing-all-expenses-code-listexpenses-code">4.6.3. Listing all expenses : <code>listexpenses</code></a></h4>
+<h4 id="listing-all-expenses-code-listexpense-code"><a class="link" href="#listing-all-expenses-code-listexpense-code">4.6.3. Listing all expenses : <code>listexpense</code></a></h4>
 <div class="paragraph">
 <p>You can list every single expense you have added into MooLah.</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>listexpenses</code></p>
+<p>Format: <code>listexpense</code></p>
 </div>
 </div>
 <div class="sect3">
@@ -464,11 +570,23 @@ the description, price, and category for you.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>editexpense 2 p/3.50</pre>
+<pre>editexpense 2 p/2.30</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This will update the price of the 2nd expense in the current list to 3.50.</p>
+<p>Executing this command will change the <code>PRICE</code> of the second expense in the list to 2.30.</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/editexpense_before.png" alt="editexpense before" width="500">
+</div>
+<div class="title">Figure 4. expense #2 has a price of $123.00</div>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/editexpense_after.png" alt="editexpense after" width="500">
+</div>
+<div class="title">Figure 5. expense #2 has a price of $2.30 after executing the command</div>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -477,6 +595,15 @@ the description, price, and category for you.</p>
 <li>
 <p>Edits the expense at the specified <code>INDEX</code>. The index refers to the index number shown in the currently displayed list.</p>
 </li>
+</ul>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/editexpense_during.png" alt="editexpense during" width="350">
+</div>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
 </li>
@@ -492,7 +619,7 @@ the description, price, and category for you.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="locating-expenses-by-name-code-find-code"><a class="link" href="#locating-expenses-by-name-code-find-code">4.6.5. Locating expenses by name: <code>find</code></a></h4>
+<h4 id="locating-expenses-by-name-code-findexpense-code"><a class="link" href="#locating-expenses-by-name-code-findexpense-code">4.6.5. Locating expenses by name: <code>findexpense</code></a></h4>
 <div class="paragraph">
 <p>You can find expenses whose description contains any of the keywords you inputted.</p>
 </div>
@@ -509,20 +636,20 @@ the description, price, and category for you.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>The search is case insensitive. e.g <code>chicken</code> will match <code>Chicken</code></p>
+<p>The search is case insensitive. e.g "chicken" will match "Chicken"</p>
 </li>
 <li>
-<p>The order of the keywords does not matter. e.g. <code>Puff Curry</code> will match <code>Curry Puff</code></p>
+<p>The order of the keywords does not matter. e.g. "Puff Curry" will match "Curry Puff"</p>
 </li>
 <li>
 <p>Only the description is searched.</p>
 </li>
 <li>
-<p>Only full words will be matched. e.g. <code>chick</code> will not match <code>chicken</code></p>
+<p>Only full words will be matched. e.g. "chick" will not match "chicken"</p>
 </li>
 <li>
 <p>Expenses matching at least one keyword will be returned (i.e. OR search). e.g. an expense with description
-<code>Chicken rice</code>, and expense with description <code>Duck Rice</code> will both match <code>rice</code></p>
+"Chicken rice", and expense with description "Duck Rice" will both match "rice"</p>
 </li>
 </ul>
 </div>
@@ -534,10 +661,12 @@ the description, price, and category for you.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>findexpense rice</code> will show you all expenses with rice in their description.</p>
+<p><code>findexpense rice</code><br>
+will show you all expenses with rice in their description.</p>
 </li>
 <li>
-<p><code>findexpense chicken taxi schoolfee</code> will show you all expenses with either <code>chicken</code>, <code>taxi</code>, <code>schoolfee</code>, or a
+<p><code>findexpense chicken taxi schoolfee</code><br>
+will show you all expenses with either "chicken", "taxi", "schoolfee", or a
 combination of those in their description.</p>
 </li>
 </ul>
@@ -578,7 +707,7 @@ combination of those in their description.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>listexpenses
+<pre>listexpense
 delete 2</pre>
 </div>
 </div>
@@ -587,7 +716,7 @@ delete 2</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>listexpenses
+<pre>listexpense
 findexpense chicken
 deleteexpense 1</pre>
 </div>
@@ -598,20 +727,33 @@ deleteexpense 1</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="basic-event-related-commands"><a class="link" href="#basic-event-related-commands">4.7. Basic Event-related Commands</a></h3>
+<h3 id="event-related-commands"><a class="link" href="#event-related-commands">4.7. Event-related Commands</a></h3>
 <div class="paragraph">
 <p>Events are pretty similar to expenses, except that they denote potential expenses that they may happen in the future.
 You should use this feature to keep track of future important events in your life that would require you to spend some money
 (e.g. your friends' birthdays).</p>
 </div>
 <div class="paragraph">
-<p>At launch, MooLah will remind you of your upcoming events. Any transpired events would also appear as popups,
+<p>At launch, MooLah will remind you of your upcoming events. Any transpired events also appear as popups,
 asking you whether you wish to add these events as corresponding expenses.</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/TranspiredEventsPopup.png" alt="TranspiredEventsPopup" width="790">
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+MooLah updates time every 10 seconds, so you may experience a slight delay of 10 seconds maximum when it comes to
+event popups!
+</td>
+</tr>
+</table>
 </div>
 <div class="sect3">
 <h4 id="adding-an-event-code-addevent-code"><a class="link" href="#adding-an-event-code-addevent-code">4.7.1. Adding an event: <code>addevent</code></a></h4>
@@ -631,7 +773,7 @@ asking you whether you wish to add these events as corresponding expenses.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Events are potential future expenses, so the <code>TIMESTAMP</code> field is compulsory and should contain a future time.</p>
+<p>Events are potential future expenses, so the <code>TIMESTAMP</code> field is compulsory and must contain a future time.</p>
 </li>
 <li>
 <p>You should only input one of the following into the <code>CATEGORY</code> field:
@@ -660,7 +802,7 @@ These categories are case-insensitive.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="listing-all-events-code-listevents-code"><a class="link" href="#listing-all-events-code-listevents-code">4.7.2. Listing all events : <code>listevents</code></a></h4>
+<h4 id="listing-all-events-code-listevent-code"><a class="link" href="#listing-all-events-code-listevent-code">4.7.2. Listing all events : <code>listevent</code></a></h4>
 <div class="paragraph">
 <p>You can list every single event you have added into MooLah.</p>
 </div>
@@ -669,7 +811,7 @@ These categories are case-insensitive.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>listevents</pre>
+<pre>listevent</pre>
 </div>
 </div>
 </div>
@@ -691,11 +833,12 @@ These categories are case-insensitive.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>editevent 2 p/300</pre>
+<pre>listevent
+editevent 2 p/300</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Updates the price of the 2nd event in the current list to be 300.</p>
+<p>This will update the price of the 2nd event in the current list to be 300.</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -1147,13 +1290,19 @@ That is, this expense will also disappear from the general expense list.
 </div>
 <div class="sect2">
 <h3 id="making-inputs-quick-and-easy"><a class="link" href="#making-inputs-quick-and-easy">4.9. Making inputs quick and easy.</a></h3>
+<div class="paragraph">
+<p>Do you have trouble remembering commands and what arguments they require? MooLah provides
+several features which will help you remember them and make your life much easier!</p>
+</div>
 <div class="sect3">
 <h4 id="creating-a-shortcut-code-alias-code"><a class="link" href="#creating-a-shortcut-code-alias-code">4.9.1. Creating a shortcut:  <code>alias</code></a></h4>
 <div class="paragraph">
-<p>You can save your favourite inputs by assigning them to an <code>alias</code>.</p>
+<p>If you find yourself entering the same thing over and over, MooLah allows you to type less by
+assigning this command to an <code>alias</code>. This will allow you to type this <code>alias</code> in place of the original long
+command.</p>
 </div>
 <div class="paragraph">
-<p>The format is:</p>
+<p>To assign an <code>alias</code>, use the the <code>addalias</code> command with the following format:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1161,76 +1310,100 @@ That is, this expense will also disappear from the general expense list.
 </div>
 </div>
 <div class="paragraph">
-<p>For example, you can type:</p>
+<p>There are two kinds of alias you can make, aliases which act as a standalone command, or an alias
+which accepts arguments.</p>
+</div>
+<div class="paragraph">
+<p><strong>Variation 1:</strong> Standalone</p>
+</div>
+<div class="paragraph">
+<p>You can store an entire command using an <code>alias</code>, and then use this <code>alias</code> in place of that command. For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>addalias a/chicken i/ addexpense d/ Chicken Rice p/2.50 c/Food</pre>
+<pre>addalias a/chicken i/ addexpense d/ chicken rice p/2.30 c/food</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This creates an alias <code>chicken</code> for <code>addexpense d/ Chicken Rice p/2.50 c/Food</code> which when executed creates:<br>
-an <code>Expense</code> with <code>price=2.50</code> and <code>description=“Chicken Rice”</code> in the <code>Food category</code>.</p>
+<p>This saves the command <code>addexpense d/ chicken Rice p/2.30 c/food</code> to <code>chicken</code>. Subsequently, you may use
+this alias in place of using the full command.</p>
 </div>
 <div class="paragraph">
-<p>You may also create an alias with an incomplete input which you may add arguments to when using it:</p>
+<p><strong>Variation 2:</strong> with arguments</p>
+</div>
+<div class="paragraph">
+<p>You may also save an incomplete input to an <code>alias</code>. For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>addalias a/ addfood i/ addexpense c/Food
-addfood d/ chickenrice p/3.50</pre>
+<pre>addalias a/ addfood i/ addexpense c/Food</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Subsequently, entering the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addfood d/chickenrice p/2.30</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>is equivalent to entering:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addexpense c/Food d/chickenrice p/2.30</pre>
 </div>
 </div>
 <div class="sidebarblock">
 <div class="content">
-<div class="paragraph">
-<p><strong>Note</strong></p>
-</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Alias names cannot contain white spaces.</p>
+<p>Alias names can only contain alphanumeric characters.</p>
 </li>
 <li>
-<p>Alias names cannot be the name of another alias.</p>
+<p>Alias names cannot be a command word used by a built-in command, e.g. you may not save a command
+to an alias named "addexpense".<br>
+For the list of built-in command words, see: <a href="#command-summary">Section 6, &#8220;Command Summary&#8221;</a>.</p>
 </li>
 <li>
-<p>You may not create an alias that creates an alias.</p>
+<p>Only one input may be saved to each alias name. Saving an input to an alias name which already
+exists will overwrite the existing input if it exists.</p>
 </li>
 <li>
-<p>Using the same name for an alias will overwrite the existing alias if it exists.</p>
+<p>Repeated prefixes are not allowed! 'a/' and 'i/' may only be used once.</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
-<div class="sidebarblock">
-<div class="content">
-<div class="paragraph">
-<p><strong>Warning</strong> <br>
-Because MooLah prioritizes later instances of a prefix, including <code>a/</code> and <code>i/</code> in your input may cause your Alias to
-not be parsed properly.</p>
-</div>
-</div>
-</div>
 </div>
 <div class="sect3">
-<h4 id="listing-the-shortcuts-you-have-saved-code-listaliases-code"><a class="link" href="#listing-the-shortcuts-you-have-saved-code-listaliases-code">4.9.2. Listing the shortcuts you have saved: <code>listaliases</code></a></h4>
+<h4 id="listing-the-shortcuts-you-have-saved-code-listalias-code"><a class="link" href="#listing-the-shortcuts-you-have-saved-code-listalias-code">4.9.2. Listing the shortcuts you have saved: <code>listalias</code></a></h4>
 <div class="paragraph">
-<p>To view the aliases you have defined, you may use the <code>listaliases</code>.</p>
-</div>
-<div class="paragraph">
-<p>Alternatively, you may use the <code>view</code> command by typing <code>view Aliases</code>.</p>
-</div>
-<div class="paragraph">
-<p>Either of these will bring you to the <code>User Defined Aliases</code> panel where
+<p>To list all of the aliases you have saved, you can the the <code>listalias</code> command. Alternatively, you
+may use the <code>view</code> command by typing <code>view Aliases</code>. Either of these will bring you to the <em>User Defined Aliases</em> panel where
 you can see the list of aliases you have created.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/aliases.png" alt="aliases" width="600">
+</div>
+<div class="title">Figure 6. User Defined Aliases panel</div>
+</div>
+<div class="paragraph">
+<p>The <em>user defined aliases</em> showing some valid aliases.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="deleting-the-shortcuts-you-no-longer-want-to-use-code-deletealias-code"><a class="link" href="#deleting-the-shortcuts-you-no-longer-want-to-use-code-deletealias-code">4.9.3. Deleting the shortcuts you no longer want to use: <code>deletealias</code></a></h4>
 <div class="paragraph">
-<p>To delete an <code>Alias</code> you no longer wish to use, you may use the <code>deletealias</code> command.</p>
+<p>To delete an <code>alias</code> you no longer wish to use, you may use the <code>deletealias</code> command.</p>
 </div>
 <div class="paragraph">
 <p>This is the format:</p>
@@ -1250,109 +1423,160 @@ deletealias hello</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This will delete the <code>hello</code> from your saved shortcuts.</p>
+<p>This will delete the <code>hello</code> alias from your saved aliases.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="autocomplete"><a class="link" href="#autocomplete">4.9.4. Autocomplete</a></h4>
+<h4 id="autocomplete-and-suggestions"><a class="link" href="#autocomplete-and-suggestions">4.9.4. Autocomplete and Suggestions</a></h4>
 <div class="paragraph">
-<p>When entering a command, MooLah will show you a list of valid command words which match the text you have entered.</p>
+<p>If you find yourself forgetting the syntax for some commands, enable the suggestion feature. This will enable MooLah to
+suggest valid commands, as well as prefixes when you already have a command word entered.</p>
+</div>
+<div class="paragraph">
+<p><strong>Enable</strong><br>
+To enable the suggestion feature, press the <kbd>TAB</kbd> key. This will enable the suggestion feature!
+You will see that the command box has a green border. This indicates that the feature is enabled.</p>
+</div>
+<div class="paragraph">
+<p><strong>Disable</strong><br>
+To disable the suggestion feature, press the <kbd>TAB</kbd> key again. This will disable the suggestion feature!
+You will see that the command box no longer has a green border. This indicates that the feature is no longer enabled.</p>
+</div>
+<div class="paragraph">
+<p>The suggestion menu will show you the command words which match your current input.</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/suggestions3.png" alt="suggestions3" width="400">
+</div>
+<div class="title">Figure 7. suggestions for command words beginning with "add"</div>
+</div>
 <div class="paragraph">
-<p><span class="image"><img src="images/autocommand0.png" alt="autocommand0" width="350px"></span><br>
-You can press <kbd>TAB</kbd> to cycle through the available suggestions and press <kbd>ENTER</kbd> to autocomplete.
-All other keys will hide the menu.</p>
+<p>The suggestion menu showing suggestions for built-in commands which begin with 'add' when the feature has been enabled</p>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>When you have entered a valid command, MooLah will show you a list of prefixes you have missed while typing your input.
-Prefixes with the red <code>Missing</code> tag are required prefixes you have not entered. While orange <code>Optional</code>
-prefixes are not necessary.</p>
+<p>You can cycle through the choices using the <kbd>UP</kbd> and <kbd>DOWN</kbd> keys. To confirm your choice, push the <kbd>ENTER</kbd> or <kbd>SPACE</kbd> key!
+<kbd>LEFT</kbd>, <kbd>RIGHT</kbd>, and <kbd>ESC</kbd> can be used to close the menu without disabling suggestions.</p>
+</div>
+<div class="paragraph">
+<p>When you have entered a valid command, MooLah will show you a list of prefixes that are supported by this command and that
+you have not yet entered.</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
-<div class="paragraph">
-<p><span class="image"><img src="images/autoprefix0.png" alt="autoprefix0" width="350px"></span><br>
-You can press <kbd>TAB</kbd> to cycle through the available suggestions and press <kbd>ENTER</kbd> to autocomplete.
-All other keys will hide the menu.</p>
-</div>
-</div>
-</div>
-<div class="sidebarblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<div class="paragraph">
-<p><span class="image"><img src="images/autoprefix1.png" alt="autoprefix1" width="350px"></span><br>
-After including the prefix, the prefix will not be included in the menu.</p>
+<img src="images/suggestions2.png" alt="suggestions2" width="600">
 </div>
-</div>
+<div class="title">Figure 8. suggestions for "addexpense" command</div>
 </div>
 <div class="paragraph">
-<p>If you choose <code>ALL MISSING</code>, all your missing required prefixes will be inserted.</p>
+<p>The suggestion menu showing the missing prefixes in the current input, "addexpense d/", along with what the prefix
+represents.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>When the suggestion menu shows you the prefixes that you are missing, you may see these 3 tags:</p>
+</div>
+<div class="ulist None">
+<ul class="None">
+<li>
+<p><span class="image"><img src="images/missingprefixtag.png" alt="missingprefixtag"></span> indicates that this prefix is mandatory and you have yet to include it.</p>
+</li>
+<li>
+<p><span class="image"><img src="images/allmissingprefixtag.png" alt="allmissingprefixtag"></span> represents all the missing mandatory prefixes.</p>
+</li>
+<li>
+<p><span class="image"><img src="images/optionalprefixtag.png" alt="optionalprefixtag"></span> indicates that this prefix is missing, but is not compulsory to enter.</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect3">
 <h4 id="syntax-highlighting"><a class="link" href="#syntax-highlighting">4.9.5. Syntax Highlighting</a></h4>
-<div class="sidebarblock">
+<div class="paragraph">
+<p>MooLah will highlight valid command words and prefixes, as well as the arguments that will be used with that argument.</p>
+</div>
+<div class="paragraph">
+<p>When you are entering a command, MooLah will highlight command words which are supported built-in commands.</p>
+</div>
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<div class="paragraph">
-<p><span class="image"><img src="images/syntaxhighlighting0.png" alt="syntaxhighlighting0" width="350px"></span><br>
-argument and prefix highlighting</p>
+<img src="images/correctcommand.png" alt="correctcommand" width="200">
 </div>
+<div class="title">Figure 9. addexpense is valid and highlighted</div>
 </div>
-</div>
-<div class="paragraph">
-<p>MooLah highlights valid prefixes, and indicates what arguments fall under them.</p>
-</div>
-<div class="paragraph">
-<p><strong>note</strong>: while an argument may be highlighted, it does mean the value is valid.</p>
-</div>
-<div class="sidebarblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<div class="paragraph">
-<p><span class="image"><img src="images/descriptionplaceholder.png" alt="descriptionplaceholder" width="350px"></span><br>
-<code>&lt;placeholder&gt;</code> for description field</p>
+<img src="images/wrongcommand.png" alt="wrongcommand" width="200">
 </div>
-</div>
+<div class="title">Figure 10. addmonkey is not built-in and not highlighted</div>
 </div>
 <div class="paragraph">
-<p>After typing in a prefix, MooLah will put a <code>&lt;placeholder&gt;</code> to remind you what the argument you should
-enter is.<br>
-Typing over this area will write write over the placeholder.</p>
+<p>After entering a valid command word, MooLah will also highlight the prefixes that are supported by this command.
+However, it will not validate them for you!</p>
 </div>
-<div class="sidebarblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<div class="paragraph">
-<p><span class="image"><img src="images/amountplaceholder.png" alt="amountplaceholder" width="350px"></span><br>
-<code>&lt;placeholder&gt;</code> for amount field</p>
+<img src="images/highlight1.png" alt="highlight1" width="400">
 </div>
+<div class="title">Figure 11. Highlighting of prefixes and arguments for the add.</div>
 </div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/highlight_wrong.png" alt="highlight wrong" width="400">
 </div>
-<div class="paragraph">
-<p><strong>note</strong><br>
-If you forget to type over the placeholders, do not worry. It will not affect your input as these placeholders are
-ignored during execution of your input.</p>
+<div class="title">Figure 12. Wrong arguments are also highlighted.</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="input-history"><a class="link" href="#input-history">4.9.6. Input history</a></h4>
 <div class="paragraph">
-<p>You may cycle through successfully entered commands during the current session with the <kbd>UP</kbd> and <kbd>DOWN</kbd> keys.</p>
+<p>MooLah remembers what commands you have previously entered, and allows you to access them to use them again.</p>
+</div>
+<div class="paragraph">
+<p>If you need to enter the same input multiple times but do not want to save it as an <code>alias</code>
+you may cycle through the history of successfully executed inputs within the current session.</p>
+</div>
+<div class="paragraph">
+<p>Press <kbd>UP</kbd> to scroll through previously executed commands.<br>
+Press <kbd>DOWN</kbd> to go back the more recent commands.</p>
 </div>
 <div class="paragraph">
 <p>For example, if you entered these commands previously.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>addexpense d/chickenrice p/12.3 c/food
-addexpense d/chickenrice p/12.3 c/food
-addexpense d/duck rice p/12.3111 c/food</pre>
+<pre>&gt; addexpense d/chickenrice p/12.3 c/food
+&gt; addexpense d/chickenrice p/12.3 c/food
+&gt; add d/chicken rice p/2.30 c/food</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You may cycle through these commands using the arrow keys.</p>
+<p>Pressing the <kbd>UP</kbd> key to quickly enter the previous input.</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/highlight1.png" alt="highlight1" width="400">
+</div>
+<div class="title">Figure 13. the last input which was successfully executed will be entered into the command box.</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+When the suggestion menu is open, the <kbd>UP</kbd> and <kbd>DOWN</kbd> keys will cycle through the suggestions instead!
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -1458,7 +1682,7 @@ For example, MooLah is currently at the "Outside School" budget, and shown below
 the current window of the Budget from start of 18 Oct to the end of 24 Oct. There are exactly
 4 expenses as shown in the example.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
 <img src="images/OutsideSchoolWindow.png" alt="OutsideSchoolWindow" width="790">
 </div>
@@ -1480,7 +1704,7 @@ as shown below.</p>
 </li>
 </ol>
 </div>
-<div class="imageblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
 <img src="images/PieChart.png" alt="PieChart" width="790">
 </div>
@@ -1518,7 +1742,7 @@ represents the difference in frequency and difference in total expenditure.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Date formats accepted are handled by our Natural Language Parser library which supports human jargons.
+<p>Date formats accepted are handled by Natty Date Parser library which supports human jargons.
 Please refer to the above documentation for more information.</p>
 </li>
 <li>
@@ -1783,7 +2007,15 @@ There is no need to save manually.</p>
 
 </div>
 <div class="sect2">
-<h3 id="input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code"><a class="link" href="#input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code">4.15. Input expenses by scanning a receipt <code>[coming in v2.0]</code></a></h3>
+<h3 id="input-expenses-using-speech-code-coming-in-v2-0-code"><a class="link" href="#input-expenses-using-speech-code-coming-in-v2-0-code">4.15. Input expenses using speech <code>[coming in v2.0]</code></a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code"><a class="link" href="#input-expenses-by-scanning-a-receipt-code-coming-in-v2-0-code">4.16. Input expenses by scanning a receipt <code>[coming in v2.0]</code></a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="splitting-a-shared-bill-code-coming-in-v2-0-code"><a class="link" href="#splitting-a-shared-bill-code-coming-in-v2-0-code">4.17. Splitting a shared bill <code>[coming in v2.0]</code></a></h3>
 
 </div>
 </div>
@@ -1818,6 +2050,9 @@ the data of your previous MooLah folder.</p>
 <li>
 <p><strong>Redo</strong> : <code>redo</code></p>
 </li>
+<li>
+<p><strong>Clear MooLah</strong> : <code>clearmoolah</code></p>
+</li>
 </ul>
 </div>
 <hr>
@@ -1827,24 +2062,52 @@ the data of your previous MooLah folder.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Add an expense</strong> (<em>undoable</em>) : <code>addexpense d/&lt;DESCRIPTION&gt; p/&lt;PRICE&gt;  c/&lt;CATEGORY&gt; [t/&lt;TIME&gt;]</code><br>
+<p><strong>Add an expense</strong> (<em>undoable</em>) :<br>
+<code>addexpense d/&lt;DESCRIPTION&gt; p/&lt;PRICE&gt;  c/&lt;CATEGORY&gt; [t/&lt;TIME&gt;]</code><br>
 e.g. <code>addexpense d/Chicken Rice p/2.50 t/15-09-2019 1230 c/Food</code></p>
 </li>
 <li>
-<p><strong>List all expenses</strong> (<em>undoable</em>) : <code>listexpenses</code></p>
+<p><strong>List all expenses</strong> :<br>
+<code>listexpense</code></p>
 </li>
 <li>
-<p><strong>Edit an expenses</strong> (<em>undoable</em>) : <code>editexpense &lt;INDEX&gt; [d/&lt;DESCRIPTION&gt;] [p/&lt;PRICE&gt;]  [c/&lt;CATEGORY&gt;] [t/&lt;TIME&gt;]</code><br>
+<p><strong>Edit an expenses</strong> (<em>undoable</em>) :<br>
+<code>editexpense &lt;INDEX&gt; [d/&lt;DESCRIPTION&gt;] [p/&lt;PRICE&gt;]  [c/&lt;CATEGORY&gt;] [t/&lt;TIME&gt;]</code><br>
 e.g. <code>editexpense 1 p/2.50 t/15-09-2019 1230 c/Food</code></p>
 </li>
 <li>
-<p><strong>Delete an expense</strong> (<em>undoable</em>) : <code>deleteexpense &lt;INDEX&gt;</code></p>
+<p><strong>Delete an expense</strong> (<em>undoable</em>) :<br>
+<code>deleteexpense &lt;INDEX&gt;</code></p>
 </li>
 <li>
-<p><strong>Find an expense</strong> (<em>undoable</em>) : <code>findexpense &lt;KEYWORD&gt; [&lt;MORE_KEYWORD&gt;]</code></p>
+<p><strong>Find an expense</strong> (<em>undoable</em>) :<br>
+<code>findexpense &lt;KEYWORD&gt; [&lt;MORE_KEYWORD&gt;]</code></p>
 </li>
 <li>
-<p><strong>Clear all expenses and budgets</strong> (<em>undoable</em>) : <code>clearall</code></p>
+<p><strong>Clear all expenses and budgets</strong> (<em>undoable</em>) :<br>
+<code>clearmoolah</code>
+---</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>All about events:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Add an event</strong> (<em>undoable</em>) : <code>addevent d/&lt;DESCRIPTION&gt; p/&lt;PRICE&gt;  c/&lt;CATEGORY&gt; t/&lt;TIME&gt;</code><br>
+e.g. <code>addevent d/Family buffet p/50 t/1 week from now c/Food</code></p>
+</li>
+<li>
+<p><strong>List all events</strong> : <code>listevent</code></p>
+</li>
+<li>
+<p><strong>Edit an event</strong> (<em>undoable</em>) : <code>editexpense &lt;INDEX&gt; [d/&lt;DESCRIPTION&gt;] [p/&lt;PRICE&gt;]  [c/&lt;CATEGORY&gt;] [t/&lt;TIME&gt;]</code><br>
+e.g. <code>editexpense 1 p/2.50 c/Food</code></p>
+</li>
+<li>
+<p><strong>Delete an event</strong> (<em>undoable</em>) : <code>deleteevent &lt;INDEX&gt;</code></p>
 </li>
 </ul>
 </div>
@@ -1972,4 +2235,4 @@ e.g. <code>alias a/chicken rice c/ add d/ Chicken Rice p/2.50 c/Food</code></p>
 </tbody>
 </table>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 10:02:49 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 10:33:55 UTC</div></div></div></body></html>

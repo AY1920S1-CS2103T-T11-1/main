@@ -208,13 +208,19 @@ The implementation too was challenging as it required changes to existing comman
 </table>
 <div class="sect2">
 <h3 id="making-inputs-quick-and-easy"><a class="link" href="#making-inputs-quick-and-easy">Making inputs quick and easy.</a></h3>
+<div class="paragraph">
+<p>Do you have trouble remembering commands and what arguments they require? MooLah provides
+several features which will help you remember them and make your life much easier!</p>
+</div>
 <div class="sect3">
 <h4 id="creating-a-shortcut-code-alias-code"><a class="link" href="#creating-a-shortcut-code-alias-code">Creating a shortcut:  <code>alias</code></a></h4>
 <div class="paragraph">
-<p>You can save your favourite inputs by assigning them to an <code>alias</code>.</p>
+<p>If you find yourself entering the same thing over and over, MooLah allows you to type less by
+assigning this command to an <code>alias</code>. This will allow you to type this <code>alias</code> in place of the original long
+command.</p>
 </div>
 <div class="paragraph">
-<p>The format is:</p>
+<p>To assign an <code>alias</code>, use the the <code>addalias</code> command with the following format:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -222,76 +228,100 @@ The implementation too was challenging as it required changes to existing comman
 </div>
 </div>
 <div class="paragraph">
-<p>For example, you can type:</p>
+<p>There are two kinds of alias you can make, aliases which act as a standalone command, or an alias
+which accepts arguments.</p>
+</div>
+<div class="paragraph">
+<p><strong>Variation 1:</strong> Standalone</p>
+</div>
+<div class="paragraph">
+<p>You can store an entire command using an <code>alias</code>, and then use this <code>alias</code> in place of that command. For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>addalias a/chicken i/ addexpense d/ Chicken Rice p/2.50 c/Food</pre>
+<pre>addalias a/chicken i/ addexpense d/ chicken rice p/2.30 c/food</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This creates an alias <code>chicken</code> for <code>addexpense d/ Chicken Rice p/2.50 c/Food</code> which when executed creates:<br>
-an <code>Expense</code> with <code>price=2.50</code> and <code>description=“Chicken Rice”</code> in the <code>Food category</code>.</p>
+<p>This saves the command <code>addexpense d/ chicken Rice p/2.30 c/food</code> to <code>chicken</code>. Subsequently, you may use
+this alias in place of using the full command.</p>
 </div>
 <div class="paragraph">
-<p>You may also create an alias with an incomplete input which you may add arguments to when using it:</p>
+<p><strong>Variation 2:</strong> with arguments</p>
+</div>
+<div class="paragraph">
+<p>You may also save an incomplete input to an <code>alias</code>. For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>addalias a/ addfood i/ addexpense c/Food
-addfood d/ chickenrice p/3.50</pre>
+<pre>addalias a/ addfood i/ addexpense c/Food</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Subsequently, entering the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addfood d/chickenrice p/2.30</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>is equivalent to entering:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addexpense c/Food d/chickenrice p/2.30</pre>
 </div>
 </div>
 <div class="sidebarblock">
 <div class="content">
-<div class="paragraph">
-<p><strong>Note</strong></p>
-</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Alias names cannot contain white spaces.</p>
+<p>Alias names can only contain alphanumeric characters.</p>
 </li>
 <li>
-<p>Alias names cannot be the name of another alias.</p>
+<p>Alias names cannot be a command word used by a built-in command, e.g. you may not save a command
+to an alias named "addexpense".<br>
+For the list of built-in command words, see: <a href="#Command Summary">[Command Summary]</a>.</p>
 </li>
 <li>
-<p>You may not create an alias that creates an alias.</p>
+<p>Only one input may be saved to each alias name. Saving an input to an alias name which already
+exists will overwrite the existing input if it exists.</p>
 </li>
 <li>
-<p>Using the same name for an alias will overwrite the existing alias if it exists.</p>
+<p>Repeated prefixes are not allowed! 'a/' and 'i/' may only be used once.</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
-<div class="sidebarblock">
-<div class="content">
-<div class="paragraph">
-<p><strong>Warning</strong> <br>
-Because MooLah prioritizes later instances of a prefix, including <code>a/</code> and <code>i/</code> in your input may cause your Alias to
-not be parsed properly.</p>
-</div>
-</div>
-</div>
 </div>
 <div class="sect3">
-<h4 id="listing-the-shortcuts-you-have-saved-code-listaliases-code"><a class="link" href="#listing-the-shortcuts-you-have-saved-code-listaliases-code">Listing the shortcuts you have saved: <code>listaliases</code></a></h4>
+<h4 id="listing-the-shortcuts-you-have-saved-code-listalias-code"><a class="link" href="#listing-the-shortcuts-you-have-saved-code-listalias-code">Listing the shortcuts you have saved: <code>listalias</code></a></h4>
 <div class="paragraph">
-<p>To view the aliases you have defined, you may use the <code>listaliases</code>.</p>
-</div>
-<div class="paragraph">
-<p>Alternatively, you may use the <code>view</code> command by typing <code>view Aliases</code>.</p>
-</div>
-<div class="paragraph">
-<p>Either of these will bring you to the <code>User Defined Aliases</code> panel where
+<p>To list all of the aliases you have saved, you can the the <code>listalias</code> command. Alternatively, you
+may use the <code>view</code> command by typing <code>view Aliases</code>. Either of these will bring you to the <em>User Defined Aliases</em> panel where
 you can see the list of aliases you have created.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="../images/aliases.png" alt="aliases" width="600">
+</div>
+<div class="title">Figure 1. User Defined Aliases panel</div>
+</div>
+<div class="paragraph">
+<p>The <em>user defined aliases</em> showing some valid aliases.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="deleting-the-shortcuts-you-no-longer-want-to-use-code-deletealias-code"><a class="link" href="#deleting-the-shortcuts-you-no-longer-want-to-use-code-deletealias-code">Deleting the shortcuts you no longer want to use: <code>deletealias</code></a></h4>
 <div class="paragraph">
-<p>To delete an <code>Alias</code> you no longer wish to use, you may use the <code>deletealias</code> command.</p>
+<p>To delete an <code>alias</code> you no longer wish to use, you may use the <code>deletealias</code> command.</p>
 </div>
 <div class="paragraph">
 <p>This is the format:</p>
@@ -311,109 +341,160 @@ deletealias hello</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This will delete the <code>hello</code> from your saved shortcuts.</p>
+<p>This will delete the <code>hello</code> alias from your saved aliases.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="autocomplete"><a class="link" href="#autocomplete">Autocomplete</a></h4>
+<h4 id="autocomplete-and-suggestions"><a class="link" href="#autocomplete-and-suggestions">Autocomplete and Suggestions</a></h4>
 <div class="paragraph">
-<p>When entering a command, MooLah will show you a list of valid command words which match the text you have entered.</p>
+<p>If you find yourself forgetting the syntax for some commands, enable the suggestion feature. This will enable MooLah to
+suggest valid commands, as well as prefixes when you already have a command word entered.</p>
+</div>
+<div class="paragraph">
+<p><strong>Enable</strong><br>
+To enable the suggestion feature, press the <kbd>TAB</kbd> key. This will enable the suggestion feature!
+You will see that the command box has a green border. This indicates that the feature is enabled.</p>
+</div>
+<div class="paragraph">
+<p><strong>Disable</strong><br>
+To disable the suggestion feature, press the <kbd>TAB</kbd> key again. This will disable the suggestion feature!
+You will see that the command box no longer has a green border. This indicates that the feature is no longer enabled.</p>
+</div>
+<div class="paragraph">
+<p>The suggestion menu will show you the command words which match your current input.</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="../images/suggestions3.png" alt="suggestions3" width="400">
+</div>
+<div class="title">Figure 2. suggestions for command words beginning with "add"</div>
+</div>
 <div class="paragraph">
-<p><span class="image"><img src="../images/autocommand0.png" alt="autocommand0" width="350px"></span><br>
-You can press <kbd>TAB</kbd> to cycle through the available suggestions and press <kbd>ENTER</kbd> to autocomplete.
-All other keys will hide the menu.</p>
+<p>The suggestion menu showing suggestions for built-in commands which begin with 'add' when the feature has been enabled</p>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>When you have entered a valid command, MooLah will show you a list of prefixes you have missed while typing your input.
-Prefixes with the red <code>Missing</code> tag are required prefixes you have not entered. While orange <code>Optional</code>
-prefixes are not necessary.</p>
+<p>You can cycle through the choices using the <kbd>UP</kbd> and <kbd>DOWN</kbd> keys. To confirm your choice, push the <kbd>ENTER</kbd> or <kbd>SPACE</kbd> key!
+<kbd>LEFT</kbd>, <kbd>RIGHT</kbd>, and <kbd>ESC</kbd> can be used to close the menu without disabling suggestions.</p>
+</div>
+<div class="paragraph">
+<p>When you have entered a valid command, MooLah will show you a list of prefixes that are supported by this command and that
+you have not yet entered.</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
-<div class="paragraph">
-<p><span class="image"><img src="../images/autoprefix0.png" alt="autoprefix0" width="350px"></span><br>
-You can press <kbd>TAB</kbd> to cycle through the available suggestions and press <kbd>ENTER</kbd> to autocomplete.
-All other keys will hide the menu.</p>
-</div>
-</div>
-</div>
-<div class="sidebarblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<div class="paragraph">
-<p><span class="image"><img src="../images/autoprefix1.png" alt="autoprefix1" width="350px"></span><br>
-After including the prefix, the prefix will not be included in the menu.</p>
+<img src="../images/suggestions2.png" alt="suggestions2" width="600">
 </div>
-</div>
+<div class="title">Figure 3. suggestions for "addexpense" command</div>
 </div>
 <div class="paragraph">
-<p>If you choose <code>ALL MISSING</code>, all your missing required prefixes will be inserted.</p>
+<p>The suggestion menu showing the missing prefixes in the current input, "addexpense d/", along with what the prefix
+represents.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>When the suggestion menu shows you the prefixes that you are missing, you may see these 3 tags:</p>
+</div>
+<div class="ulist None">
+<ul class="None">
+<li>
+<p><span class="image"><img src="../images/missingprefixtag.png" alt="missingprefixtag"></span> indicates that this prefix is mandatory and you have yet to include it.</p>
+</li>
+<li>
+<p><span class="image"><img src="../images/allmissingprefixtag.png" alt="allmissingprefixtag"></span> represents all the missing mandatory prefixes.</p>
+</li>
+<li>
+<p><span class="image"><img src="../images/optionalprefixtag.png" alt="optionalprefixtag"></span> indicates that this prefix is missing, but is not compulsory to enter.</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect3">
 <h4 id="syntax-highlighting"><a class="link" href="#syntax-highlighting">Syntax Highlighting</a></h4>
-<div class="sidebarblock">
+<div class="paragraph">
+<p>MooLah will highlight valid command words and prefixes, as well as the arguments that will be used with that argument.</p>
+</div>
+<div class="paragraph">
+<p>When you are entering a command, MooLah will highlight command words which are supported built-in commands.</p>
+</div>
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<div class="paragraph">
-<p><span class="image"><img src="../images/syntaxhighlighting0.png" alt="syntaxhighlighting0" width="350px"></span><br>
-argument and prefix highlighting</p>
+<img src="../images/correctcommand.png" alt="correctcommand" width="200">
 </div>
+<div class="title">Figure 4. addexpense is valid and highlighted</div>
 </div>
-</div>
-<div class="paragraph">
-<p>MooLah highlights valid prefixes, and indicates what arguments fall under them.</p>
-</div>
-<div class="paragraph">
-<p><strong>note</strong>: while an argument may be highlighted, it does mean the value is valid.</p>
-</div>
-<div class="sidebarblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<div class="paragraph">
-<p><span class="image"><img src="../images/descriptionplaceholder.png" alt="descriptionplaceholder" width="350px"></span><br>
-<code>&lt;placeholder&gt;</code> for description field</p>
+<img src="../images/wrongcommand.png" alt="wrongcommand" width="200">
 </div>
-</div>
+<div class="title">Figure 5. addmonkey is not built-in and not highlighted</div>
 </div>
 <div class="paragraph">
-<p>After typing in a prefix, MooLah will put a <code>&lt;placeholder&gt;</code> to remind you what the argument you should
-enter is.<br>
-Typing over this area will write write over the placeholder.</p>
+<p>After entering a valid command word, MooLah will also highlight the prefixes that are supported by this command.
+However, it will not validate them for you!</p>
 </div>
-<div class="sidebarblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<div class="paragraph">
-<p><span class="image"><img src="../images/amountplaceholder.png" alt="amountplaceholder" width="350px"></span><br>
-<code>&lt;placeholder&gt;</code> for amount field</p>
+<img src="../images/highlight1.png" alt="highlight1" width="400">
 </div>
+<div class="title">Figure 6. Highlighting of prefixes and arguments for the add.</div>
 </div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="../images/highlight_wrong.png" alt="highlight wrong" width="400">
 </div>
-<div class="paragraph">
-<p><strong>note</strong><br>
-If you forget to type over the placeholders, do not worry. It will not affect your input as these placeholders are
-ignored during execution of your input.</p>
+<div class="title">Figure 7. Wrong arguments are also highlighted.</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="input-history"><a class="link" href="#input-history">Input history</a></h4>
 <div class="paragraph">
-<p>You may cycle through successfully entered commands during the current session with the <kbd>UP</kbd> and <kbd>DOWN</kbd> keys.</p>
+<p>MooLah remembers what commands you have previously entered, and allows you to access them to use them again.</p>
+</div>
+<div class="paragraph">
+<p>If you need to enter the same input multiple times but do not want to save it as an <code>alias</code>
+you may cycle through the history of successfully executed inputs within the current session.</p>
+</div>
+<div class="paragraph">
+<p>Press <kbd>UP</kbd> to scroll through previously executed commands.<br>
+Press <kbd>DOWN</kbd> to go back the more recent commands.</p>
 </div>
 <div class="paragraph">
 <p>For example, if you entered these commands previously.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>addexpense d/chickenrice p/12.3 c/food
-addexpense d/chickenrice p/12.3 c/food
-addexpense d/duck rice p/12.3111 c/food</pre>
+<pre>&gt; addexpense d/chickenrice p/12.3 c/food
+&gt; addexpense d/chickenrice p/12.3 c/food
+&gt; add d/chicken rice p/2.30 c/food</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You may cycle through these commands using the arrow keys.</p>
+<p>Pressing the <kbd>UP</kbd> key to quickly enter the previous input.</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="../images/highlight1.png" alt="highlight1" width="400">
+</div>
+<div class="title">Figure 8. the last input which was successfully executed will be entered into the command box.</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+When the suggestion menu is open, the <kbd>UP</kbd> and <kbd>DOWN</kbd> keys will cycle through the suggestions instead!
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -436,4 +517,4 @@ addexpense d/duck rice p/12.3111 c/food</pre>
 <p><em>{Optionally, you may include other projects in your portfolio.}</em></p>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 10:02:49 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 10:33:55 UTC</div></div></div></body></html>

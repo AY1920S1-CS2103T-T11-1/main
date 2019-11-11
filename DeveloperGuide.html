@@ -55,7 +55,7 @@
 <li><a href="#instructions-for-manual-testing">Appendix G: Instructions for Manual Testing</a>
 <ul class="sectlevel2">
 <li><a href="#launch-and-shutdown">G.1. Launch and Shutdown</a></li>
-<li><a href="#deleting-a-person">G.2. Deleting a person</a></li>
+<li><a href="#deleting-a-expense">G.2. Deleting a expense</a></li>
 <li><a href="#saving-data">G.3. Saving data</a></li>
 </ul>
 </li>
@@ -245,6 +245,9 @@ The following class plays an important role at the architecture level:</p>
 <div class="ulist">
 <ul>
 <li>
+<p>Determines what commands are available to the user.</p>
+</li>
+<li>
 <p>Executes user commands using the <code>Logic</code> component.</p>
 </li>
 <li>
@@ -252,26 +255,109 @@ The following class plays an important role at the architecture level:</p>
 </li>
 </ul>
 </div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/SinglePanelViewClassDiagram.png" alt="SinglePanelViewClassDiagram" width="400">
+</div>
+<div class="title">Figure 5. Class diagram of the SinglePanelView component which implements the Panel Manager interface.</div>
+</div>
 <div class="paragraph">
-<p>The content being shown in the <code>MainWindow</code> is managed by the <code>SinglePanelView</code> which supports the following operations:
-<code>SinglePanelView#viewPanel(panelName)</code>
-<code>SinglePanelView#hasPanel(panelName)</code>
-<code>SinglePanelView#getPanel(panelName)</code>
-<code>SinglePanelView#setPanel(panelName, panel)</code></p>
+<p>The content that is being shown in the <code>MainWindow</code> to the user is managed by a <code>SinglePanelView</code> which implements the
+<code>PanelManager</code> interface  that supports the following operations:<br>
+<code>PanelManager#viewPanel(PanelName)</code><br>
+<code>PanelManager#hasPanel(PanelName)</code><br>
+<code>PanelManager#getPanel(PanelName)</code><br>
+<code>PanelManager#setPanel(PanelName, Panel)</code>
+<code>PanelManager#getCurrentPanel()</code><br>
+<code>PanelManager#getCurrentPanelName()</code><br>
+<code>PanelManager#removePanel(PanelName)</code><br></p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/SinglePanelViewClassDiagram.png" alt="SinglePanelViewClassDiagram">
+<img src="images/PanelManagerStructureDiagram.png" alt="PanelManagerStructureDiagram">
 </div>
+<div class="title">Figure 6. Structure of the SinglePanelView component used to display the Model components.</div>
 </div>
 <div class="paragraph">
-<p>Users may change between the visible panels through the CLI by using the <code>view</code> command.
-The following sequence diagram shows the events which occur in order to change the the UI component displayed in the main window.</p>
+<p>The <code>PanelManager</code> manages the other <code>Panels</code> which represent their respective <code>Model</code> component:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>AliasMappings</code> as <code>AliasListPanel</code></p>
+</li>
+<li>
+<p><code>UniqueBudgetList</code> as <code>BudgetListPanel</code></p>
+</li>
+<li>
+<p>Primary <code>Budget</code> as <code>BudgetPanel</code></p>
+</li>
+<li>
+<p><code>UniqueExpenseList</code> as <code>ExpenseListPanel</code></p>
+</li>
+<li>
+<p><code>UniqueEventList</code> as <code>EventListPanel</code></p>
+</li>
+<li>
+<p><code>Statistics</code> as <code>StatsPanel</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Each of these <code>Panels</code> extend the abstract <code>Panel</code> class and implement the abstract methods:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Panel#view()</code> which displays the panel to the user</p>
+</li>
+<li>
+<p><code>Panel#hide()</code> which hides the panel from the user</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>When users execute a valid command, via <code>Logic</code>, the <code>Model</code> is updated. These changes are reflected in the respective <code>Panel</code> components.
+The <code>CommandResult</code> returned by the <code>Logic</code> component also tells the <code>UI</code> which <code>Panel</code> needs to be displayed.</p>
+</div>
+<div class="paragraph">
+<p>The <code>UI</code> then displays the <code>Panel</code> to the user.</p>
+</div>
+<div class="paragraph">
+<p>Users may also manually change between the visible <code>Panels</code> through the CLI by using the <code>view</code> command.</p>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows the events which occur in order to change the the UI <code>Panel</code> component displayed in the <code>SinglePanelView</code>
+component of the <code>MainWindow</code> when the user executes a <code>view</code> command.</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/ViewPanelSequenceDiagram.png" alt="ViewPanelSequenceDiagram">
 </div>
+<div class="title">Figure 7. Sequence Diagram showing the events that occur when a user uses the view command.</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The user executes a valid view command</p>
+</li>
+<li>
+<p>The <code>Logic</code> parses the input as a <code>ViewPanelCommand</code></p>
+</li>
+<li>
+<p>The <code>#run(Model)</code> method of the <code>ViewPanelCommand</code> instance returns a <code>CommandResult</code> containing a <code>PanelName</code></p>
+</li>
+<li>
+<p>The <code>MainWindow</code> uses the <code>PanelName</code> to call <code>PanelManager#viewPanel(PanelName)</code>.</p>
+</li>
+<li>
+<p>The <code>SinglePanelView</code> object which implements <code>PanelManager</code> calls the <code>#view()</code> on the panel which needs to be displayed,
+and calls <code>#hide()</code> on all other panels.</p>
+</li>
+<li>
+<p>The user sees the changes to the GUI.</p>
+</li>
+</ol>
 </div>
 </div>
 <div class="sect2">
@@ -280,7 +366,7 @@ The following sequence diagram shows the events which occur in order to change t
 <div class="content">
 <img src="images/LogicClassDiagram.png" alt="LogicClassDiagram">
 </div>
-<div class="title">Figure 5. Structure of the Logic Component</div>
+<div class="title">Figure 8. Structure of the Logic Component</div>
 </div>
 <div class="paragraph">
 <p><strong>API</strong> :
@@ -295,7 +381,7 @@ The following sequence diagram shows the events which occur in order to change t
 <p>This results in a <code>Command</code> object which is executed by the <code>LogicManager</code>.</p>
 </li>
 <li>
-<p>The command execution can affect the <code>Model</code> (e.g. adding a person).</p>
+<p>The command execution can affect the <code>Model</code> (e.g. adding a expense).</p>
 </li>
 <li>
 <p>The result of the command execution is encapsulated as a <code>CommandResult</code> object which is passed back to the <code>Ui</code>.</p>
@@ -312,7 +398,7 @@ The following sequence diagram shows the events which occur in order to change t
 <div class="content">
 <img src="images/DeleteSequenceDiagram.png" alt="DeleteSequenceDiagram">
 </div>
-<div class="title">Figure 6. Interactions Inside the Logic Component for the <code>delete 1</code> Command</div>
+<div class="title">Figure 9. Interactions Inside the Logic Component for the <code>delete 1</code> Command</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -333,7 +419,7 @@ The lifeline for <code>DeleteCommandParser</code> should end at the destroy mark
 <div class="content">
 <img src="images/ModelClassDiagram.png" alt="ModelClassDiagram">
 </div>
-<div class="title">Figure 7. Structure of the Model Component</div>
+<div class="title">Figure 10. Structure of the Model Component</div>
 </div>
 <div class="paragraph">
 <p><strong>API</strong> : <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/src/main/java/seedu/moolah/model/Model.java"><code>Model.java</code></a></p>
@@ -350,26 +436,18 @@ The lifeline for <code>DeleteCommandParser</code> should end at the destroy mark
 <p>stores the MooLah data.</p>
 </li>
 <li>
-<p>exposes an unmodifiable <code>ObservableList&lt;Person&gt;</code> that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.</p>
+<p>exposes an unmodifiable <code>ObservableList&lt;Expense&gt;</code> that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.</p>
+</li>
+<li>
+<p>exposes an unmodifiable <code>ObservableList&lt;Budget&gt;</code> that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.</p>
+</li>
+<li>
+<p>exposes an unmodifiable <code>ObservableList&lt;Event&gt;</code> that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.</p>
 </li>
 <li>
 <p>does not depend on any of the other three components.</p>
 </li>
 </ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-As a more OOP model, we can store a <code>Tag</code> list in <code>MooLah</code>, which <code>Person</code> can reference. This would allow <code>MooLah</code> to only require one <code>Tag</code> object per unique <code>Tag</code>, instead of each <code>Person</code> needing their own <code>Tag</code> object. An example of how such a model may look like is given below.<br>
-<br>
-<span class="image"><img src="images/BetterModelClassDiagram.png" alt="BetterModelClassDiagram"></span>
-</td>
-</tr>
-</table>
 </div>
 </div>
 <div class="sect2">
@@ -378,7 +456,7 @@ As a more OOP model, we can store a <code>Tag</code> list in <code>MooLah</code>
 <div class="content">
 <img src="images/StorageClassDiagram.png" alt="StorageClassDiagram">
 </div>
-<div class="title">Figure 8. Structure of the Storage Component</div>
+<div class="title">Figure 11. Structure of the Storage Component</div>
 </div>
 <div class="paragraph">
 <p><strong>API</strong> : <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/src/main/java/seedu/moolah/storage/Storage.java"><code>Storage.java</code></a></p>
@@ -1293,7 +1371,7 @@ other than being restricted within the same budget</p>
 <div class="sect3">
 <h4 id="implementation-5"><a class="link" href="#implementation-5">4.5.1. Implementation</a></h4>
 <div class="paragraph">
-<p>The Aliases feature allows users to assign inputs they may use very often to a shortcut, and execute the input by entering
+<p>The Alias feature allows users to assign inputs they may use very often to a shortcut, and execute the input by entering
 the shortcut, (a.k.a <code>Alias</code>), in place of the full or partial command.</p>
 </div>
 <div class="imageblock">
@@ -2720,26 +2798,26 @@ Expected: The most recent window size and location is retained.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="deleting-a-person"><a class="link" href="#deleting-a-person">G.2. Deleting a person</a></h3>
+<h3 id="deleting-a-expense"><a class="link" href="#deleting-a-expense">G.2. Deleting a expense</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Deleting a person while all persons are listed</p>
+<p>Deleting a expense while all expenses are listed</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Prerequisites: List all persons using the <code>list</code> command. Multiple persons in the list.</p>
+<p>Prerequisites: List all expenses using the <code>listexpense</code> command. Multiple expenses in the list.</p>
 </li>
 <li>
-<p>Test case: <code>delete 1</code><br>
+<p>Test case: <code>deleteexpense 1</code><br>
 Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.</p>
 </li>
 <li>
-<p>Test case: <code>delete 0</code><br>
-Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.</p>
+<p>Test case: <code>deleteexpense 0</code><br>
+Expected: No expense is deleted. Error details shown in the status message. Status bar remains the same.</p>
 </li>
 <li>
-<p>Other incorrect delete commands to try: <code>delete</code>, <code>delete x</code> (where x is larger than the list size) <em>{give more}</em><br>
+<p>Other incorrect delete commands to try: <code>deleteexpense</code>, <code>deleteexpense x</code> (where x is larger than the list size) <em>{give more}</em><br>
 Expected: Similar to previous.</p>
 </li>
 </ol>
@@ -2772,4 +2850,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 10:02:49 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 10:33:55 UTC</div></div></div></body></html>
