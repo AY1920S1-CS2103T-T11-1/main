@@ -49,7 +49,8 @@ undo/redo, constant coordination with other developers is required.</p>
 </div>
 </li>
 <li>
-<p><strong>Code contributed</strong>:(<a href="https://nus-cs2103-ay1920s1.github.io/tp-dashboard/#search=qweiping31415&amp;sort=groupTitle&amp;sortWithin=title&amp;since=2019-09-06&amp;timeframe=commit&amp;mergegroup=false&amp;groupSelect=groupByRepos&amp;breakdown=false">Functional Code</a>)</p>
+<p><strong>Code contributed</strong>:(<a href="https://nus-cs2103-ay1920s1.github.io/tp-dashboard/#search=qweiping31415&amp;sort=groupTitle&amp;sortWithin=title&amp;since=2019-09-06&amp;timeframe=commit&amp;mergegroup=false&amp;groupSelect=groupByRepos&amp;breakdown=false">Functional Code</a>)
+(<a href="https://nus-cs2103-ay1920s1.github.io/tp-dashboard/#search=qweiping31415&amp;sort=groupTitle&amp;sortWithin=title&amp;since=2019-09-06&amp;timeframe=commit&amp;mergegroup=false&amp;groupSelect=groupByRepos&amp;breakdown=false">Test Code</a>)</p>
 </li>
 <li>
 <p><strong>Other contributions</strong>:</p>
@@ -73,7 +74,7 @@ undo/redo, constant coordination with other developers is required.</p>
 </li>
 <li>
 <p>Wrote additional tests for existing features to increase coverage from 52% to 59%
-(<a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/254">#254</a>)</p>
+(PR <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/254">#254</a>)</p>
 </li>
 </ul>
 </div>
@@ -83,7 +84,10 @@ undo/redo, constant coordination with other developers is required.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Refactored Tag classes from AddressBook - Level 3  to Category class (TO BE FILLED IN)</p>
+<p>Refactored Tag classes from AddressBook - Level 3  to Category class (PR <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/100">#100</a>, <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/129">#129</a>)</p>
+</li>
+<li>
+<p>Populated SampleDataUtil class with various budgets and expenses so that MooLah has sufficient data upon first launch (PR <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/254">#254</a>)</p>
 </li>
 </ul>
 </div>
@@ -93,10 +97,10 @@ undo/redo, constant coordination with other developers is required.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Documented new statistics features in User Guide (TO BE FILLED IN)</p>
+<p>Documented new statistics features in User Guide</p>
 </li>
 <li>
-<p>Added the implementation of Statistics in Developer’s Guide (TO BE FILLED IN)</p>
+<p>Added the implementation of Statistics in Developer’s Guide</p>
 </li>
 </ul>
 </div>
@@ -130,6 +134,38 @@ the Statistics features.</p></td>
 to the primary budget you&#8217;re residing on. Read further for the rest of the commands covered
 under the Statistics section.</p>
 </div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><strong>Notes that apply to all statistics features</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For any input that consists of date and time, only the date information will be considered.</p>
+</li>
+<li>
+<p>Expenses to be included in the statistics generated include those on the start dates and end dates itself.</p>
+</li>
+<li>
+<p>The period of the budget plays a significant role in determining the output of the statistics
+features especially those that allow optional parameters. Hence, it may be helpful to be familiar
+with editing the period of a budget.</p>
+</li>
+<li>
+<p>Even though the <code>Default Budget</code> can contain expenses and has a valid budget period, it is not
+recommended to type this command when in that budget. It is after all a placeholder budget that
+is meant to hold expenses not associated to any budgets when starting out, which also implies it
+doesn&#8217;t support editing any of its attributes, especially period. Also, the budget period is set to
+a large interval by design, so the output might not make sense.</p>
+</li>
+<li>
+<p>For commands that use <code>sd/</code> <code>ed/</code> prefixes, <code>START_DATE</code> will be checked to be earlier than <code>END_DATE</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <div class="sect3">
 <h4 id="summary-statistics-code-statsbasic-code"><a class="link" href="#summary-statistics-code-statsbasic-code">Summary Statistics: <code>statsbasic</code></a></h4>
 <div class="paragraph">
@@ -152,31 +188,15 @@ taken as a percentage of the total expenditure in the budget the command was cal
 <div class="ulist">
 <ul>
 <li>
-<p>For any input that consists of date and time, only, only the date information will be considered.</p>
-</li>
-<li>
-<p>Expenses to be included in the statistics generated include those on the start dates and end dates itself.</p>
-</li>
-<li>
-<p><code>START_DATE</code> will be checked to be earlier than <code>END_DATE</code></p>
-</li>
-<li>
 <p>The success message for this command is "Pie Chart calculated!"</p>
-</li>
-<li>
-<p>Categories where no tracked expenses fall under will not be reflected in the Statistics Panel.</p>
-</li>
-<li>
-<p>Even though the <code>Default Budget</code> can contain expenses and has a valid budget period, it is not
-recommended to type this command when in that budget. It is after all a placeholder budget that
-is meant to hold expenses not associated to any budgets when starting out, which also implies it
-doesn&#8217;t support editing any of its attributes, especially period. Also, the budget period is set to
-a large interval by design, so the output might not make sense.</p>
 </li>
 <li>
 <p>When there are no expenses in the current window of the current budget, a successful <code>statsbasic</code>
 can stil be called. However, the same success message "Pie Chart calculated!" is still seen on the result display,
 but now with a blank screen in the StatsPanel.</p>
+</li>
+<li>
+<p>Categories where no tracked expenses fall under will not be reflected in the Statistics Panel.</p>
 </li>
 </ul>
 </div>
@@ -203,10 +223,6 @@ the unit of time and statistics is calculated starting from one unit of time bef
 <p>If both <code>START_DATE</code> and <code>END_DATE</code> are empty, statistics will be calculated using the start date and end date
 of the current window of the budget, seen on the top right of the budget progress bar.</p>
 </li>
-<li>
-<p>As the 3 alternative configurations involve the knowledge of the budget&#8217;s period, be familiar with the
-procedure of editing a budget&#8217;s period.</p>
-</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -227,7 +243,7 @@ the current window of the Budget from start of 18 Oct to the end of 24 Oct. Ther
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="../images/OutsideSchoolWindow.png" alt="OutsideSchoolWindow" width="790">
+<img src="../images/OutsideSchoolWindow.png" alt="OutsideSchoolWindow" width="600">
 </div>
 </div>
 <div class="paragraph">
@@ -249,11 +265,8 @@ as shown below.</p>
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="../images/PieChart.png" alt="PieChart" width="790">
+<img src="../images/PieChart.png" alt="PieChart" width="600">
 </div>
-</div>
-<div class="paragraph">
-<p>+</p>
 </div>
 </div>
 <div class="sect3">
@@ -285,18 +298,7 @@ represents the difference in frequency and difference in total expenditure.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Date formats accepted are handled by Natty Date Parser library which supports human jargons.
-Please refer to the above documentation for more information.</p>
-</li>
-<li>
-<p>For any input that consists of date and time, only, only the date information will be considered.</p>
-</li>
-<li>
-<p>Expenses to be included in the statistics generated include those on the start dates and end dates itself.</p>
-</li>
-<li>
-<p>The end dates for both start dates specified by the user are constructed using the period
-that the current budget is using. To switch the period of analysis, consider editing the duration of the budget.</p>
+<p>The success message for this command is "Statistics Comparison Calculated!"</p>
 </li>
 <li>
 <p>The cells in the "similarity columns" denote only non-negative values. This is because it
@@ -305,45 +307,15 @@ shows the frequency and total expenditure common to both periods.</p>
 <li>
 <p>The cells in the "difference columns" may contain negative values. This is because
 the values for differences in frequency and differences in total expenditure for each category
-is calculated using the formula <code>second period – first period</code>.</p>
+is calculated using the formula <code>second period</code> - <code>first period</code>.</p>
 </li>
 <li>
-<p>The success message for this command is "Statistics Comparison Calculated!"</p>
-</li>
-<li>
-<p>The default size of the application window accounts just sufficiently for a nicely fitted view of the
-table columns. Adjustments to the program window should not be made, otherwise some columns may be covered
-or excess space will be revealed. Currently the default startup dimension is Height = 800 and Width = 1254.</p>
-</li>
-<li>
-<p>Even though the <code>Default Budget</code> can contain expenses and has a valid budget period, it is not
-recommended to type this command when in that budget. It is after all a placeholder budget that
-is meant to hold expenses not associated to any budgets when starting out, which also implies it
-doesn&#8217;t support editing any of its attributes, especially period. Also, the budget period is set to
-a large interval by design, so the output might not make sense.</p>
+<p>The end dates for both start dates specified by the user are constructed using the period
+that the current budget is using.</p>
 </li>
 </ul>
 </div>
 </div>
-</div>
-<div class="paragraph">
-<p>Tips:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>If zeroes are observed in the similarity columns, it may be possible that there is no
-overlap between the 2 periods or there are no expenses recorded in the common period.</p>
-</li>
-<li>
-<p>It is possible to reorder the columns generated after the Table is being generated for better
-comparison.</p>
-</li>
-<li>
-<p>As the 2 intervals to be compared are constructed with the budget&#8217;s period, be familiar with the
-procedure of editing a budget&#8217;s period.</p>
-</li>
-</ul>
 </div>
 <div class="paragraph">
 <p>Example of configurations:</p>
@@ -351,36 +323,17 @@ procedure of editing a budget&#8217;s period.</p>
 <div class="listingblock">
 <div class="content">
 <pre>statscompare sd1/12-12 sd2/ 1 month ago
-stats sd2/ today sd1/ytd
-stats sd2/ 23-09-2019 sd1/1 year ago</pre>
+statscompare sd2/ today sd1/ytd
+statscompare sd2/ 23-09-2019 sd1/1 year ago</pre>
 </div>
-</div>
-<div class="paragraph">
-<p>Step-by-step guide:</p>
-</div>
-<div class="paragraph">
-<p>To generate the table view:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Type <code>statscompare sd1/27-10 sd2/ 28-10' into the command box and press `Enter</code> to execute it.</p>
-</li>
-<li>
-<p>The result display will display the message "Statistics Comparison Calculated!".</p>
-</li>
-<li>
-<p>The screen will be switched into the Statistics Panel where the Table View will be generated.</p>
-</li>
-</ol>
 </div>
 </div>
 <div class="sect3">
 <h4 id="growth-statistics-code-statstrend-code"><a class="link" href="#growth-statistics-code-statstrend-code">Growth Statistics : <code>statstrend</code></a></h4>
 <div class="paragraph">
 <p>This command allows you to see the growth
-of the money spent from their categorical expenses in specified
-units of time between the period specified in the current budget.</p>
+of the money spent from your categorical expenses in fixed
+units of time between the interval that you&#8217;re interested in finding out</p>
 </div>
 <div class="paragraph">
 <p>The visual output of the statistics shown is in the form of plotted
@@ -417,36 +370,6 @@ till before the stated date of the next point.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Date formats accepted are handled by our Natural Language Parser library which supports human jargons.
-Please refer to the above documentation for more information.</p>
-</li>
-<li>
-<p>For any input that consists of date and time, only, only the date information will be considered.</p>
-</li>
-<li>
-<p>Expenses to be included in the statistics generated include those on the start dates and end dates itself.</p>
-</li>
-<li>
-<p><code>START_DATE</code> will be checked to be earlier than <code>END_DATE</code></p>
-</li>
-<li>
-<p>We only allow a maximum of 33 plotted points to be displayed, which means that in any specified
-time interval bounded by the start date and end date, we will produce at most 33 time intervals of
-the specified unit of time starting from the start date. This is also a design consideration to coordinate
-with the size of the application window.</p>
-</li>
-<li>
-<p>The first plotted point that would be observed should be the start date of the window of the current budget
-closest to the start date of analysis. If the two happen to be the same, the start date of the window of the budget
-should be included as a point in the trend line</p>
-</li>
-<li>
-<p>Even though the current application doesn&#8217;t allow for expenses to be added into dates ahead of the current date,
-the budget windows after the most recent possible window, relative to the current date, will still be shown for ths command.
-This also applies to budget windows which have intervals that are future to the current time. For example, a window spanning
-from 18 Oct to 24 Oct for a weekly budget is a legal point even when it is currently 19 Oct.</p>
-</li>
-<li>
 <p>The success message for this command is "Statistics Trend Calculated!"</p>
 </li>
 <li>
@@ -454,11 +377,9 @@ from 18 Oct to 24 Oct for a weekly budget is a legal point even when it is curre
 as trend lines in the Statistics Panel.</p>
 </li>
 <li>
-<p>Even though the <code>Default Budget</code> can contain expenses and has a valid budget period, it is not
-recommended to type this command when in that budget. It is after all a placeholder budget that
-is meant to hold expenses not associated to any budgets when starting out, which also implies it
-doesn&#8217;t support editing any of its attributes, especially period. Also, the budget period is set to
-a large interval by design, so the output might not make sense.</p>
+<p>The first plotted point that would be observed should be the start date of the window of the current budget
+closest to the start date of analysis. If the two happen to be the same, the start date of the window of the budget
+should be included as a point in the trend line</p>
 </li>
 </ul>
 </div>
@@ -486,14 +407,6 @@ before the consideration of the earliest available window of the current budget.
 of the current window of the current budget and the end date of analysis is constructed from 17 units after the
 start date of the current window of the current budget.</p>
 </li>
-<li>
-<p>The unit interval of time is set to always be the period of the current budget,
-hence to access other time modes of this command, please edit the budget&#8217;s period.</p>
-</li>
-<li>
-<p>As the 3 alternative configurations involve the knowledge of the budget&#8217;s period, be familiar with the
-procedure of editing a budget&#8217;s period.</p>
-</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -505,25 +418,6 @@ procedure of editing a budget&#8217;s period.</p>
 statstrend sd/ytd mode/category
 statstrend sd/11-11-2018 ed/12-12-2018 mode/category</pre>
 </div>
-</div>
-<div class="paragraph">
-<p>Step-by-step guide:</p>
-</div>
-<div class="paragraph">
-<p>To generate the trend lines:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Type <code>statstrend mode/category</code> into the command box and press <code>Enter</code> to execute it.</p>
-</li>
-<li>
-<p>The result box will display the message "Statistics Trend Calculated!".</p>
-</li>
-<li>
-<p>The screen will be switched into the Statistics Panel where the trend lines will be generated.</p>
-</li>
-</ol>
 </div>
 </div>
 </div>
@@ -545,6 +439,8 @@ They showcase my ability to write technical documentation and the technical dept
 </table>
 <div class="sect2">
 <h3 id="statistics-feature"><a class="link" href="#statistics-feature">Statistics Feature</a></h3>
+<div class="sect3">
+<h4 id="implementation"><a class="link" href="#implementation">Implementation</a></h4>
 <div class="paragraph">
 <p>The statistics feature allows users to have an alternative view for the entries in <code>MooLah</code>.
 It is facilitated by the <code>Statistics</code> interface, which is part of the <code>model</code> package, and is implemented by 3 classes
@@ -579,10 +475,9 @@ to modify the attributes of the budget.</p>
 <p>In the following sections, the implementation details of one of the more complicated command words will be discussed,
 as well as its design considerations.</p>
 </div>
+</div>
 <div class="sect3">
 <h4 id="code-statsbasic-code"><a class="link" href="#code-statsbasic-code"><code>statsbasic</code></a></h4>
-<div class="sect4">
-<h5 id="implementation"><a class="link" href="#implementation">Implementation</a></h5>
 <div class="paragraph">
 <p>The purpose of the <code>statsbasic</code> command word is to request <code>MooLah</code> to visualise the total expenditure across
 expenses of different categories as a percentage of the total expenditure of all expenses tracked under the budget
@@ -614,51 +509,29 @@ If the end date happens to be before the start date, a <code>ParseException</cod
 <p>Step 4. The filled <code>desc</code> will be returned to the <code>LogicManager</code> where a new <code>StatsCommand</code> command, <code>statsCommand</code> will be created with <code>desc</code></p>
 </div>
 <div class="paragraph">
-<p>Figure 1. below illustrates the details from Steps 2 to 4.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/BasicStatisticsParserToCommand.png" alt="BasicStatisticsParserToCommand">
-</div>
+<p>Step 5. The <code>LogicManager</code> calls <code>StatsCommand#run()</code>, where the <code>StatsCommand</code> will be validated before getting executed.</p>
 </div>
 <div class="paragraph">
-<p>Figure 1. Reference Diagram for creating a <code>StatsCommand</code></p>
+<p>Step 6. During execution, <code>StatsCommand</code> calls <code>ModelManager#getPrimaryBudget()</code> to retrieve the primary budget to calculate statistics from.
+After which, <code>StatsCommand</code> will call <code>createPieChartStatistics</code>, which takes in <code>desc</code> and the primary budget.</p>
 </div>
 <div class="paragraph">
-<p>Step 4. The <code>LogicManager</code> calls <code>StatsCommand#run()</code>, where the <code>StatsCommand</code> will be validated before getting executed.</p>
-</div>
-<div class="paragraph">
-<p>Step 5. During execution, <code>StatsCommand</code> calls <code>ModelManager#getPrimaryBudget()</code> to retrieve the primary budget to calculate statistics from.
-After which, <code>StatsCommand</code> will call <code>createPieChartStatistics', which takes in `desc</code> and the primary budget.</p>
-</div>
-<div class="paragraph">
-<p>Step 6. To construct the time interval required for statistics, information from <code>desc</code> is being processed.
+<p>Step 7. To construct the time interval required for statistics, information from <code>desc</code> is being processed.
 If there are unspecified inputs inside <code>desc</code>, the time interval will be constructed with some information from the primary budget.</p>
 </div>
 <div class="paragraph">
-<p>Step 7. The <code>PieChartStatistics</code> object will be created with the constructed interval as well as the expenses the primary budget tracks.
+<p>Step 8. The <code>PieChartStatistics</code> object will be created with the constructed interval as well as the expenses the primary budget tracks.
 After which, <code>StatsCommand</code> will call <code>PieChartStatistics</code> implementation of <code>populateData()</code> to fill up its other fields</p>
 </div>
 <div class="paragraph">
-<p>Step 8. <code>StatsCommand</code> calls <code>ModelManager#setStatistics(statistics)</code> which updates the <code>Statistics</code> attribute in <code>ModelManager</code>.</p>
+<p>Step 9. <code>StatsCommand</code> calls <code>ModelManager#setStatistics(statistics)</code> which updates the <code>Statistics</code> attribute in <code>ModelManager</code>.</p>
 </div>
 <div class="paragraph">
-<p>Step 9. A <code>CommandResult</code> is then created and returned to <code>LogicManager</code>, which will then force a switch
+<p>Step 10. A <code>CommandResult</code> is then created and returned to <code>LogicManager</code>, which will then force a switch
 to the <code>Statistics Panel</code> where a Pie Chart will be generated.</p>
 </div>
 <div class="paragraph">
-<p>Figure 2. below illustrates the details from Steps 6 to 9.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/CreatePieChartReference.png" alt="CreatePieChartReference">
-</div>
-</div>
-<div class="paragraph">
-<p>Figure 2. Reference Diagram for creating a <code>StatsCommand</code></p>
-</div>
-<div class="paragraph">
-<p>The following sequence diagram shows how the <code>statsbasic</code> operation works as a big picture:</p>
+<p>The following sequence diagram shows how the <code>statsbasic</code> operation works:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -666,8 +539,7 @@ to the <code>Statistics Panel</code> where a Pie Chart will be generated.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Figure 3. Sequence Diagram for executing a <code>StatsCommand</code></p>
-</div>
+<p>Figure 1. Sequence Diagram for executing a <code>StatsCommand</code></p>
 </div>
 </div>
 <div class="sect3">
@@ -686,7 +558,7 @@ suitable visual representation for <code>statsbasic</code> particular use case.<
 <p>Pros: Sequential view, can capture number of entries</p>
 </li>
 <li>
-<p>Cons: May be a duplicate of the <code>ListExpense</code> command, just sorted via categories</p>
+<p>Cons: May be a duplicate of the <code>ListExpense</code> command, just grouping expenses via categories</p>
 </li>
 </ul>
 </div>
@@ -714,39 +586,10 @@ of sequential view in the primary budget.</p>
 </li>
 </ul>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Once again, this question will be better addressed holistically once all 3 features has been rolled out.
-</td>
-</tr>
-</table>
-</div>
-<div class="sect4">
-<h5 id="future-implementation-coming-in-v2-0"><a class="link" href="#future-implementation-coming-in-v2-0">Future Implementation (Coming in v2.0)</a></h5>
 <div class="paragraph">
-<p>For each of the command words, users will be given the option to choose a Visual Representation method they prefer
-if the use case allows for it, instead of the default option we have prioritised.
-Currently, statistics under <code>statsbasic</code> mode can only be displayed in a pie chart,
-and users may have different preferences for formats. The current implementation for MooLah
-is such that only expenses up to the current date will be included and any expenses after the current date
-is considered an event, which is not tracked by statistics. The inclusion of events in statistics
-can be a possible complementary feature to a prediction feature to pre-empt users about their incoming expenses.
-Last of all, more modes can be added to all existing commands, such as comparing with periods across different budgets
-other than being restricted within the same budget</p>
+<p>For more sequence diagrams, you can find them below Figure 1 (<a href="https://github.com/AY1920S1-CS2103T-T11-1/main/blob/master/docs/DeveloperGuide.adoc#statistics-feature">here</a>)</p>
 </div>
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="project-moolah-2"><a class="link" href="#project-moolah-2">PROJECT: MooLah</a></h2>
-<div class="sectionbody">
-
-</div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 13:29:17 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 13:46:01 UTC</div></div></div></body></html>
