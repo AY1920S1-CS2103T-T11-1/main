@@ -166,7 +166,8 @@ quickly.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>add p/&lt;PRICE&gt;</code>, you will need to supply a value to be used as the <code>PRICE</code> such as <code>add p/2.50</code>.</p>
+<p><code>addexpense p/&lt;PRICE&gt; c/&lt;CATEGORY&gt; d/&lt;DESCRIPTION&gt;</code>, means you will need to supply a value to be used as the <code>PRICE</code>,
+<code>DESCRIPTION</code> and <code>CATEGORY</code> such as <code>addexpense p/2.50 c/food d/chickenrice</code>.</p>
 </li>
 </ul>
 </div>
@@ -496,19 +497,6 @@ These categories are case-insensitive.</p>
 </li>
 </ul>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The highest amount for Price is <code>100000</code>.<br>
-The accepted &lt;TIMESTAMP&gt; range is <code>1 Jan 2000 to 31 Dec 2099</code>.
-</td>
-</tr>
-</table>
-</div>
 <div class="paragraph">
 <p>After typing in the command and entering it&#8230;&#8203;</p>
 </div>
@@ -799,7 +787,8 @@ that event was still present would not restore the event.
 </td>
 <td class="content">
 MooLah updates time every 10 seconds, so you may experience a slight delay of 10 seconds maximum when it comes to
-event popups!
+event popups!<br>
+A popup would also not appear if the transpired event has had its corresponding budget deleted.
 </td>
 </tr>
 </table>
@@ -2182,4 +2171,4 @@ e.g. <code>alias a/chicken rice c/ add d/ Chicken Rice p/2.50 c/Food</code></p>
 </tbody>
 </table>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 17:27:19 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 17:45:49 UTC</div></div></div></body></html>
