@@ -72,7 +72,7 @@ the model, which was challenging and time-consuming to debug.</p>
 users to <strong>edit or delete expenses directly from the budget panel, without having to switch to general expense list first</strong>.</p>
 </li>
 <li>
-<p><strong>Code Contributed</strong>: [<a href="https://nus-cs2103-ay1920s1.github.io/tp-dashboard/#search=anqichen9856&amp;sort=groupTitle&amp;sortWithin=title&amp;since=2019-09-06&amp;timeframe=commit&amp;mergegroup=false&amp;groupSelect=groupByRepos&amp;breakdown=false&amp;tabOpen=true&amp;tabType=authorship&amp;tabAuthor=anqichen9856&amp;tabRepo=AY1920S1-CS2103T-T11-1%2Fmain%5Bmaster%5D">Functional code</a>] [<a href="https://nus-cs2103-ay1920s1.github.io/tp-dashboard/#search=anqichen9856&amp;sort=groupTitle&amp;sortWithin=title&amp;since=2019-09-06&amp;timeframe=commit&amp;mergegroup=false&amp;groupSelect=groupByRepos&amp;breakdown=false&amp;tabOpen=true&amp;tabType=authorship&amp;tabAuthor=anqichen9856&amp;tabRepo=AY1920S1-CS2103T-T11-1%2Fmain%5Bmaster%5D">Test code</a>]</p>
+<p><strong>Code Contributed</strong>: [<a href="https://nus-cs2103-ay1920s1.github.io/tp-dashboard/#search=anqichen9856&amp;sort=groupTitle&amp;sortWithin=title&amp;since=2019-09-06&amp;timeframe=commit&amp;mergegroup=false&amp;groupSelect=groupByRepos&amp;breakdown=false&amp;tabOpen=true&amp;tabType=authorship&amp;tabAuthor=anqichen9856&amp;tabRepo=AY1920S1-CS2103T-T11-1%2Fmain%5Bmaster%5D">link to RepoSense</a>]</p>
 </li>
 <li>
 <p><strong>Other Contributions</strong>:</p>
@@ -780,24 +780,24 @@ takes in a <code>Timestamp</code> and switches the budget window to a period anc
 <p>Given below is an example usage scenario of <code>SwitchPeriodCommand</code>:<br></p>
 </div>
 <div class="paragraph">
-<p><strong>Step 1.</strong> The user has a monthly budget "school" that recurs on the 5th of each month. Suppose the current date is
+<p><strong>Step 1.</strong> The user has a monthly budget "school" that recurs on <code>the 5th of each month</code>. Suppose the current date is
 <code>10 Nov</code>. As a result, the current budgeting period will be <code>5 Nov - 4 Dec</code>.</p>
 </div>
 <div class="paragraph">
 <p><strong>Step 2.</strong> The user wants to view expenses in September. As such, the user executes <code>switchperiod t/20-09</code>
 (<code>20-09</code> is interchangeable with any other dates within <code>5 Sep - 4 Oct</code>). This command calls
-<code>BudgetWindow#normalize(Timestamp anchor)</code>, which shifts the window&#8217;s start and end dates to <code>5 Sep</code> and <code>4 Oct</code> respectively,
+<code>BudgetWindow#normalize</code>, which shifts the window&#8217;s start and end dates to <code>5 Sep</code> and <code>4 Oct</code> respectively,
 while maintaining the fixed period&#8201;&#8212;&#8201;<code>MONTH</code>. As a result, the user sees expenses tracked under the budget during <code>5 Sep - 4 Oct</code>.</p>
 </div>
 <div class="paragraph">
-<p>The <code>BudgetWindow#normalize(Timestamp anchor)</code> method is also called upon adding a new <code>Budget</code> to MooLah. No matter how
+<p>The <code>BudgetWindow#normalize</code> method is also called upon adding a new <code>Budget</code> to MooLah. No matter how
 far the start date inputted by the user is from now, it will be normalized to the current period, such that expenses added
 subsequently will correctly be reflected in the budget panel.</p>
 </div>
 <div class="paragraph">
-<p>Each budget, once added, will recur infinitely. This is achieved by <code>Budget#refresh()</code>, along the <code>Timekeeper</code> class.
+<p>Each budget, once added, will recur infinitely. This is achieved by <code>Budget#refresh()</code>, along with the <code>Timekeeper</code> class.
 Every 10 seconds, <code>Timekeeper</code> checks if it is a new day, and call <code>Budget#refresh()</code> if necessary. Subsequently,
-<code>BudgetWindow#normalize(Timestamp anchor)</code> is called; the anchor passed in is current time. As a result, the <code>Budget</code> is
+<code>BudgetWindow#normalize</code> is called; the anchor passed in is current time. As a result, the <code>Budget</code> is
 successfully normalized to the current period.</p>
 </div>
 </div>
@@ -858,7 +858,7 @@ that modifies the existing budgets.</p>
 <div class="sect3">
 <h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
 <div class="sect4">
-<h5 id="aspect-since-code-budget-code-already-keeps-a-list-of-code-expense-code-should-code-expense-code-have-a-code-budget-code-field"><a class="link" href="#aspect-since-code-budget-code-already-keeps-a-list-of-code-expense-code-should-code-expense-code-have-a-code-budget-code-field">Aspect: Since <code>Budget</code> already keeps a list of <code>Expense</code>, should <code>Expense</code> have a <code>Budget</code> field?</a></h5>
+<h5 id="aspect-since-budget-already-keeps-a-list-of-expense-should-expense-have-a-budget-field"><a class="link" href="#aspect-since-budget-already-keeps-a-list-of-expense-should-expense-have-a-budget-field">Aspect: Since Budget already keeps a list of Expense, should Expense have a Budget field?</a></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -900,7 +900,7 @@ stores only the budget name instead of the full <code>Budget</code> object.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="aspect-can-one-code-expense-code-be-tracked-under-multiple-code-budget-code-or-under-no-code-budget-code-at-all"><a class="link" href="#aspect-can-one-code-expense-code-be-tracked-under-multiple-code-budget-code-or-under-no-code-budget-code-at-all">Aspect: Can one <code>Expense</code> be tracked under multiple <code>Budget</code>? Or under no <code>Budget</code> at all?</a></h5>
+<h5 id="aspect-can-one-expense-be-tracked-under-multiple-budget-or-under-no-budget-at-all"><a class="link" href="#aspect-can-one-expense-be-tracked-under-multiple-budget-or-under-no-budget-at-all">Aspect: Can one Expense be tracked under multiple Budget? Or under no Budget at all?</a></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -946,12 +946,12 @@ Besides, it leads to neater statistics.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1:</strong> JsonAdaptedBudget stores a list of JsonAdaptedExpenses</p>
+<p><strong>Alternative 1:</strong> <code>JsonAdaptedBudget</code> stores a list of <code>JsonAdaptedExpense</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: More intuitive, improving readability of json file. Also eases reconstruction of MooLah from storage file,
-since JsonAdaptedExpenses can be easily converted to model type Expenses.</p>
+<p>Pros: More intuitive, improving readability of Json file. Also eases reconstruction of MooLah from storage file,
+since <code>JsonAdaptedExpense</code> can be easily converted to model type <code>Expense</code>.</p>
 </li>
 <li>
 <p>Cons: Json file is subject to user modification. If expenses are modified such that those in general expense list
@@ -962,24 +962,24 @@ MooLah.</p>
 </div>
 </li>
 <li>
-<p><strong>Alternative 2:</strong> JsonAdaptedBudget stores a list of UniqueIdentifiers</p>
+<p><strong>Alternative 2:</strong> <code>JsonAdaptedBudget</code> stores a list of <code>UniqueIdentifier</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Guards against accidental user modification of json file.</p>
+<p>Pros: Guards against accidental user modification of Json file.</p>
 </li>
 <li>
-<p>Cons: More hassle when reconstructing MooLah from storage, since the JsonAdaptedBudget#toModelType() will need to
-refer to MooLah&#8217;s expense list, identify those expenses by their UniqueIdentifiers, and add them to the budget.</p>
+<p>Cons: More hassle when reconstructing MooLah from storage, since <code>JsonAdaptedBudget#toModelType</code> will need to
+refer to MooLah&#8217;s expense list, identify those expenses by their <code>UniqueIdentifier</code>, and add them to the budget.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
 <p><strong>Solution (Current implementation):</strong>
-Adopt Alternative 2. Since every expense has a unique identifier, a list of UniqueIdentifiers, supplemented with a list
+Adopt Alternative 2. Since every expense has a unique identifier, a list of <code>UniqueIdentifier</code>, supplemented with a list
 of MooLah&#8217;s general expenses, is sufficient to correctly reconstruct those expenses tracked under this budget. The
-benefit of protecting MooLah from external json modification outweighs the extra hassle in reconstructing MooLah from
+benefit of protecting MooLah from external Json modification outweighs the extra hassle in reconstructing MooLah from
 storage.</p>
 </li>
 </ul>
@@ -988,4 +988,4 @@ storage.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 15:04:00 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 15:33:46 UTC</div></div></div></body></html>
