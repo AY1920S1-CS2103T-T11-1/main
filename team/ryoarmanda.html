@@ -238,19 +238,19 @@ by storing the changed fields of the model throughout execution, which will be r
 <div class="ulist">
 <ul>
 <li>
-<p><code>Model#commit(String, Model)</code>&#8201;&#8212;&#8201;Saves the changes between the current model and the given previous model to the past changes history, keeping the previous model&#8217;s data should there be any differences. This adds the changes to the past history, and clearing the future history.</p>
+<p><code>Model#commit(String, Model)</code>&#8201;&#8212;&#8201;Saves the changes between the current model and the given previous model to the past changes history, keeping the previous model&#8217;s data should there be any differences. This adds the changes to the past history, and clears the future history.</p>
 </li>
 <li>
-<p><code>Model#applyChanges(ModelChanges)</code>&#8201;&#8212;&#8201;Applies the changes in history</p>
+<p><code>Model#applyChanges(ModelChanges)</code>&#8201;&#8212;&#8201;Applies the given changes to the model.</p>
 </li>
 <li>
-<p><code>Model#canRollback()</code>&#8201;&#8212;&#8201;Checks whether the model can be rolled-back</p>
+<p><code>Model#canRollback()</code>&#8201;&#8212;&#8201;Checks whether the model can be rolled-back.</p>
 </li>
 <li>
 <p><code>Model#rollback()</code>&#8201;&#8212;&#8201;Restores the model one step back by applying the changes described in the immediate previous changes in history.</p>
 </li>
 <li>
-<p><code>Model#canMigrate()</code>&#8201;&#8212;&#8201;Checks whether the model can be migrated</p>
+<p><code>Model#canMigrate()</code>&#8201;&#8212;&#8201;Checks whether the model can be migrated.</p>
 </li>
 <li>
 <p><code>Model#migrate()</code>&#8201;&#8212;&#8201;Moves the model one step forward in history by applying the changes described in the immediate next changes.</p>
@@ -263,7 +263,7 @@ by storing the changed fields of the model throughout execution, which will be r
 <div class="ulist">
 <ul>
 <li>
-<p><code>ModelChanges#compareModels(Model, Model)</code>&#8201;&#8212;&#8201;Compares two models' data and creates a new <code>ModelChanges</code> object that c</p>
+<p><code>ModelChanges#compareModels(Model, Model)</code>&#8201;&#8212;&#8201;Compares two models' data and creates a new <code>ModelChanges</code> object that describes the field data of the first model that is different with the second model.</p>
 </li>
 <li>
 <p><code>ModelChanges#revertChanges(Model)</code>&#8201;&#8212;&#8201;Reverts the current changes with respect to the base model given.</p>
@@ -316,7 +316,7 @@ If a command fails its execution, it will not call <code>Model#commit(String, Mo
 </table>
 </div>
 <div class="paragraph">
-<p>Step 4. The user now decides that deleting the expense was a mistake, and decides to undo that action by executing the <code>undo</code> command. The <code>undo</code> command will call <code>Model#rollback()</code>, which will retrieve the immediate previous change in history, adding the reverting change to the future history of the retrieved model, and applies the change to the model.</p>
+<p>Step 4. The user now decides that deleting the expense was a mistake, and decides to undo that action by executing the <code>undo</code> command. The <code>undo</code> command will call <code>Model#rollback()</code>, which will retrieve the immediate previous change in history, adding the reverting change to the future history of the model, and applies the change to the model.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -334,6 +334,14 @@ If <code>pastChanges</code> is empty, then there are no previous changes to roll
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>Step 5. The user then realizes the expense should be deleted after all, and wishes to redo the deletion by entering the <code>redo</code> command. The command will call <code>Model#migrate()</code>, which will get the immediate next change in history, adding the reverting change to the past history, and applies the change to the model.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/UndoRedoState4.png" alt="UndoRedoState4">
+</div>
 </div>
 <div class="paragraph">
 <p>The following sequence diagram shows how the undo command works:</p>
@@ -434,7 +442,7 @@ by the <code>addexpense</code> command.</p>
 <p>Pros: It is easier to implement.</p>
 </li>
 <li>
-<p>Cons: The approach introduces a lot of memory usage.</p>
+<p>Cons: The approach introduces a lot of memory usage and some data might not be necessary.</p>
 </li>
 </ul>
 </div>
@@ -444,7 +452,7 @@ by the <code>addexpense</code> command.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: This approach is more conservative in memory usage.</p>
+<p>Pros: This approach is more conservative in memory usage, only saving fields that are changed means every data is necessary.</p>
 </li>
 <li>
 <p>Cons: We have to make sure every field is immutable to preserve changes.</p>
@@ -454,7 +462,8 @@ by the <code>addexpense</code> command.</p>
 </li>
 <li>
 <p><strong>Current implementation (Alternative 2)</strong>:
-We choose this approach as the time and memory resource trade-off is less significant compared to Alternative 1.</p>
+We choose this approach as the time and memory resource trade-off is less significant compared to Alternative 1. As Alternative 2 stores
+only the data needed to correctly reflect the change, it requires less memory and also executes in less time as Alternative 1.</p>
 </li>
 </ul>
 </div>
@@ -462,4 +471,4 @@ We choose this approach as the time and memory resource trade-off is less signif
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 17:45:50 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 17:51:29 UTC</div></div></div></body></html>
