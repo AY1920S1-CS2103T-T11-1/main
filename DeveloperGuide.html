@@ -72,6 +72,9 @@
 <li><a href="#testing-of-suggestions">G.15. Testing of suggestions</a></li>
 <li><a href="#testing-of-input-history">G.16. Testing of input history</a></li>
 <li><a href="#testing-of-generic-commands">G.17. Testing of generic commands</a></li>
+<li><a href="#testing-statsbasic">G.18. Testing statsbasic</a></li>
+<li><a href="#testing-statscompare">G.19. Testing statscompare</a></li>
+<li><a href="#testing-statstrend">G.20. Testing statstrend</a></li>
 </ul>
 </li>
 </ul>
@@ -712,7 +715,7 @@ The following diagram briefly describes how the execution of undoable commands w
 <p>Pros: It is easier to implement.</p>
 </li>
 <li>
-<p>Cons: The approach introduces a new</p>
+<p>Cons: The approach introduces a component that will take up memory.</p>
 </li>
 </ul>
 </div>
@@ -3581,5 +3584,70 @@ i.e. <code>add</code> on the Expense List panel, should behave as <code>addexpen
 </tbody>
 </table>
 </div>
+<div class="sect2">
+<h3 id="testing-statsbasic"><a class="link" href="#testing-statsbasic">G.18. Testing statsbasic</a></h3>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Create a new budget, one possible way is <code>addbudget d/school p/3.00 sd/28-10 pr/day</code>.</p>
+</li>
+<li>
+<p>Test case: <code>statsbasic</code> + Expected: A success message of "Pie Chart calculated!" appears with the correct date, amount
+but no pie chart being shown</p>
+</li>
+<li>
+<p>Test case: Add an expense to the empty budget <code>addexpense d/ chicken rice p/2.50 c/food</code> and type <code>statsbasic</code> + Expected:
+A success message of "Pie Chart calculated!" appears with the correct date, amount but a pie chart being shown with only food
+category showing 100.00%.</p>
+</li>
+<li>
+<p>Test case: In any budget, type <code>statsbasic sd/12-12 ed/11-11</code> + Expected : Start date must be before end date.</p>
+</li>
+</ol>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 17:51:29 UTC</div></div></div></body></html>
+</div>
+<div class="sect2">
+<h3 id="testing-statscompare"><a class="link" href="#testing-statscompare">G.19. Testing statscompare</a></h3>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Create a new budget, one possible way is <code>addbudget d/school p/3.00 sd/28-10 pr/day</code>.</p>
+</li>
+<li>
+<p>Test case: <code>statscompare sd1/12-12 sd2/ 1 month ago</code> + Expected: A success message of "Statistics Comparison Calculated!" appears with the correct date, amount
+but entries all reflect 0</p>
+</li>
+<li>
+<p>Test case: Add an expense to the empty budget <code>addexpense d/ chicken rice p/2.50 c/food t/28-10</code> and type <code>statscompare sd1/28-10 sd2/ 29-10</code>
++ Expected: A success message of "Statistics Comparison Calculated!" appears with the correct date, with the first entries of difference amount
+pointing to -2.5.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="testing-statstrend"><a class="link" href="#testing-statstrend">G.20. Testing statstrend</a></h3>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Create a new budget, one possible way is <code>addbudget d/school p/3.00 sd/28-10 pr/day</code>.</p>
+</li>
+<li>
+<p>Test case: <code>statstrend mode/category</code> + Expected: A success message of "Statistics Trend Calculated!" appears with the correct date, unit of time,
+but no trend lines are seen</p>
+</li>
+<li>
+<p>Test case: Add an expense to the empty budget <code>addexpense d/ chicken rice p/2.50 c/food t/28-10</code> and type <code>statstrend mode/category sd/28-10</code>
++ Expected: A success message of "Statistics Trend Calculated!" appears with the correct date, unit of time,
+1 trend line for food is observed, with the first plotted point of the line being the highest non-zero point at y-axis = 2.50</p>
+</li>
+<li>
+<p>Now, add one more expense like <code>addexpense d/ chicken rice p/3.50 c/food t/29-10</code> and type <code>statstrend mode/category sd/28-10</code> again.<br>
+Expected: A success message of "Statistics Trend Calculated!" appears with the correct date, unit of time,
+1 trend line for food is observed, with 2 points observed.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 18:02:29 UTC</div></div></div></body></html>
