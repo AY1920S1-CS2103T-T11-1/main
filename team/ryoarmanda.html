@@ -98,7 +98,7 @@ the quality of the project as a whole. For the improvements, I have:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Separated command validation from execution <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/">#85</a></p>
+<p>Separated command validation from execution <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/85">#85</a></p>
 </li>
 </ul>
 </div>
@@ -111,7 +111,7 @@ the quality of the project as a whole. For the improvements, I have:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Reviewing pull requests (with in-depth comments): <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/">#62</a>, <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/">#89</a></p>
+<p>Reviewing pull requests (with in-depth comments): <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/62">#62</a>, <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/89">#89</a></p>
 </li>
 </ul>
 </div>
@@ -148,16 +148,14 @@ the quality of the project as a whole. For the improvements, I have:</p>
 </tr>
 </tbody>
 </table>
-<div class="sect2">
-<h3 id="undo-and-redo"><a class="link" href="#undo-and-redo">Undo and Redo</a></h3>
 <div class="sect3">
 <h4 id="undo-the-previous-command-code-undo-code"><a class="link" href="#undo-the-previous-command-code-undo-code">Undo the previous command : <code>undo</code></a></h4>
 <div class="paragraph">
 <p>Did something wrong? You can undo it.</p>
 </div>
 <div class="paragraph">
-<p>However, do keep in mind that you can only undo commands that modify the data in MooLah, such as <code>addexpense</code>,
-<code>deleteexpense-primary</code>, and so on. Head over to <a href="#Command Summary">[Command Summary]</a> for list of commands that are undoable.</p>
+<p>However, do keep in mind that you can only undo commands that modify the data in MooLah, such as <code>addexpense</code>, <code>deleteexpense-primary</code>, and so on.
+Head over to <a href="https://ay1920s1-cs2103t-t11-1.github.io/main/UserGuide.html#command-summary">"Command Summary" section</a> for list of commands that are undoable.</p>
 </div>
 <div class="paragraph">
 <p>Do not worry if you forgot what you did a few steps back (it happens!). MooLah will display a short description of what
@@ -169,16 +167,37 @@ particular command it undid to help you confirm that you undid the right thing.<
 <div class="paragraph">
 <p>Example:</p>
 </div>
+<div class="paragraph">
+<p>Let&#8217;s say you just added a new expense&#8230;&#8203;</p>
+</div>
 <div class="listingblock">
 <div class="content">
-<pre>deleteexpense-primary 5
-undo</pre>
+<pre>addexpense d/bowling p/10 c/entertainment</pre>
+</div>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="../images/undo1.png" alt="undo1">
+</div>
+<div class="title">Figure 1. The state of MooLah after adding the "bowling" expense</div>
+</div>
+<div class="paragraph">
+<p>But you added it to the wrong budget! You wish to undo the mistake now&#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>undo</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Result:
-The deletion of expense #5 in the primary budget will be undone, or in other words, re-added back to MooLah.
-MooLah will then display the message <code>Undid "Delete expense with index 5"</code>.</p>
+<p>And MooLah will undo it for you and return the data to the way it was before. Also, it will
+display <code>Undid "Add expense bowling (10.00)"</code> in the result display for reference. Phew!</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="../images/undo2.png" alt="undo2">
+</div>
+<div class="title">Figure 2. The state of MooLah after undoing the expense addition</div>
 </div>
 </div>
 <div class="sect3">
@@ -193,20 +212,50 @@ MooLah will then display the message <code>Undid "Delete expense with index 5"</
 <p>Format: <code>redo</code></p>
 </div>
 <div class="paragraph">
-<p>Example:</p>
+<p>Example:
+Continuing the example in the "undo" section&#8230;&#8203; suppose now you think that the "bowling" expense is in the right place after all, and you wish to do the addition again.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>deleteexpense-primary 5
-undo
-redo</pre>
+<pre>redo</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Result:
-At the end, expense #5 in the primary budget will keep being deleted (poor thing!).
-MooLah will also display a message <code>Redid "Delete expense with index 5"</code>.</p>
+At the end, the "bowling" expense will be re-added back to MooLah. Yay!
+MooLah will also display a message <code>Redid "Add expense bowling (10.00)"</code> for reference.</p>
 </div>
+</div>
+<div class="sect3">
+<h4 id="adding-an-expense-from-nus-canteens-menu-code-addmenuexpense-code"><a class="link" href="#adding-an-expense-from-nus-canteens-menu-code-addmenuexpense-code">Adding an expense from NUS canteens' menu : <code>addmenuexpense</code></a></h4>
+<div class="paragraph">
+<p>This is what makes MooLah special for NUS students.
+Shortcut your way to adding expenses for foods and drinks in NUS!</p>
+</div>
+<div class="paragraph">
+<p>Currently, MooLah only supports just a handful of menu items, though. Head over to our
+<a href="https://ay1920s1-cs2103t-t11-1.github.io/main/UserGuide.html#menu-items-list">"Menu Items List" section</a>
+to see the supported menu items. A more comprehensive menu list is on its way in v2.0!</p>
+</div>
+<div class="paragraph">
+<p>Format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addmenuexpense m/&lt;MENU_ITEM&gt; [t/TIMESTAMP]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addmenuexpense m/deck chicken rice</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will add a new expense that corresponds to The Deck&#8217;s Chicken Rice and MooLah will automatically fill in
+the description, price, and category for you.</p>
 </div>
 </div>
 </div>
@@ -267,9 +316,9 @@ by storing the changed fields of the model throughout execution, which will be r
 <div class="paragraph">
 <p>Refer to the class diagram below for comprehensive list of the methods offered and the association of both classes:</p>
 </div>
-<div class="imageblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="../images/ModelHistory.png" alt="ModelHistory">
+<img src="../images/ModelHistory.png" alt="ModelHistory" width="70%">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -279,7 +328,7 @@ by storing the changed fields of the model throughout execution, which will be r
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Typical field accessor and mutator methods are omitted for brevity, except when it returns a different type from the field&#8217;s type (e.g. <code>ModelChanges#getMooLah()</code>)
+Typical field accessor and mutator methods are omitted for brevity, except when it returns a different type from the field&#8217;s type (e.g. <code>ModelChanges#getMooLah()</code>).
 </td>
 </tr>
 </table>
@@ -295,26 +344,26 @@ With the division, <code>Model#commit(String, Model)</code> will only be called 
 <div class="paragraph">
 <p>Step 1. The user launches the application for the first time. The current <code>ModelHistory</code> is now empty.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="../images/UndoRedoState0.png" alt="UndoRedoState0">
+<img src="../images/UndoRedoState0.png" alt="UndoRedoState0" width="35%">
 </div>
 </div>
 <div class="paragraph">
 <p>Step 2. The user executes <code>addexpense d/chicken rice p/2.50 c/food</code> command to add an expense.
 The <code>addexpense</code> command, being an <code>UndoableCommand</code>, calls <code>Model#commit(String, Model)</code>, which saves the state of the model just before the command executes to <code>pastChanges</code>, and <code>futureChanges</code> is cleared.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="../images/UndoRedoState1.png" alt="UndoRedoState1">
+<img src="../images/UndoRedoState1.png" alt="UndoRedoState1" width="40%">
 </div>
 </div>
 <div class="paragraph">
 <p>Step 3. The user executes <code>deleteexpense-primary 1</code> to delete the first expense on the list. The <code>deleteexpense-primary</code> command, also an <code>UndoableCommand</code>, calls <code>Model#commit(String, Model)</code>, inserting another entry to the <code>pastChanges</code> and clearing <code>futureChanges</code> again.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="../images/UndoRedoState2.png" alt="UndoRedoState2">
+<img src="../images/UndoRedoState2.png" alt="UndoRedoState2" width="35%">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -332,9 +381,9 @@ If a command fails its execution, it will not call <code>Model#commit(String, Mo
 <div class="paragraph">
 <p>Step 4. The user now decides that deleting the expense was a mistake, and decides to undo that action by executing the <code>undo</code> command. The <code>undo</code> command will call <code>Model#rollback()</code>, which will retrieve the immediate previous change in history, adding the reverting change to the future history of the model, and applies the change to the model.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="../images/UndoRedoState3.png" alt="UndoRedoState3">
+<img src="../images/UndoRedoState3.png" alt="UndoRedoState3" width="35%">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -352,17 +401,17 @@ If <code>pastChanges</code> is empty, then there are no previous changes to roll
 <div class="paragraph">
 <p>Step 5. The user then realizes the expense should be deleted after all, and wishes to redo the deletion by entering the <code>redo</code> command. The command will call <code>Model#migrate()</code>, which will get the immediate next change in history, adding the reverting change to the past history, and applies the change to the model.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="../images/UndoRedoState4.png" alt="UndoRedoState4">
+<img src="../images/UndoRedoState4.png" alt="UndoRedoState4" width="40%">
 </div>
 </div>
 <div class="paragraph">
 <p>The following sequence diagram shows how the undo command works:</p>
 </div>
-<div class="imageblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="../images/UndoSequenceDiagram.png" alt="UndoSequenceDiagram">
+<img src="../images/UndoSequenceDiagram.png" alt="UndoSequenceDiagram" width="70%">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -396,9 +445,9 @@ If <code>futureChanges</code> is empty, then there are no snapshots to be redone
 <p>As explained earlier, additions of entry to <code>ModelHistory</code> will only be performed when the command being executed is an instance of <code>UndoableCommand</code>.
 The following diagram briefly describes how the execution of undoable commands will do so:</p>
 </div>
-<div class="imageblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="../images/UndoableCommandActivityDiagram.png" alt="UndoableCommandActivityDiagram">
+<img src="../images/UndoableCommandActivityDiagram.png" alt="UndoableCommandActivityDiagram" width="40%">
 </div>
 </div>
 </div>
@@ -489,4 +538,4 @@ only the data needed to correctly reflect the change, it requires less memory an
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 12:41:58 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 12:46:57 UTC</div></div></div></body></html>

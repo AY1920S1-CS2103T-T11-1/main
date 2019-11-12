@@ -255,8 +255,8 @@ are valid inputs.</p>
 <p>Did something wrong? You can undo it.</p>
 </div>
 <div class="paragraph">
-<p>However, do keep in mind that you can only undo commands that modify the data in MooLah, such as <code>addexpense</code>,
-<code>deleteexpense-primary</code>, and so on. Head over to <a href="#command-summary">Section 6, &#8220;Command Summary&#8221;</a> for list of commands that are undoable.</p>
+<p>However, do keep in mind that you can only undo commands that modify the data in MooLah, such as <code>addexpense</code>, <code>deleteexpense-primary</code>, and so on.
+Head over to <a href="https://ay1920s1-cs2103t-t11-1.github.io/main/UserGuide.html#command-summary">"Command Summary" section</a> for list of commands that are undoable.</p>
 </div>
 <div class="paragraph">
 <p>Do not worry if you forgot what you did a few steps back (it happens!). MooLah will display a short description of what
@@ -268,16 +268,37 @@ particular command it undid to help you confirm that you undid the right thing.<
 <div class="paragraph">
 <p>Example:</p>
 </div>
+<div class="paragraph">
+<p>Let&#8217;s say you just added a new expense&#8230;&#8203;</p>
+</div>
 <div class="listingblock">
 <div class="content">
-<pre>deleteexpense-primary 5
-undo</pre>
+<pre>addexpense d/bowling p/10 c/entertainment</pre>
+</div>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/undo1.png" alt="undo1">
+</div>
+<div class="title">Figure 2. The state of MooLah after adding the "bowling" expense</div>
+</div>
+<div class="paragraph">
+<p>But you added it to the wrong budget! You wish to undo the mistake now&#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>undo</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Result:
-The deletion of expense #5 in the primary budget will be undone, or in other words, re-added back to MooLah.
-MooLah will then display the message <code>Undid "Delete expense with index 5"</code>.</p>
+<p>And MooLah will undo it for you and return the data to the way it was before. Also, it will
+display <code>Undid "Add expense bowling (10.00)"</code> in the result display for reference. Phew!</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/undo2.png" alt="undo2">
+</div>
+<div class="title">Figure 3. The state of MooLah after undoing the expense addition</div>
 </div>
 </div>
 <div class="sect3">
@@ -292,19 +313,18 @@ MooLah will then display the message <code>Undid "Delete expense with index 5"</
 <p>Format: <code>redo</code></p>
 </div>
 <div class="paragraph">
-<p>Example:</p>
+<p>Example:
+Continuing the example in the "undo" section&#8230;&#8203; suppose now you think that the "bowling" expense is in the right place after all, and you wish to do the addition again.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>deleteexpense-primary 5
-undo
-redo</pre>
+<pre>redo</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Result:
-At the end, expense #5 in the primary budget will keep being deleted (poor thing!).
-MooLah will also display a message <code>Redid "Delete expense with index 5"</code>.</p>
+At the end, the "bowling" expense will be re-added back to MooLah. Yay!
+MooLah will also display a message <code>Redid "Add expense bowling (10.00)"</code> for reference.</p>
 </div>
 </div>
 </div>
@@ -531,7 +551,7 @@ These categories are case-insensitive.</p>
 <div class="content">
 <img src="images/addexpense_before.png" alt="addexpense before" width="700">
 </div>
-<div class="title">Figure 2. Entering an addexpense command into the command box</div>
+<div class="title">Figure 4. Entering an addexpense command into the command box</div>
 </div>
 <div class="paragraph">
 <p>Your new expense will appear in the list!</p>
@@ -540,7 +560,7 @@ These categories are case-insensitive.</p>
 <div class="content">
 <img src="images/addexpense_after.png" alt="addexpense after" width="700">
 </div>
-<div class="title">Figure 3. a new Food is added to the list.</div>
+<div class="title">Figure 5. a new Food is added to the list.</div>
 </div>
 <div class="paragraph">
 <p>A new Food expense is added.</p>
@@ -570,8 +590,9 @@ These categories are case-insensitive.</p>
 Shortcut your way to adding expenses for foods and drinks in NUS!</p>
 </div>
 <div class="paragraph">
-<p>Currently, MooLah only supports just a handful of menu items, though. Head over to our <a href="#menu-items-list">menu items list</a> to see the
-supported menu items. A more comprehensive menu list is on its way in v2.0!</p>
+<p>Currently, MooLah only supports just a handful of menu items, though. Head over to our
+<a href="https://ay1920s1-cs2103t-t11-1.github.io/main/UserGuide.html#menu-items-list">"Menu Items List" section</a>
+to see the supported menu items. A more comprehensive menu list is on its way in v2.0!</p>
 </div>
 <div class="paragraph">
 <p>Format:</p>
@@ -631,13 +652,13 @@ the description, price, and category for you.</p>
 <div class="content">
 <img src="images/editexpense_before.png" alt="editexpense before" width="500">
 </div>
-<div class="title">Figure 4. expense #2 has a price of $123.00</div>
+<div class="title">Figure 6. expense #2 has a price of $123.00</div>
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
 <img src="images/editexpense_after.png" alt="editexpense after" width="500">
 </div>
-<div class="title">Figure 5. expense #2 has a price of $2.30 after executing the command</div>
+<div class="title">Figure 7. expense #2 has a price of $2.30 after executing the command</div>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -1462,7 +1483,7 @@ you can see the list of aliases you have created.</p>
 <div class="content">
 <img src="images/aliases.png" alt="aliases" width="600">
 </div>
-<div class="title">Figure 6. User Defined Aliases panel</div>
+<div class="title">Figure 8. User Defined Aliases panel</div>
 </div>
 <div class="paragraph">
 <p>The <em>user defined aliases</em> showing some valid aliases.</p>
@@ -1521,7 +1542,7 @@ You will see that the command box no longer has a green border. This indicates t
 <div class="content">
 <img src="images/suggestions3.png" alt="suggestions3" width="400">
 </div>
-<div class="title">Figure 7. suggestions for command words beginning with "add"</div>
+<div class="title">Figure 9. suggestions for command words beginning with "add"</div>
 </div>
 <div class="paragraph">
 <p>The suggestion menu showing suggestions for built-in commands which begin with 'add' when the feature has been enabled</p>
@@ -1542,7 +1563,7 @@ you have not yet entered.</p>
 <div class="content">
 <img src="images/suggestions2.png" alt="suggestions2" width="600">
 </div>
-<div class="title">Figure 8. suggestions for "addexpense" command</div>
+<div class="title">Figure 10. suggestions for "addexpense" command</div>
 </div>
 <div class="paragraph">
 <p>The suggestion menu showing the missing prefixes in the current input, "addexpense d/", along with what the prefix
@@ -1579,13 +1600,13 @@ represents.</p>
 <div class="content">
 <img src="images/correctcommand.png" alt="correctcommand" width="200">
 </div>
-<div class="title">Figure 9. addexpense is valid and highlighted</div>
+<div class="title">Figure 11. addexpense is valid and highlighted</div>
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
 <img src="images/wrongcommand.png" alt="wrongcommand" width="200">
 </div>
-<div class="title">Figure 10. addmonkey is not built-in and not highlighted</div>
+<div class="title">Figure 12. addmonkey is not built-in and not highlighted</div>
 </div>
 <div class="paragraph">
 <p>After entering a valid command word, MooLah will also highlight the prefixes that are supported by this command.
@@ -1595,13 +1616,13 @@ However, it will not validate them for you!</p>
 <div class="content">
 <img src="images/highlight1.png" alt="highlight1" width="400">
 </div>
-<div class="title">Figure 11. Highlighting of prefixes and arguments for the add.</div>
+<div class="title">Figure 13. Highlighting of prefixes and arguments for the add.</div>
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
 <img src="images/highlight_wrong.png" alt="highlight wrong" width="400">
 </div>
-<div class="title">Figure 12. Wrong arguments are also highlighted.</div>
+<div class="title">Figure 14. Wrong arguments are also highlighted.</div>
 </div>
 </div>
 <div class="sect3">
@@ -1634,7 +1655,7 @@ Press <code>DOWN</code> to go back the more recent commands.</p>
 <div class="content">
 <img src="images/highlight1.png" alt="highlight1" width="400">
 </div>
-<div class="title">Figure 13. the last input which was successfully executed will be entered into the command box.</div>
+<div class="title">Figure 15. the last input which was successfully executed will be entered into the command box.</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2094,9 +2115,6 @@ the data of your previous MooLah folder.</p>
 <li>
 <p><strong>Redo</strong> : <code>redo</code></p>
 </li>
-<li>
-<p><strong>Clear MooLah</strong> : <code>clearmoolah</code></p>
-</li>
 </ul>
 </div>
 <hr>
@@ -2109,6 +2127,11 @@ the data of your previous MooLah folder.</p>
 <p><strong>Add an expense</strong> (<em>undoable</em>) :<br>
 <code>addexpense d/&lt;DESCRIPTION&gt; p/&lt;PRICE&gt;  c/&lt;CATEGORY&gt; [t/&lt;TIME&gt;]</code><br>
 e.g. <code>addexpense d/Chicken Rice p/2.50 t/15-09-2019 1230 c/Food</code></p>
+</li>
+<li>
+<p><strong>Add menu-item expense</strong> (<em>undoable</em>) :<br>
+<code>addmenuexpense m/&lt;MENU_ITEM&gt; [t/&lt;TIME&gt;]</code><br>
+e.g. <code>addmenuexpense m/deck chicken rice</code></p>
 </li>
 <li>
 <p><strong>List all expenses</strong> :<br>
@@ -2236,7 +2259,7 @@ e.g. <code>addalias a/chicken rice i/ add d/ Chicken Rice p/2.50 c/Food</code></
 <p><strong>See all aliases</strong> : <code>listalias</code></p>
 </li>
 <li>
-<p><strong>Delete an alias</strong> : <code>deletealias &lt;DESCRIPTION&gt;</code></p>
+<p><strong>Delete an alias</strong> (<em>undoable</em>): <code>deletealias &lt;DESCRIPTION&gt;</code></p>
 </li>
 </ul>
 </div>
@@ -2256,32 +2279,32 @@ e.g. <code>addalias a/chicken rice i/ add d/ Chicken Rice p/2.50 c/Food</code></
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Menu Item</th>
-<th class="tableblock halign-left valign-top">Price</th>
+<th class="tableblock halign-center valign-top">Menu Item</th>
+<th class="tableblock halign-center valign-top">Price</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Deck Chicken Rice</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.50</p></td>
+<td class="tableblock halign-center valign-middle"><p class="tableblock">2.50</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Finefood Western Combo Set Meal</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">7.50</p></td>
+<td class="tableblock halign-center valign-middle"><p class="tableblock">7.50</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">YIH Nutella Waffle</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1.50</p></td>
+<td class="tableblock halign-center valign-middle"><p class="tableblock">1.50</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Deck Ice Milo</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1.50</p></td>
+<td class="tableblock halign-center valign-middle"><p class="tableblock">1.50</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">E2 Fried Fish Fillet</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3.50</p></td>
+<td class="tableblock halign-center valign-middle"><p class="tableblock">3.50</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 12:41:58 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 12:46:57 UTC</div></div></div></body></html>

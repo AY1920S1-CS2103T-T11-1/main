@@ -57,24 +57,25 @@
 <ul class="sectlevel2">
 <li><a href="#launch-and-shutdown">G.1. Launch and Shutdown</a></li>
 <li><a href="#deleting-an-expense">G.2. Deleting an expense</a></li>
-<li><a href="#undo-and-redo">G.3. Undo and redo</a></li>
-<li><a href="#adding-a-budget">G.4. Adding a budget</a></li>
-<li><a href="#editing-a-budget">G.5. Editing a budget</a></li>
-<li><a href="#deleting-a-budget">G.6. Deleting a budget</a></li>
-<li><a href="#switching-the-primary-budget">G.7. Switching the primary budget</a></li>
-<li><a href="#switching-budget-period">G.8. Switching budget period</a></li>
-<li><a href="#listing-all-budgets">G.9. Listing all budgets</a></li>
-<li><a href="#clearing-all-budgets">G.10. Clearing all budgets</a></li>
-<li><a href="#deleting-an-expense-from-budget-panel">G.11. Deleting an expense from budget panel</a></li>
-<li><a href="#editing-an-expense-from-budget-panel">G.12. Editing an expense from budget panel</a></li>
-<li><a href="#testing-of-events">G.13. Testing of events</a></li>
-<li><a href="#testing-of-aliases">G.14. Testing of aliases</a></li>
-<li><a href="#testing-of-suggestions">G.15. Testing of suggestions</a></li>
-<li><a href="#testing-of-input-history">G.16. Testing of input history</a></li>
-<li><a href="#testing-of-generic-commands">G.17. Testing of generic commands</a></li>
-<li><a href="#testing-statsbasic">G.18. Testing statsbasic</a></li>
-<li><a href="#testing-statscompare">G.19. Testing statscompare</a></li>
-<li><a href="#testing-statstrend">G.20. Testing statstrend</a></li>
+<li><a href="#adding-a-menu-item-expense">G.3. Adding a menu-item expense</a></li>
+<li><a href="#undo-and-redo">G.4. Undo and redo</a></li>
+<li><a href="#adding-a-budget">G.5. Adding a budget</a></li>
+<li><a href="#editing-a-budget">G.6. Editing a budget</a></li>
+<li><a href="#deleting-a-budget">G.7. Deleting a budget</a></li>
+<li><a href="#switching-the-primary-budget">G.8. Switching the primary budget</a></li>
+<li><a href="#switching-budget-period">G.9. Switching budget period</a></li>
+<li><a href="#listing-all-budgets">G.10. Listing all budgets</a></li>
+<li><a href="#clearing-all-budgets">G.11. Clearing all budgets</a></li>
+<li><a href="#deleting-an-expense-from-budget-panel">G.12. Deleting an expense from budget panel</a></li>
+<li><a href="#editing-an-expense-from-budget-panel">G.13. Editing an expense from budget panel</a></li>
+<li><a href="#testing-of-events">G.14. Testing of events</a></li>
+<li><a href="#testing-of-aliases">G.15. Testing of aliases</a></li>
+<li><a href="#testing-of-suggestions">G.16. Testing of suggestions</a></li>
+<li><a href="#testing-of-input-history">G.17. Testing of input history</a></li>
+<li><a href="#testing-of-generic-commands">G.18. Testing of generic commands</a></li>
+<li><a href="#testing-statsbasic">G.19. Testing statsbasic</a></li>
+<li><a href="#testing-statscompare">G.20. Testing statscompare</a></li>
+<li><a href="#testing-statstrend">G.21. Testing statstrend</a></li>
 </ul>
 </li>
 </ul>
@@ -580,9 +581,9 @@ by storing the changed fields of the model throughout execution, which will be r
 <div class="paragraph">
 <p>Refer to the class diagram below for comprehensive list of the methods offered and the association of both classes:</p>
 </div>
-<div class="imageblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="images/ModelHistory.png" alt="ModelHistory">
+<img src="images/ModelHistory.png" alt="ModelHistory" width="70%">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -592,7 +593,7 @@ by storing the changed fields of the model throughout execution, which will be r
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Typical field accessor and mutator methods are omitted for brevity, except when it returns a different type from the field&#8217;s type (e.g. <code>ModelChanges#getMooLah()</code>)
+Typical field accessor and mutator methods are omitted for brevity, except when it returns a different type from the field&#8217;s type (e.g. <code>ModelChanges#getMooLah()</code>).
 </td>
 </tr>
 </table>
@@ -608,26 +609,26 @@ With the division, <code>Model#commit(String, Model)</code> will only be called 
 <div class="paragraph">
 <p>Step 1. The user launches the application for the first time. The current <code>ModelHistory</code> is now empty.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="images/UndoRedoState0.png" alt="UndoRedoState0">
+<img src="images/UndoRedoState0.png" alt="UndoRedoState0" width="35%">
 </div>
 </div>
 <div class="paragraph">
 <p>Step 2. The user executes <code>addexpense d/chicken rice p/2.50 c/food</code> command to add an expense.
 The <code>addexpense</code> command, being an <code>UndoableCommand</code>, calls <code>Model#commit(String, Model)</code>, which saves the state of the model just before the command executes to <code>pastChanges</code>, and <code>futureChanges</code> is cleared.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="images/UndoRedoState1.png" alt="UndoRedoState1">
+<img src="images/UndoRedoState1.png" alt="UndoRedoState1" width="40%">
 </div>
 </div>
 <div class="paragraph">
 <p>Step 3. The user executes <code>deleteexpense-primary 1</code> to delete the first expense on the list. The <code>deleteexpense-primary</code> command, also an <code>UndoableCommand</code>, calls <code>Model#commit(String, Model)</code>, inserting another entry to the <code>pastChanges</code> and clearing <code>futureChanges</code> again.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="images/UndoRedoState2.png" alt="UndoRedoState2">
+<img src="images/UndoRedoState2.png" alt="UndoRedoState2" width="35%">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -645,9 +646,9 @@ If a command fails its execution, it will not call <code>Model#commit(String, Mo
 <div class="paragraph">
 <p>Step 4. The user now decides that deleting the expense was a mistake, and decides to undo that action by executing the <code>undo</code> command. The <code>undo</code> command will call <code>Model#rollback()</code>, which will retrieve the immediate previous change in history, adding the reverting change to the future history of the model, and applies the change to the model.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="images/UndoRedoState3.png" alt="UndoRedoState3">
+<img src="images/UndoRedoState3.png" alt="UndoRedoState3" width="35%">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -665,17 +666,17 @@ If <code>pastChanges</code> is empty, then there are no previous changes to roll
 <div class="paragraph">
 <p>Step 5. The user then realizes the expense should be deleted after all, and wishes to redo the deletion by entering the <code>redo</code> command. The command will call <code>Model#migrate()</code>, which will get the immediate next change in history, adding the reverting change to the past history, and applies the change to the model.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="images/UndoRedoState4.png" alt="UndoRedoState4">
+<img src="images/UndoRedoState4.png" alt="UndoRedoState4" width="40%">
 </div>
 </div>
 <div class="paragraph">
 <p>The following sequence diagram shows how the undo command works:</p>
 </div>
-<div class="imageblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="images/UndoSequenceDiagram.png" alt="UndoSequenceDiagram">
+<img src="images/UndoSequenceDiagram.png" alt="UndoSequenceDiagram" width="70%">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -709,9 +710,9 @@ If <code>futureChanges</code> is empty, then there are no snapshots to be redone
 <p>As explained earlier, additions of entry to <code>ModelHistory</code> will only be performed when the command being executed is an instance of <code>UndoableCommand</code>.
 The following diagram briefly describes how the execution of undoable commands will do so:</p>
 </div>
-<div class="imageblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="images/UndoableCommandActivityDiagram.png" alt="UndoableCommandActivityDiagram">
+<img src="images/UndoableCommandActivityDiagram.png" alt="UndoableCommandActivityDiagram" width="40%">
 </div>
 </div>
 </div>
@@ -817,17 +818,17 @@ look up the list of expenses in <code>Menu</code> that matches the description, 
 <div class="paragraph">
 <p>See the class diagram below for available methods on <code>Menu</code> and <code>MenuItem</code>:</p>
 </div>
-<div class="imageblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="images/Menu.png" alt="Menu">
+<img src="images/Menu.png" alt="Menu" width="30%">
 </div>
 </div>
 <div class="paragraph">
 <p>Given below is an example usage scenario and how the add menu-item expense feature is processed within MooLah:</p>
 </div>
-<div class="imageblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="images/AddMenuExpenseSequenceDiagram.png" alt="AddMenuExpenseSequenceDiagram">
+<img src="images/AddMenuExpenseSequenceDiagram.png" alt="AddMenuExpenseSequenceDiagram" width="100%">
 </div>
 </div>
 </div>
@@ -842,7 +843,7 @@ look up the list of expenses in <code>Menu</code> that matches the description, 
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: This format is quite natural for end-users.</p>
+<p>Pros: This approach is quite natural for end-users to use as menu-item expense is essentially a shorthand for user-defined expense.</p>
 </li>
 <li>
 <p>Cons: MooLah has to support command option groups to enable multiple sets of required prefixes on the same command word.</p>
@@ -3227,29 +3228,53 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="undo-and-redo"><a class="link" href="#undo-and-redo">G.3. Undo and redo</a></h3>
+<h3 id="adding-a-menu-item-expense"><a class="link" href="#adding-a-menu-item-expense">G.3. Adding a menu-item expense</a></h3>
+<div class="paragraph">
+<p>Adding an expense from a menu-item instead of manually define the expense data.</p>
+</div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
 <p>Prerequisites: None.</p>
 </li>
 <li>
-<p>Test case: <code>addexpense d/pasta p/7.0 c/food</code> continued with <code>undo</code><br>
-Expected: The</p>
+<p>Test case: <code>addmenuexpense m/deck chicken rice</code><br>
+Expected: An expense "Deck Chicken Rice" is added to the list. Details of the expense added is shown in the result display.</p>
 </li>
 <li>
-<p>Test case: <code>addbudget d/fun p/300 sd/05-09 pr/month</code> continued with <code>undo</code> and then <code>redo</code><br>
-Expected: The "fun" budget is still being added to MooLah.</p>
-</li>
-<li>
-<p>Test case: <code>undo</code><br>
-Expected: MooLah will display an error stating that nothing can be undone.</p>
+<p>Test case: <code>addmenuexpense m/bubble tea</code><br>
+Expected: No expense is added as the description provided does not match any supported menu items in MooLah.</p>
 </li>
 </ol>
 </div>
 </div>
 <div class="sect2">
-<h3 id="adding-a-budget"><a class="link" href="#adding-a-budget">G.4. Adding a budget</a></h3>
+<h3 id="undo-and-redo"><a class="link" href="#undo-and-redo">G.4. Undo and redo</a></h3>
+<div class="paragraph">
+<p>Undo and redo operations to an undoable command.</p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: None.</p>
+</li>
+<li>
+<p>Test case: <code>undo</code><br>
+Expected: MooLah will display an error stating that nothing can be undone.</p>
+</li>
+<li>
+<p>Test case: <code>addexpense d/pasta p/7.0 c/food</code> continued with <code>undo</code><br>
+Expected: The addition of the "pasta" expense will be undone. MooLah will display the undo message in the result display.</p>
+</li>
+<li>
+<p>Test case: <code>addbudget d/fun p/300 sd/05-09 pr/month</code> continued with <code>undo</code> and then <code>redo</code><br>
+Expected: The "fun" budget will continue to be added to MooLah.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="adding-a-budget"><a class="link" href="#adding-a-budget">G.5. Adding a budget</a></h3>
 <div class="paragraph">
 <p>Adding a budget to MooLah</p>
 </div>
@@ -3278,7 +3303,7 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="editing-a-budget"><a class="link" href="#editing-a-budget">G.5. Editing a budget</a></h3>
+<h3 id="editing-a-budget"><a class="link" href="#editing-a-budget">G.6. Editing a budget</a></h3>
 <div class="paragraph">
 <p>Editing a budget in MooLah while all budgets are listed</p>
 </div>
@@ -3307,7 +3332,7 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="deleting-a-budget"><a class="link" href="#deleting-a-budget">G.6. Deleting a budget</a></h3>
+<h3 id="deleting-a-budget"><a class="link" href="#deleting-a-budget">G.7. Deleting a budget</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -3358,7 +3383,7 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="switching-the-primary-budget"><a class="link" href="#switching-the-primary-budget">G.7. Switching the primary budget</a></h3>
+<h3 id="switching-the-primary-budget"><a class="link" href="#switching-the-primary-budget">G.8. Switching the primary budget</a></h3>
 <div class="paragraph">
 <p>Switching the primary budget to another budget</p>
 </div>
@@ -3383,7 +3408,7 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="switching-budget-period"><a class="link" href="#switching-budget-period">G.8. Switching budget period</a></h3>
+<h3 id="switching-budget-period"><a class="link" href="#switching-budget-period">G.9. Switching budget period</a></h3>
 <div class="paragraph">
 <p>Switching the budget period to view past expenses</p>
 </div>
@@ -3412,7 +3437,7 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="listing-all-budgets"><a class="link" href="#listing-all-budgets">G.9. Listing all budgets</a></h3>
+<h3 id="listing-all-budgets"><a class="link" href="#listing-all-budgets">G.10. Listing all budgets</a></h3>
 <div class="paragraph">
 <p>Listing all budgets in MooLah</p>
 </div>
@@ -3433,7 +3458,7 @@ Expected: No action taken. Error details shown in the result display message.</p
 </div>
 </div>
 <div class="sect2">
-<h3 id="clearing-all-budgets"><a class="link" href="#clearing-all-budgets">G.10. Clearing all budgets</a></h3>
+<h3 id="clearing-all-budgets"><a class="link" href="#clearing-all-budgets">G.11. Clearing all budgets</a></h3>
 <div class="paragraph">
 <p>Clearing all budgets in MooLah</p>
 </div>
@@ -3450,7 +3475,7 @@ Expected: GUI switches to the budget list panel. All budgets except default budg
 </div>
 </div>
 <div class="sect2">
-<h3 id="deleting-an-expense-from-budget-panel"><a class="link" href="#deleting-an-expense-from-budget-panel">G.11. Deleting an expense from budget panel</a></h3>
+<h3 id="deleting-an-expense-from-budget-panel"><a class="link" href="#deleting-an-expense-from-budget-panel">G.12. Deleting an expense from budget panel</a></h3>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -3472,7 +3497,7 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="editing-an-expense-from-budget-panel"><a class="link" href="#editing-an-expense-from-budget-panel">G.12. Editing an expense from budget panel</a></h3>
+<h3 id="editing-an-expense-from-budget-panel"><a class="link" href="#editing-an-expense-from-budget-panel">G.13. Editing an expense from budget panel</a></h3>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -3498,7 +3523,7 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="testing-of-events"><a class="link" href="#testing-of-events">G.13. Testing of events</a></h3>
+<h3 id="testing-of-events"><a class="link" href="#testing-of-events">G.14. Testing of events</a></h3>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -3522,7 +3547,7 @@ to see that the expense has been added.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="testing-of-aliases"><a class="link" href="#testing-of-aliases">G.14. Testing of aliases</a></h3>
+<h3 id="testing-of-aliases"><a class="link" href="#testing-of-aliases">G.15. Testing of aliases</a></h3>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -3553,7 +3578,7 @@ Expected: error message complaining that an alias cannot be be recursive.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="testing-of-suggestions"><a class="link" href="#testing-of-suggestions">G.15. Testing of suggestions</a></h3>
+<h3 id="testing-of-suggestions"><a class="link" href="#testing-of-suggestions">G.16. Testing of suggestions</a></h3>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -3579,7 +3604,7 @@ you do not see all the options.).</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="testing-of-input-history"><a class="link" href="#testing-of-input-history">G.16. Testing of input history</a></h3>
+<h3 id="testing-of-input-history"><a class="link" href="#testing-of-input-history">G.17. Testing of input history</a></h3>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -3603,7 +3628,7 @@ Press <code>up</code> to re-enter the past inputs.<br>
 </div>
 </div>
 <div class="sect2">
-<h3 id="testing-of-generic-commands"><a class="link" href="#testing-of-generic-commands">G.17. Testing of generic commands</a></h3>
+<h3 id="testing-of-generic-commands"><a class="link" href="#testing-of-generic-commands">G.18. Testing of generic commands</a></h3>
 <div class="paragraph">
 <p>Navigate to the panels on the left column of the table below using the <code>view</code> command.
 Execute a valid input for the commands in their respective
@@ -3652,7 +3677,7 @@ i.e. <code>add</code> on the Expense List panel, should behave as <code>addexpen
 </table>
 </div>
 <div class="sect2">
-<h3 id="testing-statsbasic"><a class="link" href="#testing-statsbasic">G.18. Testing statsbasic</a></h3>
+<h3 id="testing-statsbasic"><a class="link" href="#testing-statsbasic">G.19. Testing statsbasic</a></h3>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -3674,7 +3699,7 @@ category showing 100.00%.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="testing-statscompare"><a class="link" href="#testing-statscompare">G.19. Testing statscompare</a></h3>
+<h3 id="testing-statscompare"><a class="link" href="#testing-statscompare">G.20. Testing statscompare</a></h3>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -3693,7 +3718,7 @@ pointing to -2.5.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="testing-statstrend"><a class="link" href="#testing-statstrend">G.20. Testing statstrend</a></h3>
+<h3 id="testing-statstrend"><a class="link" href="#testing-statstrend">G.21. Testing statstrend</a></h3>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -3717,4 +3742,4 @@ Expected: A success message of "Statistics Trend Calculated!" appears with the c
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 12:41:58 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 12:46:57 UTC</div></div></div></body></html>
