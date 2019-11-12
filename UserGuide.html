@@ -990,13 +990,13 @@ delete 2</pre>
 <h3 id="let-s-do-budgeting"><a class="link" href="#let-s-do-budgeting">4.8. Let&#8217;s Do Budgeting</a></h3>
 <div class="paragraph">
 <p>Feel a need to cut your spending? Try MooLah&#8217;s awesome budgeting feature!
-It can help you cultivate better financial management habits in the following ways:</p>
+It can help you cultivate healthier saving habits and better financial management skills, in these following ways:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
 <p>Each budget has a progress bar with a percentage (rounded to the nearest integer), which indicates how much you have
-spent as a proportion to the limit.</p>
+spent as a proportion to the budget limit.</p>
 </li>
 <li>
 <p>The color of the progress bar implies the following 4 status:</p>
@@ -1071,10 +1071,12 @@ The year in &lt;START_DATE&gt; is optional, i.e. you can simply input <code>01-1
 to the current year.<br>
 The &lt;START_DATE&gt; can be any time in the past or future, the budget period will <strong>automatically
 normalize to the current period</strong>.
-For example, if today is <code>23-10-2019</code>, when you type <code>sd/01-07 pr/month</code>, the resulting budget period
+For example, suppose today is <code>23-10-2019</code>, when you type <code>sd/01-07 pr/month</code>, the resulting budget period
 will be <code>01-10-2019 to 31-10-2019</code>, since that&#8217;s the period anchored by today&#8217;s date.<br>
 All budgets are <strong>recurring</strong>. Continuing from the example above, on 1 Nov 2019, you&#8217;ll see the budget&#8217;s period refreshed
-to <code>01-11-2019 to 30-11-2019</code>, and all past expenses archived, giving you an empty budget panel to start with.
+to <code>01-11-2019 to 30-11-2019</code>, and all past expenses archived, giving you an empty budget panel to start with.<br>
+When you add an expense that&#8217;s not within the current budgeting period, the budget panel will stay at the current
+period. To see the expense you&#8217;ve just added, switch to that corresponding period first. See <a href="#view-expenses-in-a-different-period-code-switchperiod-code">Section 4.8.8, &#8220;View Expenses in a Different Period: <code>switchperiod</code>&#8221;</a>
 </td>
 </tr>
 </table>
@@ -1183,7 +1185,7 @@ editbudget 2 d/school expenses p/400 sd/05-10</pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-You can choose to edit any of these 4 attributes of a budget: <code>DESCRIPTION</code>, <code>AMOUNT</code>, <code>START_DATE</code>
+You may choose to edit any of these 4 attributes of a budget: <code>DESCRIPTION</code>, <code>AMOUNT</code>, <code>START_DATE</code>
 and <code>PERIOD</code>, more than one at a time.
 </td>
 </tr>
@@ -2298,4 +2300,4 @@ e.g. <code>addalias a/chicken rice i/ add d/ Chicken Rice p/2.50 c/Food</code></
 </tbody>
 </table>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 14:42:08 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 14:51:46 UTC</div></div></div></body></html>

@@ -36,7 +36,7 @@ contributions to this feature.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Major Enhancement</strong>: added <strong>the ability to track expenses under different budgets, and manage multiple budgets</strong>.<br>
+<p><strong>Major Enhancement</strong>: added <strong>the ability to track expenses under different budgets, and flexibly manage multiple budgets</strong>.<br>
 The budgeting feature is a significant enhancement to MooLah. Users need a tool to help them monitor their expenditure and avoid overspending.
 This is especially relevant to our main target users - university students, most of whom do not have a stable income.
 The budgeting feature enables users to be more controlled with their own expenses, grow healthy saving habits,
@@ -58,10 +58,10 @@ I developed ten budgeting-related commands, added utility classes such as <code>
 and wrote unit tests for all, achieving 100% lines coverage for my part.
 One highlight is <code>BudgetWindow#normalize()</code>, which shifts the budgeting period to another anchored by a specific date.
 While developing this method, it was necessary for me to take into account marginal cases such as February, leap year, and months with 30 days,
-and constantly fix emerging bugs to ensure good functionality.
-Besides, to make sure budgeting integrates well with undo-redo, I must check through every command to make sure all
+and painstakingly fix emerging bugs to ensure good functionality.
+Besides, budgeting integrates well with undo-redo. I made a great effort to check through every command to ensure all
 undo-redo changes are immediately reflected both on GUI and in storage files. Considering that undo revolves
-around <code>Model</code>, I need to ensure a deep copy of the budget is made upon every single modification of existing budgets in
+around <code>Model</code>, I implemented this in a way that a deep copy of the budget is made upon every single modification of existing budgets in
 the model, which was challenging and time-consuming to debug.</p>
 </li>
 </ul>
@@ -69,7 +69,7 @@ the model, which was challenging and time-consuming to debug.</p>
 </li>
 <li>
 <p><strong>Minor Enhancement</strong>: added two commands (<code>EditExpenseFromBudgetCommand</code> &amp; <code>DeleteExpenseFromBudgetCommand</code>) that allow
-users to <strong>edit or delete expenses directly from the budget panel, without having to switch to general expense list first</strong>.</p>
+users to <strong>conveniently edit or delete expenses directly from the budget panel, without having to switch to general expense list first</strong>.</p>
 </li>
 <li>
 <p><strong>Code Contributed</strong>: [<a href="https://nus-cs2103-ay1920s1.github.io/tp-dashboard/#search=anqichen9856&amp;sort=groupTitle&amp;sortWithin=title&amp;since=2019-09-06&amp;timeframe=commit&amp;mergegroup=false&amp;groupSelect=groupByRepos&amp;breakdown=false&amp;tabOpen=true&amp;tabType=authorship&amp;tabAuthor=anqichen9856&amp;tabRepo=AY1920S1-CS2103T-T11-1%2Fmain%5Bmaster%5D">link to RepoSense</a>]</p>
@@ -199,13 +199,13 @@ They showcase my ability to write documentation targeting end-users.</em></p></t
 <h3 id="let-s-do-budgeting"><a class="link" href="#let-s-do-budgeting">Let&#8217;s Do Budgeting</a></h3>
 <div class="paragraph">
 <p>Feel a need to cut your spending? Try MooLah&#8217;s awesome budgeting feature!
-It can help you cultivate better financial management habits in the following ways:</p>
+It can help you cultivate healthier saving habits and better financial management skills, in these following ways:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
 <p>Each budget has a progress bar with a percentage (rounded to the nearest integer), which indicates how much you have
-spent as a proportion to the limit.</p>
+spent as a proportion to the budget limit.</p>
 </li>
 <li>
 <p>The color of the progress bar implies the following 4 status:</p>
@@ -280,10 +280,12 @@ The year in &lt;START_DATE&gt; is optional, i.e. you can simply input <code>01-1
 to the current year.<br>
 The &lt;START_DATE&gt; can be any time in the past or future, the budget period will <strong>automatically
 normalize to the current period</strong>.
-For example, if today is <code>23-10-2019</code>, when you type <code>sd/01-07 pr/month</code>, the resulting budget period
+For example, suppose today is <code>23-10-2019</code>, when you type <code>sd/01-07 pr/month</code>, the resulting budget period
 will be <code>01-10-2019 to 31-10-2019</code>, since that&#8217;s the period anchored by today&#8217;s date.<br>
 All budgets are <strong>recurring</strong>. Continuing from the example above, on 1 Nov 2019, you&#8217;ll see the budget&#8217;s period refreshed
-to <code>01-11-2019 to 30-11-2019</code>, and all past expenses archived, giving you an empty budget panel to start with.
+to <code>01-11-2019 to 30-11-2019</code>, and all past expenses archived, giving you an empty budget panel to start with.<br>
+When you add an expense that&#8217;s not within the current budgeting period, the budget panel will stay at the current
+period. To see the expense you&#8217;ve just added, switch to that corresponding period first. See <a href="#view-expenses-in-a-different-period-code-switchperiod-code">View Expenses in a Different Period: <code>switchperiod</code></a>
 </td>
 </tr>
 </table>
@@ -392,7 +394,7 @@ editbudget 2 d/school expenses p/400 sd/05-10</pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-You can choose to edit any of these 4 attributes of a budget: <code>DESCRIPTION</code>, <code>AMOUNT</code>, <code>START_DATE</code>
+You may choose to edit any of these 4 attributes of a budget: <code>DESCRIPTION</code>, <code>AMOUNT</code>, <code>START_DATE</code>
 and <code>PERIOD</code>, more than one at a time.
 </td>
 </tr>
@@ -637,7 +639,7 @@ and <code>ClearBudgetsCommand</code>.<br></p>
 <p>As shown in the figure above, <code>AddBudgetCommand</code> has 2 methods:
 (i) <code>validate(model)</code>, which checks whether the command is legal (i.e. will not result in duplicate budgets being added
  to MooLah), and throws <code>CommandException</code> to notify user of the illegal input if any;
-(ii) <code>execute(model)</code>, which runs this command in model and successfully adds a new budget.</p>
+(ii) <code>execute(model)</code>, which runs this command in model and successfully adds a new <code>Budget</code>.</p>
 </div>
 <div class="paragraph">
 <p>The following sequence diagram shows how the <code>add budget</code> operation works:</p>
@@ -692,7 +694,7 @@ under this <code>Default Budget</code>, which has a huge budget limit (<code>10^
 </div>
 <div class="paragraph">
 <p>The <code>SwitchBudgetCommand</code> takes in a budget name and switches primary budget to that budget.
-Given below is an example usage scenario of SwitchBudgetCommand:<br></p>
+Given below is an example usage scenario of <code>SwitchBudgetCommand</code>:<br></p>
 </div>
 <div class="paragraph">
 <p><strong>Step 1.</strong> The user launches MooLah for the first time. The default budget will be created and set as the primary budget.</p>
@@ -764,7 +766,7 @@ This is achieved through the <code>BudgetWindow</code> class.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>As shown in the figure above, <code>BudgetWindow</code> has 3 attributes: start date, end date, and period. The start and end
+<p>As shown in the figure above, <code>BudgetWindow</code> has 3 attributes: <code>startDate</code>, <code>endDate</code>, and <code>period</code>. The start and end
 dates are modifiable, but the period is fixed. This corresponds to the above-mentioned "sliding window" concept.</p>
 </div>
 <div class="paragraph">
@@ -803,12 +805,31 @@ successfully normalized to the current period.</p>
 </div>
 </div>
 <div class="sect3">
+<h4 id="listbudgetscommand"><a class="link" href="#listbudgetscommand">ListBudgetsCommand</a></h4>
+<div class="paragraph">
+<p><code>ListBudgetsCommand</code> updates Model&#8217;s <code>FilteredBudgetList</code> with a <code>Predicate</code> to show all budgets. The command returns a <code>CommandResult</code> with view
+request to <code>BudgetListPanel.PANEL_NAME</code>. Subsequently, <code>MainWindow#changePanel(PanelName)</code> will switch the currently
+shown panel to <code>BudgetListPanel</code>.
+<code>ListBudgetsCommand</code> has the same effect as "view budget list".</p>
+</div>
+</div>
+<div class="sect3">
 <h4 id="ui-component-of-budget"><a class="link" href="#ui-component-of-budget">UI Component of Budget</a></h4>
 <div class="paragraph">
-<p>There are three classes related to the UI display of budgets:
-(i) <code>BudgetCard</code>, which shows the budget name, period, and progress bar&#8201;&#8212;&#8201;GUI representation of a <code>Budget</code>
-(ii) <code>BudgetListPanel</code>, which displays a list of <code>BudgetCard</code>&#8201;&#8212;&#8201;called through <code>ListBudgetsCommand</code> or <code>view budget list</code>
-(iii) <code>BudgetPanel</code>, which displays a <code>BudgetCard</code> at the top, and a list of current period expenses below&#8201;&#8212;&#8201;called through <code>view primary budget</code></p>
+<p>There are three classes related to the UI display of budgets:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>BudgetCard</code>, which shows the budget name, period, and progress bar&#8201;&#8212;&#8201;GUI representation of a <code>Budget</code>;</p>
+</li>
+<li>
+<p><code>BudgetListPanel</code>, which displays a list of <code>BudgetCard</code>&#8201;&#8212;&#8201;called through <code>ListBudgetsCommand</code> or "view budget list";</p>
+</li>
+<li>
+<p><code>BudgetPanel</code>, which displays a <code>BudgetCard</code> at the top, and a list of current period expenses below&#8201;&#8212;&#8201;called through <code>view primary budget</code>.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>The progress bar in <code>BudgetCard</code> shows the proportion used against the budget limit. This is calculated by
@@ -846,13 +867,13 @@ as the budget, except: (i) it flattens the <code>BudgetWindow</code> field into 
 <div class="paragraph">
 <p>Budgeting-related commands integrate well with Undo-Redo feature, by extending <code>UndoableCommand</code>. Undoable commands are
 those modifying data in MooLah, for example, <code>AddBudgetCommand</code> and <code>EditBudgetCommand</code>. On the other hand, commands that
-only result in GUI changes, such as <code>ListBudgetsCommand</code>, is not undoable.</p>
+only result in GUI changes, such as <code>ListBudgetsCommand</code>, are not undoable.</p>
 </div>
 <div class="paragraph">
-<p>A difficulty here is to make every "undo" immediately reflected on GUI. Since undo rollback on models, this dictates that
-every change must result in a new budget object being created and replacing the old one. Otherwise, even though the
-change is reflected backend, it will not show in frontend because the Budgets in two models are still referring to
-the same object. This task is handled by <code>Budget#deepCopy()</code>, which is widely called from <code>UniqueBudgetList</code>, in every method
+<p>A difficulty here is to make every <code>undo</code> (or <code>redo</code>) change immediately reflected on GUI. Since <code>undo</code> rollbacks models, this dictates that
+every change must result in a new <code>Budget</code> object being created and replacing the old one. Otherwise, even though the
+change is effective in the back end, it might not show in the front end because the <code>Budget</code> in two models points to
+the same object. This issue is handled by <code>Budget#deepCopy()</code>, which is widely called from <code>UniqueBudgetList</code>, in every method
 that modifies the existing budgets.</p>
 </div>
 </div>
@@ -867,7 +888,7 @@ that modifies the existing budgets.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Easier to manage expenses.</p>
+<p>Pros: Easier to manage expenses, as budget is directly referred to by the expense.</p>
 </li>
 <li>
 <p>Cons: Causes cyclical dependency, and reduces testability. Also, this will cause infinite loop when creating
@@ -894,7 +915,7 @@ that modifies the existing budgets.</p>
 Each <code>Expense</code> keeps a <code>budgetName</code> field which indicates the name of the <code>Budget</code> it is tracked under. Since <code>UniqueBudgetList</code>
 disallows duplicate budget names, a name is sufficient to identify a <code>Budget</code>. Besides, since <code>budgetName</code> is of
 <code>Description</code> type instead of <code>Budget</code> type, it is easy to convert to <code>String</code>, and resolves the problem of infinite loop
-when creating Json files. Also, the resulting <code>JsonAdaptedExpense</code> file will not be too long, since the <code>budgetName</code> property
+when creating Json files. Also, the resulting <code>JsonAdaptedExpense</code> in storage files will not be too long, since the <code>budgetName</code> property
 stores only the budget name instead of the full <code>Budget</code> object.</p>
 </li>
 </ul>
@@ -934,9 +955,9 @@ revolves around budgets.</p>
 </li>
 <li>
 <p><strong>Solution (Current implementation):</strong>
-Adopt Alternative 1. Every Expense must be tracked under one and only one budget. If the expense is added before
-adding any budgets, a default budget with a huge limit and infinite period is created for tracking all expenses without
-a proper user-defined budget. This ensures that the main screen has a budget and shows a budget status bar at all times.
+Adopt Alternative 1. Every <code>Expense</code> must be tracked under one and only one <code>Budget</code>. If the <code>Expense</code> is added before
+adding any <code>Budget</code>, a <code>Default Budget</code> with a huge limit and period is created for tracking all expenses without
+a proper user-defined <code>Budget</code>. This ensures that the main screen shows a budget status bar at all times.
 Besides, it leads to neater statistics.</p>
 </li>
 </ul>
@@ -971,7 +992,7 @@ MooLah.</p>
 </li>
 <li>
 <p>Cons: More hassle when reconstructing MooLah from storage, since <code>JsonAdaptedBudget#toModelType</code> will need to
-refer to MooLah&#8217;s expense list, identify those expenses by their <code>UniqueIdentifier</code>, and add them to the budget.</p>
+refer to MooLah&#8217;s expense list, identify those expenses by their <code>UniqueIdentifier</code>, and add them to the <code>Budget</code>.</p>
 </li>
 </ul>
 </div>
@@ -989,4 +1010,4 @@ storage.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 14:42:08 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 14:51:46 UTC</div></div></div></body></html>

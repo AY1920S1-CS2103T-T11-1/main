@@ -56,26 +56,28 @@
 <li><a href="#instructions-for-manual-testing">Appendix G: Instructions for Manual Testing</a>
 <ul class="sectlevel2">
 <li><a href="#launch-and-shutdown">G.1. Launch and Shutdown</a></li>
-<li><a href="#deleting-an-expense">G.2. Deleting an expense</a></li>
-<li><a href="#adding-a-menu-item-expense">G.3. Adding a menu-item expense</a></li>
-<li><a href="#undo-and-redo">G.4. Undo and redo</a></li>
-<li><a href="#adding-a-budget">G.5. Adding a budget</a></li>
-<li><a href="#editing-a-budget">G.6. Editing a budget</a></li>
-<li><a href="#deleting-a-budget">G.7. Deleting a budget</a></li>
-<li><a href="#switching-the-primary-budget">G.8. Switching the primary budget</a></li>
-<li><a href="#switching-budget-period">G.9. Switching budget period</a></li>
-<li><a href="#listing-all-budgets">G.10. Listing all budgets</a></li>
-<li><a href="#clearing-all-budgets">G.11. Clearing all budgets</a></li>
-<li><a href="#deleting-an-expense-from-budget-panel">G.12. Deleting an expense from budget panel</a></li>
-<li><a href="#editing-an-expense-from-budget-panel">G.13. Editing an expense from budget panel</a></li>
-<li><a href="#testing-of-events">G.14. Testing of events</a></li>
-<li><a href="#testing-of-aliases">G.15. Testing of aliases</a></li>
-<li><a href="#testing-of-suggestions">G.16. Testing of suggestions</a></li>
-<li><a href="#testing-of-input-history">G.17. Testing of input history</a></li>
-<li><a href="#testing-of-generic-commands">G.18. Testing of generic commands</a></li>
-<li><a href="#testing-statsbasic">G.19. Testing statsbasic</a></li>
-<li><a href="#testing-statscompare">G.20. Testing statscompare</a></li>
-<li><a href="#testing-statstrend">G.21. Testing statstrend</a></li>
+<li><a href="#adding-an-expense">G.2. Adding an expense</a></li>
+<li><a href="#editing-an-expense">G.3. Editing an expense</a></li>
+<li><a href="#deleting-an-expense">G.4. Deleting an expense</a></li>
+<li><a href="#adding-a-menu-item-expense">G.5. Adding a menu-item expense</a></li>
+<li><a href="#undo-and-redo">G.6. Undo and redo</a></li>
+<li><a href="#adding-a-budget">G.7. Adding a budget</a></li>
+<li><a href="#editing-a-budget">G.8. Editing a budget</a></li>
+<li><a href="#deleting-a-budget">G.9. Deleting a budget</a></li>
+<li><a href="#switching-the-primary-budget">G.10. Switching the primary budget</a></li>
+<li><a href="#switching-budget-period">G.11. Switching budget period</a></li>
+<li><a href="#listing-all-budgets">G.12. Listing all budgets</a></li>
+<li><a href="#clearing-all-budgets">G.13. Clearing all budgets</a></li>
+<li><a href="#deleting-an-expense-from-budget-panel">G.14. Deleting an expense from budget panel</a></li>
+<li><a href="#editing-an-expense-from-budget-panel">G.15. Editing an expense from budget panel</a></li>
+<li><a href="#testing-of-events">G.16. Testing of events</a></li>
+<li><a href="#testing-of-aliases">G.17. Testing of aliases</a></li>
+<li><a href="#testing-of-suggestions">G.18. Testing of suggestions</a></li>
+<li><a href="#testing-of-input-history">G.19. Testing of input history</a></li>
+<li><a href="#testing-of-generic-commands">G.20. Testing of generic commands</a></li>
+<li><a href="#testing-statsbasic">G.21. Testing statsbasic</a></li>
+<li><a href="#testing-statscompare">G.22. Testing statscompare</a></li>
+<li><a href="#testing-statstrend">G.23. Testing statstrend</a></li>
 </ul>
 </li>
 </ul>
@@ -915,7 +917,7 @@ and <code>ClearBudgetsCommand</code>.<br></p>
 <p>As shown in the figure above, <code>AddBudgetCommand</code> has 2 methods:
 (i) <code>validate(model)</code>, which checks whether the command is legal (i.e. will not result in duplicate budgets being added
  to MooLah), and throws <code>CommandException</code> to notify user of the illegal input if any;
-(ii) <code>execute(model)</code>, which runs this command in model and successfully adds a new budget.</p>
+(ii) <code>execute(model)</code>, which runs this command in model and successfully adds a new <code>Budget</code>.</p>
 </div>
 <div class="paragraph">
 <p>The following sequence diagram shows how the <code>add budget</code> operation works:</p>
@@ -970,7 +972,7 @@ under this <code>Default Budget</code>, which has a huge budget limit (<code>10^
 </div>
 <div class="paragraph">
 <p>The <code>SwitchBudgetCommand</code> takes in a budget name and switches primary budget to that budget.
-Given below is an example usage scenario of SwitchBudgetCommand:<br></p>
+Given below is an example usage scenario of <code>SwitchBudgetCommand</code>:<br></p>
 </div>
 <div class="paragraph">
 <p><strong>Step 1.</strong> The user launches MooLah for the first time. The default budget will be created and set as the primary budget.</p>
@@ -1042,7 +1044,7 @@ This is achieved through the <code>BudgetWindow</code> class.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>As shown in the figure above, <code>BudgetWindow</code> has 3 attributes: start date, end date, and period. The start and end
+<p>As shown in the figure above, <code>BudgetWindow</code> has 3 attributes: <code>startDate</code>, <code>endDate</code>, and <code>period</code>. The start and end
 dates are modifiable, but the period is fixed. This corresponds to the above-mentioned "sliding window" concept.</p>
 </div>
 <div class="paragraph">
@@ -1081,12 +1083,31 @@ successfully normalized to the current period.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ui-component-of-budget"><a class="link" href="#ui-component-of-budget">4.3.5. UI Component of Budget</a></h4>
+<h4 id="listbudgetscommand"><a class="link" href="#listbudgetscommand">4.3.5. ListBudgetsCommand</a></h4>
 <div class="paragraph">
-<p>There are three classes related to the UI display of budgets:
-(i) <code>BudgetCard</code>, which shows the budget name, period, and progress bar&#8201;&#8212;&#8201;GUI representation of a <code>Budget</code>
-(ii) <code>BudgetListPanel</code>, which displays a list of <code>BudgetCard</code>&#8201;&#8212;&#8201;called through <code>ListBudgetsCommand</code> or <code>view budget list</code>
-(iii) <code>BudgetPanel</code>, which displays a <code>BudgetCard</code> at the top, and a list of current period expenses below&#8201;&#8212;&#8201;called through <code>view primary budget</code></p>
+<p><code>ListBudgetsCommand</code> updates Model&#8217;s <code>FilteredBudgetList</code> with a <code>Predicate</code> to show all budgets. The command returns a <code>CommandResult</code> with view
+request to <code>BudgetListPanel.PANEL_NAME</code>. Subsequently, <code>MainWindow#changePanel(PanelName)</code> will switch the currently
+shown panel to <code>BudgetListPanel</code>.
+<code>ListBudgetsCommand</code> has the same effect as "view budget list".</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="ui-component-of-budget"><a class="link" href="#ui-component-of-budget">4.3.6. UI Component of Budget</a></h4>
+<div class="paragraph">
+<p>There are three classes related to the UI display of budgets:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>BudgetCard</code>, which shows the budget name, period, and progress bar&#8201;&#8212;&#8201;GUI representation of a <code>Budget</code>;</p>
+</li>
+<li>
+<p><code>BudgetListPanel</code>, which displays a list of <code>BudgetCard</code>&#8201;&#8212;&#8201;called through <code>ListBudgetsCommand</code> or "view budget list";</p>
+</li>
+<li>
+<p><code>BudgetPanel</code>, which displays a <code>BudgetCard</code> at the top, and a list of current period expenses below&#8201;&#8212;&#8201;called through <code>view primary budget</code>.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>The progress bar in <code>BudgetCard</code> shows the proportion used against the budget limit. This is calculated by
@@ -1104,7 +1125,7 @@ notification to remind the user of the budget progress.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="storage-of-budgets"><a class="link" href="#storage-of-budgets">4.3.6. Storage of Budgets</a></h4>
+<h4 id="storage-of-budgets"><a class="link" href="#storage-of-budgets">4.3.7. Storage of Budgets</a></h4>
 <div class="paragraph">
 <p>Budget objects are stored in Json format, through the <code>JsonAdaptedBudget</code> class. The Json file has the same properties
 as the budget, except: (i) it flattens the <code>BudgetWindow</code> field into start date, end date and period, for clearer display;
@@ -1120,22 +1141,22 @@ as the budget, except: (i) it flattens the <code>BudgetWindow</code> field into 
 </div>
 </div>
 <div class="sect3">
-<h4 id="integration-with-undo-redo"><a class="link" href="#integration-with-undo-redo">4.3.7. Integration with Undo-Redo</a></h4>
+<h4 id="integration-with-undo-redo"><a class="link" href="#integration-with-undo-redo">4.3.8. Integration with Undo-Redo</a></h4>
 <div class="paragraph">
 <p>Budgeting-related commands integrate well with Undo-Redo feature, by extending <code>UndoableCommand</code>. Undoable commands are
 those modifying data in MooLah, for example, <code>AddBudgetCommand</code> and <code>EditBudgetCommand</code>. On the other hand, commands that
-only result in GUI changes, such as <code>ListBudgetsCommand</code>, is not undoable.</p>
+only result in GUI changes, such as <code>ListBudgetsCommand</code>, are not undoable.</p>
 </div>
 <div class="paragraph">
-<p>A difficulty here is to make every "undo" immediately reflected on GUI. Since undo rollback on models, this dictates that
-every change must result in a new budget object being created and replacing the old one. Otherwise, even though the
-change is reflected backend, it will not show in frontend because the Budgets in two models are still referring to
-the same object. This task is handled by <code>Budget#deepCopy()</code>, which is widely called from <code>UniqueBudgetList</code>, in every method
+<p>A difficulty here is to make every <code>undo</code> (or <code>redo</code>) change immediately reflected on GUI. Since <code>undo</code> rollbacks models, this dictates that
+every change must result in a new <code>Budget</code> object being created and replacing the old one. Otherwise, even though the
+change is effective in the back end, it might not show in the front end because the <code>Budget</code> in two models points to
+the same object. This issue is handled by <code>Budget#deepCopy()</code>, which is widely called from <code>UniqueBudgetList</code>, in every method
 that modifies the existing budgets.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">4.3.8. Design Considerations</a></h4>
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">4.3.9. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-since-budget-already-keeps-a-list-of-expense-should-expense-have-a-budget-field"><a class="link" href="#aspect-since-budget-already-keeps-a-list-of-expense-should-expense-have-a-budget-field">Aspect: Since Budget already keeps a list of Expense, should Expense have a Budget field?</a></h5>
 <div class="ulist">
@@ -1145,7 +1166,7 @@ that modifies the existing budgets.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Easier to manage expenses.</p>
+<p>Pros: Easier to manage expenses, as budget is directly referred to by the expense.</p>
 </li>
 <li>
 <p>Cons: Causes cyclical dependency, and reduces testability. Also, this will cause infinite loop when creating
@@ -1172,7 +1193,7 @@ that modifies the existing budgets.</p>
 Each <code>Expense</code> keeps a <code>budgetName</code> field which indicates the name of the <code>Budget</code> it is tracked under. Since <code>UniqueBudgetList</code>
 disallows duplicate budget names, a name is sufficient to identify a <code>Budget</code>. Besides, since <code>budgetName</code> is of
 <code>Description</code> type instead of <code>Budget</code> type, it is easy to convert to <code>String</code>, and resolves the problem of infinite loop
-when creating Json files. Also, the resulting <code>JsonAdaptedExpense</code> file will not be too long, since the <code>budgetName</code> property
+when creating Json files. Also, the resulting <code>JsonAdaptedExpense</code> in storage files will not be too long, since the <code>budgetName</code> property
 stores only the budget name instead of the full <code>Budget</code> object.</p>
 </li>
 </ul>
@@ -1212,9 +1233,9 @@ revolves around budgets.</p>
 </li>
 <li>
 <p><strong>Solution (Current implementation):</strong>
-Adopt Alternative 1. Every Expense must be tracked under one and only one budget. If the expense is added before
-adding any budgets, a default budget with a huge limit and infinite period is created for tracking all expenses without
-a proper user-defined budget. This ensures that the main screen has a budget and shows a budget status bar at all times.
+Adopt Alternative 1. Every <code>Expense</code> must be tracked under one and only one <code>Budget</code>. If the <code>Expense</code> is added before
+adding any <code>Budget</code>, a <code>Default Budget</code> with a huge limit and period is created for tracking all expenses without
+a proper user-defined <code>Budget</code>. This ensures that the main screen shows a budget status bar at all times.
 Besides, it leads to neater statistics.</p>
 </li>
 </ul>
@@ -1249,7 +1270,7 @@ MooLah.</p>
 </li>
 <li>
 <p>Cons: More hassle when reconstructing MooLah from storage, since <code>JsonAdaptedBudget#toModelType</code> will need to
-refer to MooLah&#8217;s expense list, identify those expenses by their <code>UniqueIdentifier</code>, and add them to the budget.</p>
+refer to MooLah&#8217;s expense list, identify those expenses by their <code>UniqueIdentifier</code>, and add them to the <code>Budget</code>.</p>
 </li>
 </ul>
 </div>
@@ -2572,23 +2593,20 @@ a command by enabling certain common command words to behave differently dependi
 <div class="paragraph">
 <p>(For all use cases below, the <strong>System</strong> is <code>MooLah</code> and the <strong>Actor</strong> is the <code>user</code>, unless specified otherwise)</p>
 </div>
-<h3 id="use-case-add-a-budget-and-switch-to-it" class="discrete">Use case: Add a budget and switch to it</h3>
+<h3 id="use-case-adding-a-budget" class="discrete">Use case: Adding a budget</h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>User requests to add a budget and specifies budget name, amount, period and start date</p>
+<p>User requests to add a budget and specifies budget name, amount, start date and period</p>
 </li>
 <li>
 <p>MooLah shows success in creating new budget</p>
 </li>
 <li>
-<p>User requests to switch to this budget by specifying the budget name</p>
-</li>
-<li>
-<p>GUI switches to the budget and sets it as current primary budget for displaying and calculating expenses</p>
+<p>GUI switches to the budget panel and sets it as current primary budget for displaying and calculating expenses</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -2601,7 +2619,7 @@ a command by enabling certain common command words to behave differently dependi
 <div class="ulist">
 <ul>
 <li>
-<p>1a. User misses any of the necessary parameters: budget name, amount, period or start date</p>
+<p>1a. User misses any of the necessary parameters: budget name, amount, start date or period</p>
 <div class="ulist none">
 <ul class="none">
 <li>
@@ -2619,44 +2637,9 @@ a command by enabling certain common command words to behave differently dependi
 </ul>
 </div>
 </li>
-<li>
-<p>3a. User forgets to input the name of the budget he wants to switch to.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>3a1. MooLah shows an error message and requests for the budget name.</p>
-</li>
-<li>
-<p>3a2. User re-enters the command, specifying the budget name.</p>
-<div class="paragraph">
-<p>Use case resumes at step 4.</p>
-</div>
-</li>
 </ul>
 </div>
-</li>
-<li>
-<p>3b. User enters a budget name that does not correspond to any of the currently existing budgets.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>3b1. MooLah shows an error message and requests for a correct budget name that exists.</p>
-</li>
-<li>
-<p>3b2. User re-enters the command with a new budget name.</p>
-</li>
-<li>
-<p>Steps 3b1-3b2 are repeated until the budget name entered is an existing one.</p>
-<div class="paragraph">
-<p>Use case resumes at step 4.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<h3 id="use-case-add-event" class="discrete">Use case: Add event</h3>
+<h3 id="use-case-adding-an-event" class="discrete">Use case: Adding an event</h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
@@ -3176,7 +3159,57 @@ Expected: The most recent window size and location is retained.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="deleting-an-expense"><a class="link" href="#deleting-an-expense">G.2. Deleting an expense</a></h3>
+<h3 id="adding-an-expense"><a class="link" href="#adding-an-expense">G.2. Adding an expense</a></h3>
+<div class="paragraph">
+<p>Adding an expense to MooLah</p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: None.</p>
+</li>
+<li>
+<p>Test case: <code>addexpense d/chicken p/3.50 c/food</code><br>
+Expected: An expense "chicken" with price $3.50 and category "food" is added to MooLah. Details of the expense shown in the result display message.</p>
+</li>
+<li>
+<p>Test case: <code>addexpense d/chicken p/3.50</code><br>
+Expected: No expense is added. Error details shown in the result display message.</p>
+</li>
+<li>
+<p>Other incorrect addexpense commands to try: <code>addexpense</code>, <code>addexpense d/chicken</code><br>
+Expected: Similar to previous.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="editing-an-expense"><a class="link" href="#editing-an-expense">G.3. Editing an expense</a></h3>
+<div class="paragraph">
+<p>Editing an expense while all expenses are listed</p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: List all expenses using the <code>listexpense</code> command. Multiple expenses in the list.</p>
+</li>
+<li>
+<p>Test case: <code>editexpense 1 d/abc</code><br>
+Expected: First expense&#8217;s description is edited to "abc". Details of the edited expense shown in the result display message.</p>
+</li>
+<li>
+<p>Test case: <code>editexpense 1</code><br>
+Expected: No expense is edited. Error details shown in the result display message.</p>
+</li>
+<li>
+<p>Other incorrect editexpense commands to try: <code>editexpense</code>, <code>editexpense d/abc</code>, <code>editexpense x d/abc</code> (where x is larger than the list size)<br>
+Expected: Similar to previous.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="deleting-an-expense"><a class="link" href="#deleting-an-expense">G.4. Deleting an expense</a></h3>
 <div class="paragraph">
 <p>Deleting an expense while all expenses are listed</p>
 </div>
@@ -3201,7 +3234,7 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="adding-a-menu-item-expense"><a class="link" href="#adding-a-menu-item-expense">G.3. Adding a menu-item expense</a></h3>
+<h3 id="adding-a-menu-item-expense"><a class="link" href="#adding-a-menu-item-expense">G.5. Adding a menu-item expense</a></h3>
 <div class="paragraph">
 <p>Adding an expense from a menu-item instead of manually define the expense data.</p>
 </div>
@@ -3222,7 +3255,7 @@ Expected: No expense is added as the description provided does not match any sup
 </div>
 </div>
 <div class="sect2">
-<h3 id="undo-and-redo"><a class="link" href="#undo-and-redo">G.4. Undo and redo</a></h3>
+<h3 id="undo-and-redo"><a class="link" href="#undo-and-redo">G.6. Undo and redo</a></h3>
 <div class="paragraph">
 <p>Undo and redo operations to an undoable command.</p>
 </div>
@@ -3247,7 +3280,7 @@ Expected: The "fun" budget will continue to be added to MooLah.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="adding-a-budget"><a class="link" href="#adding-a-budget">G.5. Adding a budget</a></h3>
+<h3 id="adding-a-budget"><a class="link" href="#adding-a-budget">G.7. Adding a budget</a></h3>
 <div class="paragraph">
 <p>Adding a budget to MooLah</p>
 </div>
@@ -3269,14 +3302,14 @@ Expected: No budget is added. Error details shown in the result display message.
 Expected: No budget is added. Error details shown in the result display message.</p>
 </li>
 <li>
-<p>Other incorrect addbudget commands to try: <code>addbudget</code>, <code>addbudget p/100</code>, <code>addbudget p/0</code>
+<p>Other incorrect addbudget commands to try: <code>addbudget</code>, <code>addbudget p/100</code>, <code>addbudget d/school p/0</code>
 Expected: Similar to previous.</p>
 </li>
 </ol>
 </div>
 </div>
 <div class="sect2">
-<h3 id="editing-a-budget"><a class="link" href="#editing-a-budget">G.6. Editing a budget</a></h3>
+<h3 id="editing-a-budget"><a class="link" href="#editing-a-budget">G.8. Editing a budget</a></h3>
 <div class="paragraph">
 <p>Editing a budget in MooLah while all budgets are listed</p>
 </div>
@@ -3305,7 +3338,7 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="deleting-a-budget"><a class="link" href="#deleting-a-budget">G.7. Deleting a budget</a></h3>
+<h3 id="deleting-a-budget"><a class="link" href="#deleting-a-budget">G.9. Deleting a budget</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -3356,7 +3389,7 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="switching-the-primary-budget"><a class="link" href="#switching-the-primary-budget">G.8. Switching the primary budget</a></h3>
+<h3 id="switching-the-primary-budget"><a class="link" href="#switching-the-primary-budget">G.10. Switching the primary budget</a></h3>
 <div class="paragraph">
 <p>Switching the primary budget to another budget</p>
 </div>
@@ -3381,7 +3414,7 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="switching-budget-period"><a class="link" href="#switching-budget-period">G.9. Switching budget period</a></h3>
+<h3 id="switching-budget-period"><a class="link" href="#switching-budget-period">G.11. Switching budget period</a></h3>
 <div class="paragraph">
 <p>Switching the budget period to view past expenses</p>
 </div>
@@ -3410,7 +3443,7 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="listing-all-budgets"><a class="link" href="#listing-all-budgets">G.10. Listing all budgets</a></h3>
+<h3 id="listing-all-budgets"><a class="link" href="#listing-all-budgets">G.12. Listing all budgets</a></h3>
 <div class="paragraph">
 <p>Listing all budgets in MooLah</p>
 </div>
@@ -3431,7 +3464,7 @@ Expected: No action taken. Error details shown in the result display message.</p
 </div>
 </div>
 <div class="sect2">
-<h3 id="clearing-all-budgets"><a class="link" href="#clearing-all-budgets">G.11. Clearing all budgets</a></h3>
+<h3 id="clearing-all-budgets"><a class="link" href="#clearing-all-budgets">G.13. Clearing all budgets</a></h3>
 <div class="paragraph">
 <p>Clearing all budgets in MooLah</p>
 </div>
@@ -3448,7 +3481,7 @@ Expected: GUI switches to the budget list panel. All budgets except default budg
 </div>
 </div>
 <div class="sect2">
-<h3 id="deleting-an-expense-from-budget-panel"><a class="link" href="#deleting-an-expense-from-budget-panel">G.12. Deleting an expense from budget panel</a></h3>
+<h3 id="deleting-an-expense-from-budget-panel"><a class="link" href="#deleting-an-expense-from-budget-panel">G.14. Deleting an expense from budget panel</a></h3>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -3470,7 +3503,7 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="editing-an-expense-from-budget-panel"><a class="link" href="#editing-an-expense-from-budget-panel">G.13. Editing an expense from budget panel</a></h3>
+<h3 id="editing-an-expense-from-budget-panel"><a class="link" href="#editing-an-expense-from-budget-panel">G.15. Editing an expense from budget panel</a></h3>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -3496,7 +3529,7 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="testing-of-events"><a class="link" href="#testing-of-events">G.14. Testing of events</a></h3>
+<h3 id="testing-of-events"><a class="link" href="#testing-of-events">G.16. Testing of events</a></h3>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -3523,7 +3556,7 @@ to see that the expense has been added.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="testing-of-aliases"><a class="link" href="#testing-of-aliases">G.15. Testing of aliases</a></h3>
+<h3 id="testing-of-aliases"><a class="link" href="#testing-of-aliases">G.17. Testing of aliases</a></h3>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -3554,7 +3587,7 @@ Expected: error message complaining that an alias cannot be be recursive.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="testing-of-suggestions"><a class="link" href="#testing-of-suggestions">G.16. Testing of suggestions</a></h3>
+<h3 id="testing-of-suggestions"><a class="link" href="#testing-of-suggestions">G.18. Testing of suggestions</a></h3>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -3580,7 +3613,7 @@ you do not see all the options.).</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="testing-of-input-history"><a class="link" href="#testing-of-input-history">G.17. Testing of input history</a></h3>
+<h3 id="testing-of-input-history"><a class="link" href="#testing-of-input-history">G.19. Testing of input history</a></h3>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -3604,7 +3637,7 @@ Press <code>up</code> to re-enter the past inputs.<br>
 </div>
 </div>
 <div class="sect2">
-<h3 id="testing-of-generic-commands"><a class="link" href="#testing-of-generic-commands">G.18. Testing of generic commands</a></h3>
+<h3 id="testing-of-generic-commands"><a class="link" href="#testing-of-generic-commands">G.20. Testing of generic commands</a></h3>
 <div class="paragraph">
 <p>Navigate to the panels on the left column of the table below using the <code>view</code> command.
 Execute a valid input for the commands in their respective
@@ -3653,7 +3686,7 @@ i.e. <code>add</code> on the Expense List panel, should behave as <code>addexpen
 </table>
 </div>
 <div class="sect2">
-<h3 id="testing-statsbasic"><a class="link" href="#testing-statsbasic">G.19. Testing statsbasic</a></h3>
+<h3 id="testing-statsbasic"><a class="link" href="#testing-statsbasic">G.21. Testing statsbasic</a></h3>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -3675,7 +3708,7 @@ category showing 100.00%.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="testing-statscompare"><a class="link" href="#testing-statscompare">G.20. Testing statscompare</a></h3>
+<h3 id="testing-statscompare"><a class="link" href="#testing-statscompare">G.22. Testing statscompare</a></h3>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -3694,7 +3727,7 @@ pointing to -2.5.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="testing-statstrend"><a class="link" href="#testing-statstrend">G.21. Testing statstrend</a></h3>
+<h3 id="testing-statstrend"><a class="link" href="#testing-statstrend">G.23. Testing statstrend</a></h3>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -3718,4 +3751,4 @@ Expected: A success message of "Statistics Trend Calculated!" appears with the c
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 14:42:08 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 14:51:46 UTC</div></div></div></body></html>
