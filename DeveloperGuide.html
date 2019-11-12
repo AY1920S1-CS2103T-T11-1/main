@@ -1474,11 +1474,11 @@ split the arguments into its preamble(the start date and end date). This returns
 Depending on the presence of start date and end date, <code>desc</code> will be filled in differently.</p>
 </div>
 <div class="paragraph">
-<p>If the start date and end date is both specified by the user, the start date will be checked to be before the end date.
+<p>If the start date and end date is both specified by the user, the end date will be checked to not be before the start date.
 If the end date happens to be before the start date, a <code>ParseException</code> will be thrown</p>
 </div>
 <div class="paragraph">
-<p>Step 4. The filled <code>desc</code> will be returned to the <code>LogicManager</code> where a new <code>StatsCommand</code> command, <code>statsCommand</code> will be created with <code>desc</code></p>
+<p>Step 4. The filled <code>desc</code> will be returned to the <code>LogicManager</code> where a new <code>StatsCommand</code> object, <code>statsCommand</code> will be created with <code>desc</code></p>
 </div>
 <div class="paragraph">
 <p>Step 5. The <code>LogicManager</code> calls <code>StatsCommand#run()</code>, where the <code>StatsCommand</code> will be validated before getting executed.</p>
@@ -1493,7 +1493,7 @@ If there are unspecified inputs inside <code>desc</code>, the time interval will
 </div>
 <div class="paragraph">
 <p>Step 8. The <code>PieChartStatistics</code> object will be created with the constructed interval as well as the expenses the primary budget tracks.
-After which, <code>StatsCommand</code> will call <code>PieChartStatistics</code> implementation of <code>populateData()</code> to fill up its other fields</p>
+After which, <code>StatsCommand</code> will call the <code>PieChartStatistics</code> implementation of <code>populateData()</code> to fill up its other fields</p>
 </div>
 <div class="paragraph">
 <p>Step 9. <code>StatsCommand</code> calls <code>ModelManager#setStatistics(statistics)</code> which updates the <code>Statistics</code> attribute in <code>ModelManager</code>.</p>
@@ -3693,16 +3693,19 @@ i.e. <code>add</code> on the Expense List panel, should behave as <code>addexpen
 <p>Prerequisites: Create a new budget, one possible way is <code>addbudget d/school p/3.00 sd/28-10 pr/day</code>.</p>
 </li>
 <li>
-<p>Test case: <code>statsbasic</code> + Expected: A success message of "Pie Chart calculated!" appears with the correct date, amount
+<p>Test case: <code>statsbasic</code><br>
+Expected: A success message of "Pie Chart calculated!" appears with the title of the statistics
+"Statistics Summary from DATE to DATE", where DATE is the current date, with $0.00 amount
 but no pie chart being shown</p>
 </li>
 <li>
-<p>Test case: Add an expense to the empty budget <code>addexpense d/ chicken rice p/2.50 c/food</code> and type <code>statsbasic</code> + Expected:
-A success message of "Pie Chart calculated!" appears with the correct date, amount but a pie chart being shown with only food
-category showing 100.00%.</p>
+<p>Test case: Add an expense to the empty budget <code>addexpense d/ chicken rice p/2.50 c/food</code> and type <code>statsbasic</code><br>
+Expected: A success message of "Pie Chart calculated!" appears with the same title, amount to $2.50 and a pie chart being shown with only food
+   category showing 100.00%.</p>
 </li>
 <li>
-<p>Test case: In any budget, type <code>statsbasic sd/12-12 ed/11-11</code> + Expected : Start date must be before end date.</p>
+<p>Test case: In any budget, type <code>statsbasic sd/12-12 ed/11-11</code><br>
+Expected : An error message of "End date cannot be before start date."</p>
 </li>
 </ol>
 </div>
@@ -3715,13 +3718,16 @@ category showing 100.00%.</p>
 <p>Prerequisites: Create a new budget, one possible way is <code>addbudget d/school p/3.00 sd/28-10 pr/day</code>.</p>
 </li>
 <li>
-<p>Test case: <code>statscompare sd1/12-12 sd2/ 1 month ago</code> + Expected: A success message of "Statistics Comparison Calculated!" appears with the correct date, amount
-but entries all reflect 0</p>
+<p>Test case: <code>statscompare sd1/12-12 sd2/ 1 month ago</code><br>
+Expected: A success message of "Statistics Comparison Calculated!" appears with the
+the title "Statistics Summary: Comparing 12-12-2019 to 12-12-2019 with 12-10-2019 to 12-10-2019"
+but all entries reflect 0 for frequency and 0.00 for amount.</p>
 </li>
 <li>
-<p>Test case: Add an expense to the empty budget <code>addexpense d/ chicken rice p/2.50 c/food t/28-10</code> and type <code>statscompare sd1/28-10 sd2/ 29-10</code>
-+ Expected: A success message of "Statistics Comparison Calculated!" appears with the correct date, with the first entries of difference amount
-pointing to -2.5.</p>
+<p>Test case: Add an expense to the empty budget <code>addexpense d/ chicken rice p/2.50 c/food t/28-10</code> and type <code>statscompare sd1/28-10 sd2/ 29-10</code>+
+Expected: A success message of "Statistics Comparison Calculated!" appears with
+the title "Statistics Summary: Comparing 28-10-2019 to 28-10-2019 with 29-10-2019 to 29-10-2019" with the first entry of <code>Difference Amount</code>
+having a value of -2.50 and having the first entry of <code>Difference Frequency</code> having a value of -1.</p>
 </li>
 </ol>
 </div>
@@ -3734,21 +3740,24 @@ pointing to -2.5.</p>
 <p>Prerequisites: Create a new budget, one possible way is <code>addbudget d/school p/3.00 sd/28-10 pr/day</code>.</p>
 </li>
 <li>
-<p>Test case: <code>statstrend mode/category</code> + Expected: A success message of "Statistics Trend Calculated!" appears with the correct date, unit of time,
-but no trend lines are seen</p>
+<p>Test case: <code>statstrend mode/category sd/14-01 ed/31-01</code><br>
+Expected: A success message of "Statistics Trend Calculated!" appears with
+the title "Periodic trendline from 14-01-2019 to 31-01-2019 in the unit of days"
+unit of time equal to the period of the budget, but no trend lines are seen</p>
 </li>
 <li>
-<p>Test case: Add an expense to the empty budget <code>addexpense d/ chicken rice p/2.50 c/food t/28-10</code> and type <code>statstrend mode/category sd/28-10</code>
-+ Expected: A success message of "Statistics Trend Calculated!" appears with the correct date, unit of time,
+<p>Test case: Add an expense to the empty budget <code>addexpense d/ chicken rice p/2.50 c/food t/28-10</code> and type <code>statstrend mode/category sd/28-10</code><br>
+Expected: A success message of "Statistics Trend Calculated!" appears with the
+title "Periodic trendline from 28-10-2019 to 29-11-2019 in the unit of days",
 1 trend line for food is observed, with the first plotted point of the line being the highest non-zero point at y-axis = 2.50</p>
 </li>
 <li>
 <p>Now, add one more expense like <code>addexpense d/ chicken rice p/3.50 c/food t/29-10</code> and type <code>statstrend mode/category sd/28-10</code> again.<br>
-Expected: A success message of "Statistics Trend Calculated!" appears with the correct date, unit of time,
+Expected: A success message of "Statistics Trend Calculated!" appears with the same title,
 1 trend line for food is observed, with 2 points observed.</p>
 </li>
 </ol>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 14:51:46 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 15:18:55 UTC</div></div></div></body></html>

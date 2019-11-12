@@ -1697,7 +1697,8 @@ doesn&#8217;t support editing any of its attributes, especially period. Also, th
 a large interval by design, so the output might not make sense.</p>
 </li>
 <li>
-<p>For commands that use <code>sd/</code> <code>ed/</code> prefixes, <code>START_DATE</code> will be checked to be earlier than <code>END_DATE</code></p>
+<p>For commands that use <code>[sd/&lt;START_DATE&gt;] [ed/&lt;END_DATE&gt;]</code> prefixes,
+<code>END_DATE</code> will be checked to be not before <code>START_DATE</code>.</p>
 </li>
 </ul>
 </div>
@@ -1729,7 +1730,7 @@ taken as a percentage of the total expenditure in the budget the command was cal
 </li>
 <li>
 <p>When there are no expenses in the current window of the current budget, a successful <code>statsbasic</code>
-can stil be called. However, the same success message "Pie Chart calculated!" is still seen on the result display,
+can still be called. However, the same success message "Pie Chart calculated!" is still seen on the result display,
 but now with a blank screen in the StatsPanel.</p>
 </li>
 <li>
@@ -1864,6 +1865,16 @@ statscompare sd2/ today sd1/tmr
 statscompare sd2/ 23-09-2019 sd1/1 year ago</pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Example with expected output:
+Test case: Create a new budget, one possible way is <code>addbudget d/school p/3.00 sd/28-10 pr/day</code>.
+then enter <code>statscompare sd1/12-12 sd2/ 1 month ago</code><br></p>
+</div>
+<div class="paragraph">
+<p>Expected: A success message of "Statistics Comparison Calculated!" appears with the
+the title "Statistics Summary: Comparing 12-12-2019 to 12-12-2019 with 12-10-2019 to 12-10-2019"
+but all entries reflect 0 for frequency and 0.00 for amount.</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="growth-statistics-code-statstrend-code"><a class="link" href="#growth-statistics-code-statstrend-code">4.10.3. Growth Statistics : <code>statstrend</code></a></h4>
@@ -1902,7 +1913,8 @@ till before the stated date of the next point.</p>
 <div class="sidebarblock">
 <div class="content">
 <div class="paragraph">
-<p><strong>Note</strong></p>
+<p><strong>Note</strong>
+- <code>mode/</code> takes in only "mode" and "category" and is case-insensitive</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1918,6 +1930,12 @@ as trend lines in the Statistics Panel.</p>
 closest to the start date of analysis. If the two happen to be the same, the start date of the window of the budget
 should be included as a point in the trend line</p>
 </li>
+<li>
+<p>Due to the possible differences in amounts, some points may not be plotted.</p>
+</li>
+<li>
+<p>At any time, only a maximum of 32 points starting from the first valid point will be shown</p>
+</li>
 </ul>
 </div>
 </div>
@@ -1929,22 +1947,22 @@ should be included as a point in the trend line</p>
 <ul>
 <li>
 <p>There is no need to specify all the parameters if the outcomes of the example usage scenarios
-below fit your needs</p>
+below fit your needs. The analysis comes in the form of interval construction followed by the searching
+of the nearest possible window to be included. The following describes how the interval is constructed
+with different configurations</p>
 </li>
 <li>
 <p>If <code>START_DATE</code> is specified but <code>END_DATE</code> is empty, the end date of analysis is constructed till
-34 unit of time after <code>START_DATE</code>, before the consideration of the earliest available window of the
-current budget.</p>
+32 unit of time after <code>START_DATE</code>.</p>
 </li>
 <li>
 <p>If <code>START_DATE</code> is empty but <code>END_DATE</code> is specified, the start date of analysis is constructed from
-34 unit of time before <code>END_DATE</code>, before the consideration of the earliest available window of the
-current budget.</p>
+32 unit of time before <code>END_DATE</code>.</p>
 </li>
 <li>
-<p>If both <code>START_DATE</code> and <code>END_DATE</code> are empty, the start date of analys is constructed from 17
+<p>If both <code>START_DATE</code> and <code>END_DATE</code> are empty, the start date of analysis is constructed from 16
 units of time before the start date of the current window of the current budget and the end date
-of analysis is constructed from 17 units after the start date of the current window of the current budget.</p>
+of analysis is constructed from 16 units after the start date of the current window of the current budget.</p>
 </li>
 </ul>
 </div>
@@ -1957,6 +1975,20 @@ of analysis is constructed from 17 units after the start date of the current win
 statstrend sd/tmr mode/category
 statstrend sd/11-11-2018 ed/12-12-2018 mode/category</pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Example with expected output:</p>
+</div>
+<div class="paragraph">
+<p>Test case: Create a new budget, one possible way is <code>addbudget d/school p/3.00 sd/28-10 pr/day</code>.
+Next, add an expense to the empty budget with <code>addexpense d/ chicken rice p/2.50 c/food t/28-10</code>
+and type <code>statstrend mode/category sd/28-10</code><br></p>
+</div>
+<div class="paragraph">
+<p>Expected: A success message of "Statistics Trend Calculated!" appears with the
+title "Periodic trendline from 28-10-2019 to 29-11-2019 in the unit of days",
+1 trend line for food is observed, with the first plotted point of the line being the
+highest non-zero point at y-axis = 2.50</p>
 </div>
 </div>
 </div>
@@ -2300,4 +2332,4 @@ e.g. <code>addalias a/chicken rice i/ add d/ Chicken Rice p/2.50 c/Food</code></
 </tbody>
 </table>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 14:51:46 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 15:18:55 UTC</div></div></div></body></html>
