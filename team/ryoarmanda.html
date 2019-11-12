@@ -230,7 +230,7 @@ MooLah will also display a message <code>Redid "Delete expense with index 5"</co
 <h4 id="implementation"><a class="link" href="#implementation">Implementation</a></h4>
 <div class="paragraph">
 <p>The undo and redo functionality is facilitated by <code>ModelHistory</code>, which is available as an instance-level member of <code>Model</code>. It keeps track of the model&#8217;s history
-by storing the changed fields of the model throughout execution, which will be represented as <code>ModelChanges</code>. Internally, <code>ModelHistory</code> stores the history by using two stacks of <code>ModelChanges</code>, namely: <code>pastChanges</code> and <code>futureChanges</code>.</p>
+by storing the changed fields of the model throughout execution, which will be represented as <code>ModelChanges</code>. Internally, <code>ModelHistory</code> stores the history by using two stacks of <code>ModelChanges</code>, namely, <code>pastChanges</code> and <code>futureChanges</code>.</p>
 </div>
 <div class="paragraph">
 <p>With the addition of model history, <code>Model</code> can support these operations:</p>
@@ -238,19 +238,13 @@ by storing the changed fields of the model throughout execution, which will be r
 <div class="ulist">
 <ul>
 <li>
-<p><code>Model#commit(String, Model)</code>&#8201;&#8212;&#8201;Saves the changes between the current model and the given previous model to the past changes history, keeping the previous model&#8217;s data should there be any differences. This adds the changes to the past history, and clears the future history.</p>
-</li>
-<li>
 <p><code>Model#applyChanges(ModelChanges)</code>&#8201;&#8212;&#8201;Applies the given changes to the model.</p>
 </li>
 <li>
-<p><code>Model#canRollback()</code>&#8201;&#8212;&#8201;Checks whether the model can be rolled-back.</p>
+<p><code>Model#commit(String, Model)</code>&#8201;&#8212;&#8201;Saves the changes between the current model and the given previous model to the past changes history, keeping the previous model&#8217;s data should there be any differences. This adds the changes to the past history, and clears the future history.</p>
 </li>
 <li>
 <p><code>Model#rollback()</code>&#8201;&#8212;&#8201;Restores the model one step back by applying the changes described in the immediate previous changes in history.</p>
-</li>
-<li>
-<p><code>Model#canMigrate()</code>&#8201;&#8212;&#8201;Checks whether the model can be migrated.</p>
 </li>
 <li>
 <p><code>Model#migrate()</code>&#8201;&#8212;&#8201;Moves the model one step forward in history by applying the changes described in the immediate next changes.</p>
@@ -269,6 +263,26 @@ by storing the changed fields of the model throughout execution, which will be r
 <p><code>ModelChanges#revertChanges(Model)</code>&#8201;&#8212;&#8201;Reverts the current changes with respect to the base model given.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Refer to the class diagram below for comprehensive list of the methods offered and the association of both classes:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ModelHistory.png" alt="ModelHistory">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Typical field accessor and mutator methods are omitted for brevity, except when it returns a different type from the field&#8217;s type (e.g. <code>ModelChanges#getMooLah()</code>)
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p><code>ModelHistory</code> only stores changes of models that were (or are going to be) executed by model-manipulating - or simply, undoable - commands.
@@ -390,8 +404,12 @@ The following diagram briefly describes how the execution of undoable commands w
 </div>
 <div class="sect3">
 <h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="paragraph">
+<p>In implementing the undo and redo functionality, some design approaches and trade-offs have to be considered to account
+for feature efficiency in computation time and memory usage.</p>
+</div>
 <div class="sect4">
-<h5 id="aspect-how-undo-redo-executes"><a class="link" href="#aspect-how-undo-redo-executes">Aspect: How undo &amp; redo executes</a></h5>
+<h5 id="aspect-how-undo-and-redo-executes"><a class="link" href="#aspect-how-undo-and-redo-executes">Aspect: How undo and redo executes</a></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -455,7 +473,7 @@ by the <code>addexpense</code> command.</p>
 <p>Pros: This approach is more conservative in memory usage, only saving fields that are changed means every data is necessary.</p>
 </li>
 <li>
-<p>Cons: We have to make sure every field is immutable to preserve changes.</p>
+<p>Cons: Every field must be immutable to preserve changes, which requires a rework on accessing and manipulating fields.</p>
 </li>
 </ul>
 </div>
@@ -471,4 +489,4 @@ only the data needed to correctly reflect the change, it requires less memory an
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 06:31:15 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 06:41:45 UTC</div></div></div></body></html>

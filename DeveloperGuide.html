@@ -543,7 +543,7 @@ The lifeline for <code>DeleteCommandParser</code> should end at the destroy mark
 <h4 id="implementation-2"><a class="link" href="#implementation-2">4.1.1. Implementation</a></h4>
 <div class="paragraph">
 <p>The undo and redo functionality is facilitated by <code>ModelHistory</code>, which is available as an instance-level member of <code>Model</code>. It keeps track of the model&#8217;s history
-by storing the changed fields of the model throughout execution, which will be represented as <code>ModelChanges</code>. Internally, <code>ModelHistory</code> stores the history by using two stacks of <code>ModelChanges</code>, namely: <code>pastChanges</code> and <code>futureChanges</code>.</p>
+by storing the changed fields of the model throughout execution, which will be represented as <code>ModelChanges</code>. Internally, <code>ModelHistory</code> stores the history by using two stacks of <code>ModelChanges</code>, namely, <code>pastChanges</code> and <code>futureChanges</code>.</p>
 </div>
 <div class="paragraph">
 <p>With the addition of model history, <code>Model</code> can support these operations:</p>
@@ -551,19 +551,13 @@ by storing the changed fields of the model throughout execution, which will be r
 <div class="ulist">
 <ul>
 <li>
-<p><code>Model#commit(String, Model)</code>&#8201;&#8212;&#8201;Saves the changes between the current model and the given previous model to the past changes history, keeping the previous model&#8217;s data should there be any differences. This adds the changes to the past history, and clears the future history.</p>
-</li>
-<li>
 <p><code>Model#applyChanges(ModelChanges)</code>&#8201;&#8212;&#8201;Applies the given changes to the model.</p>
 </li>
 <li>
-<p><code>Model#canRollback()</code>&#8201;&#8212;&#8201;Checks whether the model can be rolled-back.</p>
+<p><code>Model#commit(String, Model)</code>&#8201;&#8212;&#8201;Saves the changes between the current model and the given previous model to the past changes history, keeping the previous model&#8217;s data should there be any differences. This adds the changes to the past history, and clears the future history.</p>
 </li>
 <li>
 <p><code>Model#rollback()</code>&#8201;&#8212;&#8201;Restores the model one step back by applying the changes described in the immediate previous changes in history.</p>
-</li>
-<li>
-<p><code>Model#canMigrate()</code>&#8201;&#8212;&#8201;Checks whether the model can be migrated.</p>
 </li>
 <li>
 <p><code>Model#migrate()</code>&#8201;&#8212;&#8201;Moves the model one step forward in history by applying the changes described in the immediate next changes.</p>
@@ -582,6 +576,26 @@ by storing the changed fields of the model throughout execution, which will be r
 <p><code>ModelChanges#revertChanges(Model)</code>&#8201;&#8212;&#8201;Reverts the current changes with respect to the base model given.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Refer to the class diagram below for comprehensive list of the methods offered and the association of both classes:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ModelHistory.png" alt="ModelHistory">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Typical field accessor and mutator methods are omitted for brevity, except when it returns a different type from the field&#8217;s type (e.g. <code>ModelChanges#getMooLah()</code>)
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p><code>ModelHistory</code> only stores changes of models that were (or are going to be) executed by model-manipulating - or simply, undoable - commands.
@@ -703,8 +717,12 @@ The following diagram briefly describes how the execution of undoable commands w
 </div>
 <div class="sect3">
 <h4 id="design-considerations"><a class="link" href="#design-considerations">4.1.2. Design Considerations</a></h4>
+<div class="paragraph">
+<p>In implementing the undo and redo functionality, some design approaches and trade-offs have to be considered to account
+for feature efficiency in computation time and memory usage.</p>
+</div>
 <div class="sect4">
-<h5 id="aspect-how-undo-redo-executes"><a class="link" href="#aspect-how-undo-redo-executes">Aspect: How undo &amp; redo executes</a></h5>
+<h5 id="aspect-how-undo-and-redo-executes"><a class="link" href="#aspect-how-undo-and-redo-executes">Aspect: How undo and redo executes</a></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -768,7 +786,7 @@ by the <code>addexpense</code> command.</p>
 <p>Pros: This approach is more conservative in memory usage, only saving fields that are changed means every data is necessary.</p>
 </li>
 <li>
-<p>Cons: We have to make sure every field is immutable to preserve changes.</p>
+<p>Cons: Every field must be immutable to preserve changes, which requires a rework on accessing and manipulating fields.</p>
 </li>
 </ul>
 </div>
@@ -797,11 +815,60 @@ of accepted menu items. Whenever the user enters the <code>addmenuexpense</code>
 look up the list of expenses in <code>Menu</code> that matches the description, and if there is such menu item, it will add</p>
 </div>
 <div class="paragraph">
+<p>See the class diagram below for available methods on <code>Menu</code> and <code>MenuItem</code>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/Menu.png" alt="Menu">
+</div>
+</div>
+<div class="paragraph">
 <p>Given below is an example usage scenario and how the add menu-item expense feature is processed within MooLah:</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/AddMenuExpenseSequenceDiagram.png" alt="AddMenuExpenseSequenceDiagram">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">4.2.2. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-the-command-the-feature-should-be-under"><a class="link" href="#aspect-the-command-the-feature-should-be-under">Aspect: The command the feature should be under</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Alternative 1: Modify the general add expense command to accept menu-item expense format and user-defined expense format.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: This format is quite natural for end-users.</p>
+</li>
+<li>
+<p>Cons: MooLah has to support command option groups to enable multiple sets of required prefixes on the same command word.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Alternative 2: Create a new command for the adding menu-item expenses</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: This approach is easier to implement.</p>
+</li>
+<li>
+<p>Cons: End-users now have two different commands to add expense, which is not too user-friendly.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Current implementation (Alternative 2): As of now, MooLah has not yet supported mutually-exclusive command formats.
+The time and resource to develop multiple formats, compared to adding a new command, will be much expensive, as it will take a major rework on how autocomplete processes user inputs to perform the former.
+Thus, we decided to implement Alternative 2 instead.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -1067,7 +1134,7 @@ that modifies the existing budgets.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">4.3.8. Design Considerations</a></h4>
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">4.3.8. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-since-budget-already-keeps-a-list-of-expense-should-expense-have-a-budget-field"><a class="link" href="#aspect-since-budget-already-keeps-a-list-of-expense-should-expense-have-a-budget-field">Aspect: Since Budget already keeps a list of Expense, should Expense have a Budget field?</a></h5>
 <div class="ulist">
@@ -1270,7 +1337,7 @@ it is then converted into its corresponding expense, and a command to add the ex
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">4.4.2. Design Considerations</a></h4>
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">4.4.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-what-command-words-should-the-events-feature-use"><a class="link" href="#aspect-what-command-words-should-the-events-feature-use">Aspect: What command words should the Events feature use?</a></h5>
 <div class="ulist">
@@ -1448,7 +1515,7 @@ to the <code>Statistics Panel</code> where a Pie Chart will be generated.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">4.5.3. Design Considerations</a></h4>
+<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">4.5.3. Design Considerations</a></h4>
 <div class="paragraph">
 <p>When designing the interaction of the command word <code>statsbasic</code>, decisions have to be made on the most
 suitable visual representation for <code>statsbasic</code> particular use case.</p>
@@ -1720,7 +1787,7 @@ Alias and AliasMapping are in Model and not Core. This change has yet to be refl
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">4.6.2. Design Considerations</a></h4>
+<h4 id="design-considerations-6"><a class="link" href="#design-considerations-6">4.6.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="potential-recursive-aliases"><a class="link" href="#potential-recursive-aliases">Potential Recursive aliases</a></h5>
 <div class="paragraph">
@@ -3650,4 +3717,4 @@ Expected: A success message of "Statistics Trend Calculated!" appears with the c
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 06:31:15 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 06:41:45 UTC</div></div></div></body></html>
