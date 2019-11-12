@@ -1074,7 +1074,7 @@ subsequently will correctly be reflected in the budget panel.</p>
 </div>
 <div class="paragraph">
 <p>Each budget, once added, will recur infinitely. This is achieved by <code>Budget#refresh()</code>, along with the <code>Timekeeper</code> class.
-Every 10 seconds, <code>Timekeeper</code> checks if it is a new day, and call <code>Budget#refresh()</code> if necessary. Subsequently,
+Every 0.05 second, <code>Timekeeper</code> checks if the system time is at day break, and call <code>Budget#refresh()</code> if necessary. Subsequently,
 <code>BudgetWindow#normalize</code> is called; the anchor passed in is current time. As a result, the <code>Budget</code> is
 successfully normalized to the current period.</p>
 </div>
@@ -3717,4 +3717,4 @@ Expected: A success message of "Statistics Trend Calculated!" appears with the c
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 12:22:51 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 12:41:58 UTC</div></div></div></body></html>
