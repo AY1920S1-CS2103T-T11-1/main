@@ -243,8 +243,8 @@ are valid inputs.</p>
 <p>Did something wrong? You can undo it.</p>
 </div>
 <div class="paragraph">
-<p>However, do keep in mind that you can only undo commands that modify the data in MooLah, such as <code>addexpense</code>, <code>deleteexpense-primary</code>, and so on.
-Head over to <a href="#command-summary">Section 6, &#8220;Command Summary&#8221;</a> for list of commands that are undoable.</p>
+<p>However, do keep in mind that you can only undo commands that modify the data in MooLah, such as <code>addexpense</code>,
+<code>deleteexpense-primary</code>, and so on. Head over to <a href="#command-summary">Section 6, &#8220;Command Summary&#8221;</a> for list of commands that are undoable.</p>
 </div>
 <div class="paragraph">
 <p>Do not worry if you forgot what you did a few steps back (it happens!). MooLah will display a short description of what
@@ -1908,17 +1908,19 @@ should be included as a point in the trend line</p>
 below fit your needs</p>
 </li>
 <li>
-<p>If <code>START_DATE</code> is specified but <code>END_DATE</code> is empty, the end date of analysis is constructed till 34 unit of time after <code>START_DATE</code>,
-before the consideration of the earliest available window of the current budget.</p>
+<p>If <code>START_DATE</code> is specified but <code>END_DATE</code> is empty, the end date of analysis is constructed till
+34 unit of time after <code>START_DATE</code>, before the consideration of the earliest available window of the
+current budget.</p>
 </li>
 <li>
-<p>If <code>START_DATE</code> is empty but <code>END_DATE</code> is specified, the start date of analysis is constructed from 34 unit of time before <code>END_DATE</code>,
-before the consideration of the earliest available window of the current budget.</p>
+<p>If <code>START_DATE</code> is empty but <code>END_DATE</code> is specified, the start date of analysis is constructed from
+34 unit of time before <code>END_DATE</code>, before the consideration of the earliest available window of the
+current budget.</p>
 </li>
 <li>
-<p>If both <code>START_DATE</code> and <code>END_DATE</code> are empty, the start date of analys is constructed from 17 units of time before the start date
-of the current window of the current budget and the end date of analysis is constructed from 17 units after the
-start date of the current window of the current budget.</p>
+<p>If both <code>START_DATE</code> and <code>END_DATE</code> are empty, the start date of analys is constructed from 17
+units of time before the start date of the current window of the current budget and the end date
+of analysis is constructed from 17 units after the start date of the current window of the current budget.</p>
 </li>
 </ul>
 </div>
@@ -2098,7 +2100,8 @@ e.g. <code>deletebudget-id 2</code></p>
 e.g. <code>switchperiod t/01-05</code></p>
 </li>
 <li>
-<p><strong>Edit expense inside a budget</strong> (<em>undoable</em>) : <code>editexpense-primary &lt;INDEX&gt; [d/&lt;DESCRIPTION&gt;] [p/&lt;PRICE&gt;] [c/&lt;CATEGORY&gt;] [t/&lt;TIMESTAMP&gt;]</code><br>
+<p><strong>Edit expense inside a budget</strong> (<em>undoable</em>) :
+<code>editexpense-primary &lt;INDEX&gt; [d/&lt;DESCRIPTION&gt;] [p/&lt;PRICE&gt;] [c/&lt;CATEGORY&gt;] [t/&lt;TIMESTAMP&gt;]</code><br>
 e.g. <code>editexpense-primary 1 d/chicken</code></p>
 </li>
 <li>
@@ -2135,7 +2138,7 @@ e.g. <code>statstrend sd/11-11-2018 ed/12-12-2018 mode/category</code></p>
 <ul>
 <li>
 <p><strong>Add alias</strong> (<em>undoable</em>) : <code>addalias a/&lt;ALIAS_NAME&gt; i/&lt;INPUT&gt;</code><br>
-e.g. <code>alias a/chicken rice c/ add d/ Chicken Rice p/2.50 c/Food</code></p>
+e.g. <code>addalias a/chicken rice i/ add d/ Chicken Rice p/2.50 c/Food</code></p>
 </li>
 <li>
 <p><strong>See all aliases</strong> : <code>listalias</code></p>
@@ -2189,4 +2192,4 @@ e.g. <code>alias a/chicken rice c/ add d/ Chicken Rice p/2.50 c/Food</code></p>
 </tbody>
 </table>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 18:02:29 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 06:31:15 UTC</div></div></div></body></html>
