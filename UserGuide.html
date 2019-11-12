@@ -479,19 +479,6 @@ So, the tryout page on Natty&#8217;s official website will parse dates different
 </tr>
 </table>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The seconds or even nanoseconds you add to your datetime inputs won&#8217;t be processed by MooLah! (i.e. all seconds and
-nanoseconds are rounded down to 0.)
-</td>
-</tr>
-</table>
-</div>
 </div>
 <div class="sect2">
 <h3 id="expense-related-commands"><a class="link" href="#expense-related-commands">4.6. Expense-related Commands</a></h3>
@@ -520,7 +507,7 @@ In order to begin tracking your expenses, you are going to need to enter some ex
 <p>You cannot input an expense from the future. There&#8217;s a better way to do that, see <a href="#adding-an-event-code-addevent-code">here</a>!</p>
 </li>
 <li>
-<p>You should only input one of the following into the CATEGORY field: <code>FOOD</code>, <code>TRAVEL</code>, <code>TRANSPORT</code>,
+<p>You should only input one of the following into the &lt;CATEGORY&gt; field: <code>FOOD</code>, <code>TRAVEL</code>, <code>TRANSPORT</code>,
 <code>SHOPPING</code>, <code>UTILITIES</code>, <code>HEALTHCARE</code>, <code>ENTERTAINMENT</code>, <code>EDUCATION</code>, <code>OTHERS</code>.
 These categories are case-insensitive.</p>
 </li>
@@ -577,6 +564,7 @@ These categories are case-insensitive.</p>
 <span class="image"><img src="images/travel.png" alt="travel" width="70"></span> Travel<br>
 <span class="image"><img src="images/utilities.png" alt="utilities" width="70"></span> Utilities<br>
 <span class="image"><img src="images/shopping.png" alt="shopping" width="70"></span> Shopping<br>
+<span class="image"><img src="images/healthcare.png" alt="healthcare" width="70"></span> Healthcare<br>
 <span class="image"><img src="images/entertainment.png" alt="entertainment" width="70"></span> Entertainment<br>
 <span class="image"><img src="images/others.png" alt="others" width="70"></span> Others</p>
 </div>
@@ -678,6 +666,9 @@ the description, price, and category for you.</p>
 <ul>
 <li>
 <p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+<li>
+<p>You cannot edit an expense to have a future timestamp!</p>
 </li>
 <li>
 <p>You must provide at least one of the optional fields.</p>
@@ -801,13 +792,13 @@ deleteexpense 1</pre>
 <div class="sect2">
 <h3 id="event-related-commands"><a class="link" href="#event-related-commands">4.7. Event-related Commands</a></h3>
 <div class="paragraph">
-<p>Events are pretty similar to expenses, except that they denote potential expenses that they may happen in the future.
+<p>Events are pretty similar to expenses, except that they denote potential expenses that may happen in the future.
 You should use this feature to keep track of future important events in your life that would require you to spend some money
 (e.g. your friends' birthdays).</p>
 </div>
 <div class="paragraph">
-<p>At launch, MooLah will remind you of your upcoming events. Any transpired events also appear as popups,
-asking you whether you wish to add these events as corresponding expenses.</p>
+<p>At launch, MooLah will remind you of your upcoming events. While using MooLah, any transpired events also appear as popups,
+prompting you whether you wish to add these events as corresponding expenses.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -834,7 +825,7 @@ that event was still present would not restore the event.
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-MooLah updates time every 10 seconds, so you may experience a slight delay of 10 seconds maximum when it comes to
+MooLah checks for transpired events every 2 seconds, so you may experience a very slight delay when it comes to
 event popups!<br>
 A popup would also not appear if the transpired event has had its corresponding budget deleted.
 </td>
@@ -844,7 +835,7 @@ A popup would also not appear if the transpired event has had its corresponding 
 <div class="sect3">
 <h4 id="adding-an-event-code-addevent-code"><a class="link" href="#adding-an-event-code-addevent-code">4.7.1. Adding an event: <code>addevent</code></a></h4>
 <div class="paragraph">
-<p>Events share the same fields as expenses, so you add them the same way.</p>
+<p>Events share the same fields as expenses, so you add them in the same way, albeit with a different command word.</p>
 </div>
 <div class="paragraph">
 <p>Format:</p>
@@ -860,10 +851,6 @@ A popup would also not appear if the transpired event has had its corresponding 
 <ul>
 <li>
 <p>Events are potential future expenses, so the <code>TIMESTAMP</code> field is compulsory and must contain a future time.</p>
-</li>
-<li>
-<p>Due to how MooLah rounds all seconds to zero, inputting events with very precise timings such as <code>1 second from now</code>
-will likely result in errors since MooLah will interpret it as a past datetime input.</p>
 </li>
 <li>
 <p>You should only input one of the following into the <code>CATEGORY</code> field:
@@ -894,7 +881,7 @@ These categories are case-insensitive.</p>
 <div class="sect3">
 <h4 id="listing-all-events-code-listevent-code"><a class="link" href="#listing-all-events-code-listevent-code">4.7.2. Listing all events : <code>listevent</code></a></h4>
 <div class="paragraph">
-<p>You can list every single event you have added into MooLah.</p>
+<p>You can list every single event currently tracked by MooLah.</p>
 </div>
 <div class="paragraph">
 <p>Format:</p>
@@ -939,6 +926,10 @@ editevent 2 p/300</pre>
 </li>
 <li>
 <p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+<li>
+<p>Unlike editing expenses, you can edit events to have past timestamps! This is to accommodate cases
+where your event happened earlier than expected.</p>
 </li>
 <li>
 <p>You must provide at least one of the optional fields.</p>
@@ -991,7 +982,7 @@ delete 2</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Deletes the 2nd event in the list of events, shown by <code>listevent</code>.</p>
+<p>This will delete the 2nd event in the list of events, shown by <code>listevent</code>.</p>
 </div>
 </div>
 </div>
@@ -2138,7 +2129,7 @@ e.g. <code>addmenuexpense m/deck chicken rice</code></p>
 <code>listexpense</code></p>
 </li>
 <li>
-<p><strong>Edit an expenses</strong> (<em>undoable</em>) :<br>
+<p><strong>Edit an expense</strong> (<em>undoable</em>) :<br>
 <code>editexpense &lt;INDEX&gt; [d/&lt;DESCRIPTION&gt;] [p/&lt;PRICE&gt;]  [c/&lt;CATEGORY&gt;] [t/&lt;TIME&gt;]</code><br>
 e.g. <code>editexpense 1 p/2.50 t/15-09-2019 1230 c/Food</code></p>
 </li>
@@ -2307,4 +2298,4 @@ e.g. <code>addalias a/chicken rice i/ add d/ Chicken Rice p/2.50 c/Food</code></
 </tbody>
 </table>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 12:46:57 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 14:16:31 UTC</div></div></div></body></html>

@@ -1279,7 +1279,7 @@ and allow them to automatically add these events as expenses.</p>
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="images/EventClassDiagram.png" alt="EventClassDiagram" width="70%">
+<img src="images/EventClassDiagram.png" alt="EventClassDiagram">
 </div>
 </div>
 <div class="paragraph">
@@ -1298,15 +1298,15 @@ unique identifier is then generated to complete the creation of the expense, all
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="images/DisplayReminders.png" alt="DisplayReminders" width="70%">
+<img src="images/DisplayReminders.png" alt="DisplayReminders">
 </div>
 </div>
 <div class="paragraph">
-<p>To allow for accurate prompting of transpired events, MooLah tracks system time every 10 seconds using a <code>Timer</code> running
-on a parallel thread. An event is then deemed to have transpired if its timestamp has gone past system time.
+<p>To allow for precise timekeeping of expenses and events as well as accurate prompting of transpired events, MooLah tracks system time every 0.05 seconds using a <code>Timer</code> running
+on a parallel thread. Using another <code>Timer</code>, MooLah then checks for transpired events every 2 seconds; an event is then deemed to have transpired if its timestamp has gone past system time.
 The following sequence diagram shows how MooLah handles transpired events:</p>
 </div>
-<div class="imageblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
 <img src="images/TranspiredEventsSequenceDiagram.png" alt="TranspiredEventsSequenceDiagram">
 </div>
@@ -1314,8 +1314,8 @@ The following sequence diagram shows how MooLah handles transpired events:</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>When MooLah launches, the <code>start</code> method of <code>UiManager</code> is called. Every 10 seconds, <code>UiManager</code> calls <code>updateTime</code> of
-Timekeeper to update system time, then calls the <code>handleTranspiredEvents</code> of <code>MainWindow</code>, which fetches all transpired
+<p>When MooLah launches, the <code>start</code> method of <code>UiManager</code> is called. Every 0.05 seconds, <code>UiManager</code> calls <code>updateTime</code> of
+Timekeeper to update system time. Concurrently, <code>UiManager</code> also calls the <code>handleTranspiredEvents</code> of <code>MainWindow</code> every 2 seconds, which fetches all transpired
 events and notifies the user about them. It does so by first obtaining the transpired events from the <code>Timekeeper</code> class.</p>
 </li>
 <li>
@@ -2653,36 +2653,6 @@ a command by enabling certain common command words to behave differently dependi
 </li>
 </ul>
 </div>
-<h3 id="use-case-show-reminders" class="discrete">Use case: Show reminders</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User requests to see reminders.</p>
-</li>
-<li>
-<p>MooLah shows a list of reminders.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Extensions</strong></p>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>2a. There are no reminders.</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
 <h3 id="use-case-add-event" class="discrete">Use case: Add event</h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
@@ -3527,7 +3497,10 @@ Expected: Similar to previous.</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Test case: <code>addevent d/ test p/ 10 c/ Shopping t/ a week from now</code><br>
+<p>Prerequisites: None.</p>
+</li>
+<li>
+<p>Test case: <code>addevent d/ test p/ 10 c/ Shopping t/ 1 week from now</code><br>
 Expected: A success message will appear.</p>
 </li>
 <li>
@@ -3535,11 +3508,11 @@ Expected: A success message will appear.</p>
 Expected: The event with description <code>test</code> should be at the bottom of the event list.</p>
 </li>
 <li>
-<p>Edit the event via the command <code>editevent &lt;INDEX&gt; t/ now</code>, where &lt;INDEX&gt; is the index of the event you want to test.<br>
+<p>Edit the <code>test</code> event via the command <code>editevent &lt;INDEX&gt; t/ 10 seconds ago</code>, where &lt;INDEX&gt; is the index of <code>test</code> in the list.<br>
 Expected: A success message will appear.</p>
 </li>
 <li>
-<p>Within 10 seconds, a popup will appear to prompt for the automatic addition of an expense corresponding to the event.
+<p>Within 2 seconds, a popup will appear to prompt for the automatic addition of an expense corresponding to <code>test</code>.
 Pressing 'Yes' will add the expense into whichever primary budget you were on when you added the event. You can then view that budget
 to see that the expense has been added.</p>
 </li>
@@ -3742,4 +3715,4 @@ Expected: A success message of "Statistics Trend Calculated!" appears with the c
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 12:46:57 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 14:16:31 UTC</div></div></div></body></html>

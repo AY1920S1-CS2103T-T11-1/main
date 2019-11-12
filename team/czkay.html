@@ -36,47 +36,40 @@ At its core, MooLah allows users to easily manage their spending with the use of
 <ul>
 <li>
 <p>What it does: This feature allows the user to add, edit and delete events, which are the user&#8217;s important future
-activities that will generate corresponding expenses (e.g. a friend&#8217;s birthday). MooLah reminds the user of upcoming
+activities that they have to spend money on (e.g. a friend&#8217;s birthday). MooLah reminds the user of upcoming
 events, and on the day of the event, will automate the adding of the corresponding expense from the event.</p>
 </li>
 <li>
-<p>Justification: Many of our users lead busy lives and may sometimes forget to input expenses from important events
-in their schedule, or may forget these events altogether. My feature solves this issue by letting users input a future event; MooLah
+<p>Justification: Many of our users lead busy lives and may sometimes forget to input expenses from important events that they attend, or may forget these events altogether. My feature solves this issue by letting users input a future event; MooLah
 then automates the reminding and the eventual adding of the expense from the event. Such a 'fire-and-forget' implementation
-greatly improves the quality-of-life of MooLah.</p>
+greatly enhances convenience for the user.</p>
 </li>
 <li>
-<p>Highlights: Automating the reminding and adding of expenses from events required MooLah to keep constant track of
+<p>Highlights: Automating the reminding and adding of expenses from events requires MooLah to keep constant track of
 system time. I also had to work closely with my teammate who implemented the budgeting feature as every event, and
 its corresponding expense, had to fall under the correct budget.</p>
 </li>
 </ul>
 </div>
 </li>
-</ul>
-</div>
-<div class="paragraph">
-<p>This feature allows users to add, edit, switch, delete, clear budgets as well as switch the budget window
-to view expenses in a past period. It involves adjustments to the existing model, logic, UI components, and integrates
-well with the current implementation of other core features such as undoredo and statistics.</p>
-</div>
-<div class="ulist">
-<ul>
 <li>
 <p><strong>Minor enhancements</strong>: I implemented several time-based features in MooLah.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Fully implemented the Timestamp fields into MooLah&#8217;s expenses and events, hence allowing users to keep track of when
+<p>Fully implemented the Timestamp field into MooLah&#8217;s expenses and events, hence allowing users to keep track of when
 exactly their expenses and events happen.</p>
 </li>
 <li>
 <p>Implemented constant system-time checking in MooLah via the use of a timer that runs on a parallel thread. This allows
-MooLah to accurately refresh budgets and prompt users to add expenses from transpired events.</p>
+MooLah to accurately refresh budgets and enables precise timekeeping of expenses, events and budgets. (<a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/132">#132</a>)</p>
 </li>
 <li>
 <p>Integrated, with some modifications, the third-party Natty library into MooLah. This allows MooLah to support
-natural language date-time parsing (e.g. 'tomorrow', '1 week ago').</p>
+natural language date-time parsing. (<a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/132">#132</a>)</p>
+</li>
+<li>
+<p>Improved the parsing and validity-checking of the Price field. (<a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/216">#216</a>)</p>
 </li>
 </ul>
 </div>
@@ -93,10 +86,10 @@ natural language date-time parsing (e.g. 'tomorrow', '1 week ago').</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Oversaw code quality across the project (i.e. made sure code adhered to good software engineering principles) (<a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/288">Example</a>)</p>
+<p>Oversaw code quality across the project. (i.e. made sure code adhered to good software engineering principles) (<a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/288">Example</a>).</p>
 </li>
 <li>
-<p>Managed and assigned issues that arose from the bug-testing session of the Mock Practical Examination</p>
+<p>Managed and assigned issues that arose from the bug-testing session of the Mock Practical Examination.</p>
 </li>
 </ul>
 </div>
@@ -106,7 +99,7 @@ natural language date-time parsing (e.g. 'tomorrow', '1 week ago').</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Refactored existing tests to include the newly added datetime field of expenses</p>
+<p>Refactored existing tests to include the newly added Timestamp field of expenses.</p>
 </li>
 </ul>
 </div>
@@ -117,18 +110,18 @@ natural language date-time parsing (e.g. 'tomorrow', '1 week ago').</p>
 <ul>
 <li>
 <p>Wrote the <a href="https://ay1920s1-cs2103t-t11-1.github.io/main/UserGuide.html#natural-language-datetime-parsing">DateTime parsing</a>
-and <a href="https://ay1920s1-cs2103t-t11-1.github.io/main/UserGuide.html#basic-event-related-commands">Events</a> section of the User Guide</p>
+and <a href="https://ay1920s1-cs2103t-t11-1.github.io/main/UserGuide.html#basic-event-related-commands">Events</a> section of the User Guide.</p>
 </li>
 <li>
-<p>Improved the <a href="https://ay1920s1-cs2103t-t11-1.github.io/main/UserGuide.html#basic-expense-related-commands">Expenses</a> section of the User Guide</p>
+<p>Improved the <a href="https://ay1920s1-cs2103t-t11-1.github.io/main/UserGuide.html#basic-expense-related-commands">Expenses</a> section of the User Guide.</p>
 </li>
 <li>
 <p>Wrote the <a href="https://ay1920s1-cs2103t-t11-1.github.io/main/DeveloperGuide.html#non-functional-requirements">Non-functional Requirements</a>,
 <a href="https://ay1920s1-cs2103t-t11-1.github.io/main/DeveloperGuide.html#glossary">Glossary</a>,
-and <a href="https://ay1920s1-cs2103t-t11-1.github.io/main/DeveloperGuide.html#product-survey">Product Survey</a> sections of the Developer Guide</p>
+and <a href="https://ay1920s1-cs2103t-t11-1.github.io/main/DeveloperGuide.html#product-survey">Product Survey</a> sections of the Developer Guide.</p>
 </li>
 <li>
-<p>Added use cases for events in the <a href="https://ay1920s1-cs2103t-t11-1.github.io/main/DeveloperGuide.html#use-cases">Use Cases</a> section of the Developer Guide</p>
+<p>Added use cases for events in the <a href="https://ay1920s1-cs2103t-t11-1.github.io/main/DeveloperGuide.html#use-cases">Use Cases</a> section of the Developer Guide.</p>
 </li>
 </ul>
 </div>
@@ -139,10 +132,10 @@ and <a href="https://ay1920s1-cs2103t-t11-1.github.io/main/DeveloperGuide.html#p
 <ul>
 <li>
 <p>PRs reviewed (with non-trivial review comments): <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/84">#84</a>,
-<a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/100">#100</a></p>
+<a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/100">#100</a>.</p>
 </li>
 <li>
-<p>Gave suggestions for other teams in the module (<a href="https://github.com/nus-cs2103-AY1920S1/addressbook-level3/pull/28#pullrequestreview-306302342">Example</a>)</p>
+<p>Gave suggestions to other teams in the module (<a href="https://github.com/nus-cs2103-AY1920S1/addressbook-level3/pull/28#pullrequestreview-306302342">Example</a>).</p>
 </li>
 </ul>
 </div>
@@ -169,15 +162,38 @@ They showcase my ability to write documentation targeting end-users.</em></p></t
 </tbody>
 </table>
 <div class="sect2">
+<h3 id="natural-language-datetime-parsing"><a class="link" href="#natural-language-datetime-parsing">Natural language Datetime parsing</a></h3>
+<div class="paragraph">
+<p>In MooLah, you can type all dates and times in natural language! You no longer have to remember what date it was a week ago;
+just type '1 week ago' into the appropriate parameter in the command line and MooLah will handle the rest!
+Datetime formats are parsed mostly by a third-party Natural Language Parser library, Natty, which supports human jargon.
+Please refer to <a href="http://natty.joestelmach.com/" class="bare">http://natty.joestelmach.com/</a> for documentation and more information.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Natty naturally parses all datetime formats in the American format (e.g. MM/dd, MM-dd).
+In MooLah however, we have modified the parser such that all formats are parsed in the international format (e.g. dd/MM).
+So, the tryout page on Natty&#8217;s official website will parse dates differently in this aspect.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
 <h3 id="event-related-commands"><a class="link" href="#event-related-commands">Event-related Commands</a></h3>
 <div class="paragraph">
-<p>Events are pretty similar to expenses, except that they denote potential expenses that they may happen in the future.
+<p>Events are pretty similar to expenses, except that they denote potential expenses that may happen in the future.
 You should use this feature to keep track of future important events in your life that would require you to spend some money
 (e.g. your friends' birthdays).</p>
 </div>
 <div class="paragraph">
-<p>At launch, MooLah will remind you of your upcoming events. Any transpired events also appear as popups,
-asking you whether you wish to add these events as corresponding expenses.</p>
+<p>At launch, MooLah will remind you of your upcoming events. While using MooLah, any transpired events also appear as popups,
+prompting you whether you wish to add these events as corresponding expenses.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -204,7 +220,7 @@ that event was still present would not restore the event.
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-MooLah updates time every 10 seconds, so you may experience a slight delay of 10 seconds maximum when it comes to
+MooLah checks for transpired events every 2 seconds, so you may experience a very slight delay when it comes to
 event popups!<br>
 A popup would also not appear if the transpired event has had its corresponding budget deleted.
 </td>
@@ -214,7 +230,7 @@ A popup would also not appear if the transpired event has had its corresponding 
 <div class="sect3">
 <h4 id="adding-an-event-code-addevent-code"><a class="link" href="#adding-an-event-code-addevent-code">Adding an event: <code>addevent</code></a></h4>
 <div class="paragraph">
-<p>Events share the same fields as expenses, so you add them the same way.</p>
+<p>Events share the same fields as expenses, so you add them in the same way, albeit with a different command word.</p>
 </div>
 <div class="paragraph">
 <p>Format:</p>
@@ -230,10 +246,6 @@ A popup would also not appear if the transpired event has had its corresponding 
 <ul>
 <li>
 <p>Events are potential future expenses, so the <code>TIMESTAMP</code> field is compulsory and must contain a future time.</p>
-</li>
-<li>
-<p>Due to how MooLah rounds all seconds to zero, inputting events with very precise timings such as <code>1 second from now</code>
-will likely result in errors since MooLah will interpret it as a past datetime input.</p>
 </li>
 <li>
 <p>You should only input one of the following into the <code>CATEGORY</code> field:
@@ -264,7 +276,7 @@ These categories are case-insensitive.</p>
 <div class="sect3">
 <h4 id="listing-all-events-code-listevent-code"><a class="link" href="#listing-all-events-code-listevent-code">Listing all events : <code>listevent</code></a></h4>
 <div class="paragraph">
-<p>You can list every single event you have added into MooLah.</p>
+<p>You can list every single event currently tracked by MooLah.</p>
 </div>
 <div class="paragraph">
 <p>Format:</p>
@@ -309,6 +321,10 @@ editevent 2 p/300</pre>
 </li>
 <li>
 <p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+<li>
+<p>Unlike editing expenses, you can edit events to have past timestamps! This is to accommodate cases
+where your event happened earlier than expected.</p>
 </li>
 <li>
 <p>You must provide at least one of the optional fields.</p>
@@ -361,7 +377,7 @@ delete 2</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Deletes the 2nd event in the list of events, shown by <code>listevent</code>.</p>
+<p>This will delete the 2nd event in the list of events, shown by <code>listevent</code>.</p>
 </div>
 </div>
 </div>
@@ -395,7 +411,7 @@ and allow them to automatically add these events as expenses.</p>
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="../images/EventClassDiagram.png" alt="EventClassDiagram" width="70%">
+<img src="../images/EventClassDiagram.png" alt="EventClassDiagram">
 </div>
 </div>
 <div class="paragraph">
@@ -414,15 +430,15 @@ unique identifier is then generated to complete the creation of the expense, all
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="../images/DisplayReminders.png" alt="DisplayReminders" width="70%">
+<img src="../images/DisplayReminders.png" alt="DisplayReminders">
 </div>
 </div>
 <div class="paragraph">
-<p>To allow for accurate prompting of transpired events, MooLah tracks system time every 10 seconds using a <code>Timer</code> running
-on a parallel thread. An event is then deemed to have transpired if its timestamp has gone past system time.
+<p>To allow for precise timekeeping of expenses and events as well as accurate prompting of transpired events, MooLah tracks system time every 0.05 seconds using a <code>Timer</code> running
+on a parallel thread. Using another <code>Timer</code>, MooLah then checks for transpired events every 2 seconds; an event is then deemed to have transpired if its timestamp has gone past system time.
 The following sequence diagram shows how MooLah handles transpired events:</p>
 </div>
-<div class="imageblock">
+<div class="imageblock" style="text-align: center">
 <div class="content">
 <img src="../images/TranspiredEventsSequenceDiagram.png" alt="TranspiredEventsSequenceDiagram">
 </div>
@@ -430,8 +446,8 @@ The following sequence diagram shows how MooLah handles transpired events:</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>When MooLah launches, the <code>start</code> method of <code>UiManager</code> is called. Every 10 seconds, <code>UiManager</code> calls <code>updateTime</code> of
-Timekeeper to update system time, then calls the <code>handleTranspiredEvents</code> of <code>MainWindow</code>, which fetches all transpired
+<p>When MooLah launches, the <code>start</code> method of <code>UiManager</code> is called. Every 0.05 seconds, <code>UiManager</code> calls <code>updateTime</code> of
+Timekeeper to update system time. Concurrently, <code>UiManager</code> also calls the <code>handleTranspiredEvents</code> of <code>MainWindow</code> every 2 seconds, which fetches all transpired
 events and notifies the user about them. It does so by first obtaining the transpired events from the <code>Timekeeper</code> class.</p>
 </li>
 <li>
@@ -505,4 +521,4 @@ the user&#8217;s decision) that can then be added as expenses when their due dat
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 12:46:57 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 14:16:31 UTC</div></div></div></body></html>
