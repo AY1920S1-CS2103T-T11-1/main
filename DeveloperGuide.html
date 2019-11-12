@@ -1630,7 +1630,7 @@ to validate that an <code>Alias</code> will not cause an infinite loop by chaini
 <div class="title">Figure 13. AddAliasCommand Class Diagram</div>
 </div>
 <div class="paragraph">
-<p>In order for the user to save an <code>Alias</code>, they first define it using the <code>AliasCommand</code>. The <code>AliasCommand</code> command extends
+<p>In order for the user to save an <code>Alias</code>, they first define it using the <code>AddAliasCommand</code>. The <code>AddAliasCommand</code> command extends
 <code>UndoableCommand</code> to allow users to undo defining an <code>Alias</code>. The following sequence diagram describe in more detail how an <code>Alias</code>
 is added.</p>
 </div>
@@ -1638,7 +1638,7 @@ is added.</p>
 <div class="content">
 <div class="paragraph">
 <p>Note:<br>
-Alias and AliasMapping are in Model and not Core. This change has yet to be reflected in the following sequence diagrams.</p>
+Alias and AliasMapping are in Model and not Core. This change has yet to be reflected in the following 3 sequence diagrams.</p>
 </div>
 </div>
 </div>
@@ -1648,16 +1648,16 @@ Alias and AliasMapping are in Model and not Core. This change has yet to be refl
 </div>
 <div class="title">Figure 14. AddAliasCommand execution Sequence Diagram</div>
 </div>
-<div class="olist None">
-<ol class="None">
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>1. The user enters a command with the following syntax <code> alias a/ &lt;name&gt; i/ &lt;input&gt;</code>.</p>
+<p>The user enters a command with the following syntax <code> addalias a/ &lt;name&gt; i/ &lt;input&gt;</code>.</p>
 </li>
 <li>
-<p>2. The <code>UI</code> passes this command string to the <code>LogicManager</code> which passes it onto the <code>MooLahParser</code>.</p>
+<p>The <code>UI</code> passes this command string to the <code>LogicManager</code> which passes it onto the <code>MooLahParser</code>.</p>
 </li>
 <li>
-<p>3. The parser extracts the argument string and passes it to an <code>AliasCommandParser</code>.</p>
+<p>The parser extracts the argument string and passes it to an <code>AliasCommandParser</code>.</p>
 </li>
 </ol>
 </div>
@@ -1674,20 +1674,20 @@ Alias and AliasMapping are in Model and not Core. This change has yet to be refl
 </div>
 </div>
 </div>
-<div class="olist None">
-<ol class="None">
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>4. The <code>AliasCommandParser</code> uses the <code>ArgumentTokenizer</code> to tokenize the argument string and extract the
+<p>The <code>AliasCommandParser</code> uses the <code>ArgumentTokenizer</code> to tokenize the argument string and extract the
 <code>alias name</code> and <code>input</code> fields into an <code>ArgumentMultimap</code>.</p>
 </li>
 <li>
-<p>5. The arguments are obtained and to create a new <code>Alias</code> using the the <code>Alias</code> parser in <code>ParserUtil</code>.</p>
+<p>The arguments are obtained and to create a new <code>Alias</code> using the the <code>Alias</code> parser in <code>ParserUtil</code>.</p>
 </li>
 <li>
-<p>6. An <code>AliasCommand</code> is created containing this new <code>Alias</code> to add to the <code>UserPref</code>.</p>
+<p>An <code>AddAliasCommand</code> is created containing this new <code>Alias</code> to add to the <code>UserPref</code>.</p>
 </li>
 <li>
-<p>7. This is passed back to the <code>LogicManager</code> to call <code>AliasCommand#run()</code>.</p>
+<p>This is passed back to the <code>LogicManager</code> to call <code>AddAliasCommand#run()</code>.</p>
 </li>
 </ol>
 </div>
@@ -1700,16 +1700,16 @@ Alias and AliasMapping are in Model and not Core. This change has yet to be refl
 <div class="content">
 <img src="images/verifyAlias.png" alt="verifyAlias">
 </div>
-<div class="title">Figure 16. AliasCommand #Validate Sequence Diagram</div>
+<div class="title">Figure 16. AddAliasCommand #Validate Sequence Diagram</div>
 </div>
 </div>
 </div>
-<div class="olist None">
-<ol class="None">
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>8. The <code>AliasCommand</code> is validated using <code>AliasCommand#validate()</code>. The <code>Alias</code> is checked to ensure it does not</p>
-<div class="ulist None">
-<ul class="None">
+<p>The <code>AddAliasCommand</code> is validated using <code>AddAliasCommand#validate()</code>. The <code>Alias</code> is checked to ensure it does not</p>
+<div class="ulist">
+<ul>
 <li>
 <p>a. Have a clashing name used by an existing <code>Command</code> as a CommandWord.</p>
 </li>
@@ -1720,7 +1720,7 @@ Alias and AliasMapping are in Model and not Core. This change has yet to be refl
 </div>
 </li>
 <li>
-<p>If is not valid, handled exception is thrown.</p>
+<p>If it is not valid, an exception is thrown.</p>
 </li>
 </ol>
 </div>
@@ -1733,20 +1733,20 @@ Alias and AliasMapping are in Model and not Core. This change has yet to be refl
 <div class="content">
 <img src="images/addAlias.png" alt="addAlias">
 </div>
-<div class="title">Figure 17. AliasCommand #execute Sequence Diagram</div>
+<div class="title">Figure 17. AddAliasCommand #execute Sequence Diagram</div>
 </div>
 </div>
 </div>
 <div class="olist None">
 <ol class="None">
 <li>
-<p>9. If it was validated that the <code>Alias</code> can be added.</p>
+<p>If it was validated that the <code>Alias</code> can be added.</p>
 </li>
 <li>
-<p>10. The <code>Alias</code> is then added to the <code>AliasMappings</code> object within <code>UserPref</code>.</p>
+<p>The <code>Alias</code> is then added to the <code>AliasMappings</code> object within <code>UserPref</code>.</p>
 </li>
 <li>
-<p>11. The <code>Alias</code> is now usable  by the user.</p>
+<p>The <code>Alias</code> is now usable  by the user.</p>
 </li>
 </ol>
 </div>
@@ -1824,7 +1824,7 @@ alias data is reset.</p>
 <ul>
 <li>
 <p>Pros: A wider variety of shortcuts can be defined by the user<br>
-e.g. <code>add deckChicken 2.50</code>, where <code>deckChicken</code> maps to <code>d/ chicken rice c/ food p/</code>.</p>
+e.g. <code>addexpense deckChicken 2.50</code>, where <code>deckChicken</code> maps to <code>d/ chicken rice c/ food p/</code>.</p>
 </li>
 <li>
 <p>Cons: Harder to detect recursion due to alias chaining.</p>
@@ -1852,7 +1852,10 @@ clear what is an <code>Alias</code> within an input.</p>
 </div>
 <div class="paragraph">
 <p>The purpose behind this feature was to make CLI input less troublesome, so users do not need to type in the full input string
-to carry out commands they may use frequently. In v2.0 we want to look into using data analysis track users' input habits in
+to carry out commands they may use frequently.</p>
+</div>
+<div class="paragraph">
+<p>In v2.0 we want to look into using data analysis track users' input habits in
 order to make suggestions on possible shortcuts or Aliases they may find convenient to have.</p>
 </div>
 </div>
@@ -1950,9 +1953,9 @@ Interfaces not present in the original Address Book 3. This feature consists of 
 as well as to implement some basic realtime input validation. This feature utilises RichTextFX&#8217;s StyleClassTextArea to
 apply different styles to different regions of the text, and regular expressions to determine how to to highlight user input.</p>
 </div>
-<div class="imageblock" style="text-align: center">
+<div class="imageblock">
 <div class="content">
-<img src="images/SyntaxHighlightingActivityDiagram.png" alt="SyntaxHighlightingActivityDiagram" width="70%">
+<img src="images/SyntaxHighlightingActivityDiagram.png" alt="SyntaxHighlightingActivityDiagram">
 </div>
 <div class="title">Figure 20. Activity diagram of depicting the events triggering text to be highlighted</div>
 </div>
@@ -3715,4 +3718,4 @@ Expected: A success message of "Statistics Trend Calculated!" appears with the c
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 14:16:31 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 14:42:08 UTC</div></div></div></body></html>

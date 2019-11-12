@@ -84,15 +84,17 @@ in MooLash as the behaviour of syntax highlighting in the demo&#8217;s code did 
 </ul>
 </div>
 <div class="paragraph">
-<p><strong>Component 3:</strong> Input suggestions
-** What it does:<br>
+<p><strong>Component 3:</strong> Input suggestions</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>What it does:<br>
 As with the previous components, the main reason this feature was implemented was to reduce the need for users to have to refer
 to user guides or remember a lot of commands and their syntax. This feature suggests completions to the user&#8217;s current input to
 provide them with possible commands they may enter, as well as provide them information of what arguments are required by the command
 and what the prefixes for the argument stand for.</p>
-</div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>Highlights: This feature required in-depth analysis of the command syntax of the original code base. It required modification to the existing
 Prefix class for it to provide more information to the user. The implementation was challenging as MooLah supports almost 30
@@ -103,35 +105,54 @@ feature, this feature uses a significant use of JavaFx as well.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p><strong>Component 4:</strong> Generic commands.
-As mentioned previously, MooLah supports around 30 commands, several of which do similar thing (e.g. There are several commands which
-add information to MooLah use the word 'add'. In order to differentiate these commands, they require a much longer name to be clear as to
-what the command does. This feature allows multiple commands to use the same word and be parsed differently based on the context
-they are used.</p>
+<p><strong>Component 4:</strong> Generic commands.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Major enhancement</strong>: Design <strong>GUI elements for Budget List, Budgets, Expense, and Aliases</strong>
+<p>As mentioned previously, MooLah supports around 30 commands, several of which do similar thing (e.g. There are several commands which
+add information to MooLah use the word 'add'. In order to differentiate these commands, they require a much longer name to be clear as to
+what the command does. This feature allows multiple commands to use the same word and be parsed differently based on the context
+they are used.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Major enhancement</strong>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Design <strong>GUI elements for Budget List, Budgets, Expense, and Aliases</strong>
 Except for the most recent change to the colour theme of Moolah, most of the code to visualise changes to Aliases, Budgets, Expenses were
 written by me.
 <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/106">#106</a>
 <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/231">#231</a></p>
 </li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Minor enhancement</strong>:</p>
+</div>
+<div class="ulist">
+<ul>
 <li>
-<p><strong>Minor enhancement</strong>: <strong>initial refactoring of AddressBook into MooLah to allow tracking of expenses</strong><br>
+<p>initial refactoring of AddressBook into MooLah to allow tracking of expenses*<br>
 While expenses trackers are similar to an address book such they keep a record of items, the requirements to store expenses are
 much different. The person class needed to be refactored quite heavily. Additionally, as Expense should be able to share a name
 unlike the behaviour of the existing Person class, a new way to differentiate Expenses needed to be implemented.
 <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/40">#40</a>
 <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/42">#42</a></p>
 </li>
-<li>
+</ul>
+</div>
+<div class="paragraph">
 <p><strong>Code contributed</strong>:
 <a href="https://nus-cs2103-ay1920s1.github.io/tp-dashboard/#search=briyanii&amp;sort=groupTitle&amp;sortWithin=title&amp;since=2019-09-06&amp;timeframe=commit&amp;mergegroup=false&amp;groupSelect=groupByRepos&amp;breakdown=false&amp;tabOpen=true&amp;tabType=authorship&amp;tabAuthor=briyanii&amp;tabRepo=AY1920S1-CS2103T-T11-1%2Fmain%5Bmaster%5D">RepoSense link </a></p>
-</li>
-<li>
+</div>
+<div class="paragraph">
 <p><strong>Other contributions</strong>:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -164,8 +185,14 @@ unlike the behaviour of the existing Person class, a new way to differentiate Ex
 </div>
 </li>
 <li>
-<p>Documentation:<br>
-Made changes to UG diagrams to match changes to the code <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/285">#285</a></p>
+<p>Documentation:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Made changes to UG diagrams to match changes to the code <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/285">#285</a></p>
+</li>
+</ul>
+</div>
 </li>
 <li>
 <p>Tools:</p>
@@ -177,9 +204,6 @@ Made changes to UG diagrams to match changes to the code <a href="https://github
 <li>
 <p>Integrated TestFx into the project for Testing GUI components. <a href="https://github.com/AY1920S1-CS2103T-T11-1/main/pull/271">#271</a><br>
 (* much of the code was sourced from <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test">AddressBook4 GUI-Tests</a>)</p>
-</li>
-</ul>
-</div>
 </li>
 </ul>
 </div>
@@ -340,7 +364,7 @@ to validate that an <code>Alias</code> will not cause an infinite loop by chaini
 <div class="title">Figure 2. AddAliasCommand Class Diagram</div>
 </div>
 <div class="paragraph">
-<p>In order for the user to save an <code>Alias</code>, they first define it using the <code>AliasCommand</code>. The <code>AliasCommand</code> command extends
+<p>In order for the user to save an <code>Alias</code>, they first define it using the <code>AddAliasCommand</code>. The <code>AddAliasCommand</code> command extends
 <code>UndoableCommand</code> to allow users to undo defining an <code>Alias</code>. The following sequence diagram describe in more detail how an <code>Alias</code>
 is added.</p>
 </div>
@@ -348,7 +372,7 @@ is added.</p>
 <div class="content">
 <div class="paragraph">
 <p>Note:<br>
-Alias and AliasMapping are in Model and not Core. This change has yet to be reflected in the following sequence diagrams.</p>
+Alias and AliasMapping are in Model and not Core. This change has yet to be reflected in the following 3 sequence diagrams.</p>
 </div>
 </div>
 </div>
@@ -358,16 +382,16 @@ Alias and AliasMapping are in Model and not Core. This change has yet to be refl
 </div>
 <div class="title">Figure 3. AddAliasCommand execution Sequence Diagram</div>
 </div>
-<div class="olist None">
-<ol class="None">
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>1. The user enters a command with the following syntax <code> alias a/ &lt;name&gt; i/ &lt;input&gt;</code>.</p>
+<p>The user enters a command with the following syntax <code> addalias a/ &lt;name&gt; i/ &lt;input&gt;</code>.</p>
 </li>
 <li>
-<p>2. The <code>UI</code> passes this command string to the <code>LogicManager</code> which passes it onto the <code>MooLahParser</code>.</p>
+<p>The <code>UI</code> passes this command string to the <code>LogicManager</code> which passes it onto the <code>MooLahParser</code>.</p>
 </li>
 <li>
-<p>3. The parser extracts the argument string and passes it to an <code>AliasCommandParser</code>.</p>
+<p>The parser extracts the argument string and passes it to an <code>AliasCommandParser</code>.</p>
 </li>
 </ol>
 </div>
@@ -384,20 +408,20 @@ Alias and AliasMapping are in Model and not Core. This change has yet to be refl
 </div>
 </div>
 </div>
-<div class="olist None">
-<ol class="None">
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>4. The <code>AliasCommandParser</code> uses the <code>ArgumentTokenizer</code> to tokenize the argument string and extract the
+<p>The <code>AliasCommandParser</code> uses the <code>ArgumentTokenizer</code> to tokenize the argument string and extract the
 <code>alias name</code> and <code>input</code> fields into an <code>ArgumentMultimap</code>.</p>
 </li>
 <li>
-<p>5. The arguments are obtained and to create a new <code>Alias</code> using the the <code>Alias</code> parser in <code>ParserUtil</code>.</p>
+<p>The arguments are obtained and to create a new <code>Alias</code> using the the <code>Alias</code> parser in <code>ParserUtil</code>.</p>
 </li>
 <li>
-<p>6. An <code>AliasCommand</code> is created containing this new <code>Alias</code> to add to the <code>UserPref</code>.</p>
+<p>An <code>AddAliasCommand</code> is created containing this new <code>Alias</code> to add to the <code>UserPref</code>.</p>
 </li>
 <li>
-<p>7. This is passed back to the <code>LogicManager</code> to call <code>AliasCommand#run()</code>.</p>
+<p>This is passed back to the <code>LogicManager</code> to call <code>AddAliasCommand#run()</code>.</p>
 </li>
 </ol>
 </div>
@@ -410,16 +434,16 @@ Alias and AliasMapping are in Model and not Core. This change has yet to be refl
 <div class="content">
 <img src="../images/verifyAlias.png" alt="verifyAlias">
 </div>
-<div class="title">Figure 5. AliasCommand #Validate Sequence Diagram</div>
+<div class="title">Figure 5. AddAliasCommand #Validate Sequence Diagram</div>
 </div>
 </div>
 </div>
-<div class="olist None">
-<ol class="None">
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>8. The <code>AliasCommand</code> is validated using <code>AliasCommand#validate()</code>. The <code>Alias</code> is checked to ensure it does not</p>
-<div class="ulist None">
-<ul class="None">
+<p>The <code>AddAliasCommand</code> is validated using <code>AddAliasCommand#validate()</code>. The <code>Alias</code> is checked to ensure it does not</p>
+<div class="ulist">
+<ul>
 <li>
 <p>a. Have a clashing name used by an existing <code>Command</code> as a CommandWord.</p>
 </li>
@@ -430,7 +454,7 @@ Alias and AliasMapping are in Model and not Core. This change has yet to be refl
 </div>
 </li>
 <li>
-<p>If is not valid, handled exception is thrown.</p>
+<p>If it is not valid, an exception is thrown.</p>
 </li>
 </ol>
 </div>
@@ -443,20 +467,20 @@ Alias and AliasMapping are in Model and not Core. This change has yet to be refl
 <div class="content">
 <img src="../images/addAlias.png" alt="addAlias">
 </div>
-<div class="title">Figure 6. AliasCommand #execute Sequence Diagram</div>
+<div class="title">Figure 6. AddAliasCommand #execute Sequence Diagram</div>
 </div>
 </div>
 </div>
 <div class="olist None">
 <ol class="None">
 <li>
-<p>9. If it was validated that the <code>Alias</code> can be added.</p>
+<p>If it was validated that the <code>Alias</code> can be added.</p>
 </li>
 <li>
-<p>10. The <code>Alias</code> is then added to the <code>AliasMappings</code> object within <code>UserPref</code>.</p>
+<p>The <code>Alias</code> is then added to the <code>AliasMappings</code> object within <code>UserPref</code>.</p>
 </li>
 <li>
-<p>11. The <code>Alias</code> is now usable  by the user.</p>
+<p>The <code>Alias</code> is now usable  by the user.</p>
 </li>
 </ol>
 </div>
@@ -499,4 +523,4 @@ Alias and AliasMapping are in Model and not Core. This change has yet to be refl
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 14:16:31 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-12 14:42:08 UTC</div></div></div></body></html>
